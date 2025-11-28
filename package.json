@@ -1,5 +1,5 @@
 {
-  "name": "my-turborepo",
+  "name": "acmp-connector-new",
   "private": true,
   "scripts": {
     "build": "turbo run build",
