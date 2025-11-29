@@ -1,0 +1,14 @@
+import { FindAssetTypesIn } from '@/application/ports/primary/assets/queries/find-asset-types/find-asset-types.in';
+import { FindAssetTypesOut } from '@/application/ports/primary/assets/queries/find-asset-types/find-asset-types.out';
+import { FindAssetTypesQueryPrimaryPort } from '@/application/ports/primary/assets/queries/find-asset-types/find-asset-types.query.port';
+import { AssetQueryRepositorySecondaryPort } from '@/application/ports/secondary/repositories/assets/asset.query-repository';
+
+export class FindAssetTypesQuery implements FindAssetTypesQueryPrimaryPort {
+  public constructor(private readonly assetQueryRepository: AssetQueryRepositorySecondaryPort) {}
+
+  public async execute(input: FindAssetTypesIn): Promise<FindAssetTypesOut> {
+    const assetTypes = await this.assetQueryRepository.findAssetTypes();
+
+    return FindAssetTypesOut.create(assetTypes);
+  }
+}

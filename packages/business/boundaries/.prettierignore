@@ -1,0 +1,9 @@
+node_modules
+coverage
+dist
+build
+.tmp
+.pnp.cjs
+.pnp.loader.mjs
+pnpm-lock.yaml
+migrations/meta/_journal.json

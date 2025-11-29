@@ -1,0 +1,11 @@
+ACMP Connector API - License Agreement
+
+Copyright (c) 2024 ScaleITS Solutions GmbH
+
+All rights reserved.
+
+This software is provided for use by authorized clients only.
+Unauthorized distribution or modification is prohibited.
+
+For support, please contact your account representative.
+

@@ -1,0 +1,10 @@
+# Built installer
+*.exe
+
+# NSIS temporary files
+*.log
+*.tmp
+
+# Docker files (if created)
+Dockerfile.nsis
+

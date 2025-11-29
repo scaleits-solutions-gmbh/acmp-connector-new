@@ -1,0 +1,20 @@
+import { FindPaginatedClientNetworkCardsIn } from '@/application/ports/primary/clients/queries/find-paginated-client-network-cards/find-paginated-client-network-cards.in';
+import { FindPaginatedClientNetworkCardsOut } from '@/application/ports/primary/clients/queries/find-paginated-client-network-cards/find-paginated-client-network-cards.out';
+import { FindPaginatedClientNetworkCardsQueryPrimaryPort } from '@/application/ports/primary/clients/queries/find-paginated-client-network-cards/find-paginated-client-network-cards.query.port';
+import { ClientNetworkCardQueryRepositorySecondaryPort } from '@/application/ports/secondary/repositories/clients/client-network-card.query-repository';
+import { PaginationOption } from '@scaleits-solutions-gmbh/org-lib-backend-common-kit';
+
+export class FindPaginatedClientNetworkCardsQuery implements FindPaginatedClientNetworkCardsQueryPrimaryPort {
+  public constructor(private readonly clientNetworkCardQueryRepository: ClientNetworkCardQueryRepositorySecondaryPort) {}
+
+  public async execute(input: FindPaginatedClientNetworkCardsIn): Promise<FindPaginatedClientNetworkCardsOut> {
+    const paginationOption: PaginationOption = {
+      page: input.paginationOptions.page,
+      pageSize: input.paginationOptions.pageSize,
+    };
+
+    const paginatedData = await this.clientNetworkCardQueryRepository.findPaginatedClientNetworkCards(input.clientId, paginationOption);
+
+    return FindPaginatedClientNetworkCardsOut.create(paginatedData);
+  }
+}

@@ -1,0 +1,16 @@
+import { FindClientInstalledSoftwareCountIn } from '@/application/ports/primary/clients/queries/find-client-installed-software-count/find-client-installed-software-count.in';
+import { FindClientInstalledSoftwareCountOut } from '@/application/ports/primary/clients/queries/find-client-installed-software-count/find-client-installed-software-count.out';
+import { FindClientInstalledSoftwareCountQueryPrimaryPort } from '@/application/ports/primary/clients/queries/find-client-installed-software-count/find-client-installed-software-count.query.port';
+import { ClientInstalledSoftwareQueryRepositorySecondaryPort } from '@/application/ports/secondary/repositories/clients/client-installed-software.query-repository';
+
+export class FindClientInstalledSoftwareCountQuery implements FindClientInstalledSoftwareCountQueryPrimaryPort {
+  public constructor(private readonly clientInstalledSoftwareQueryRepository: ClientInstalledSoftwareQueryRepositorySecondaryPort) {}
+
+  public async execute(input: FindClientInstalledSoftwareCountIn): Promise<FindClientInstalledSoftwareCountOut> {
+    const filters = input.filters ? { searchTerm: input.filters?.searchTerm } : undefined;
+
+    const count = await this.clientInstalledSoftwareQueryRepository.findClientInstalledSoftwareCount(input.clientId, filters);
+
+    return FindClientInstalledSoftwareCountOut.create({ count });
+  }
+}

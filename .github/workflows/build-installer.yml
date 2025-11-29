@@ -1,0 +1,29 @@
+name: Build NSIS Installer
+
+on:
+  workflow_dispatch: # Manual trigger
+  push:
+    tags:
+      - 'v*'
+
+jobs:
+  build-installer:
+    runs-on: windows-latest
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      
+      - name: Install NSIS
+        run: choco install nsis -y
+      
+      - name: Build installer
+        working-directory: packages/tooling/nsis-installer
+        run: makensis acmp-connector-installer.nsi
+      
+      - name: Upload installer artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: acmp-connector-installer
+          path: packages/tooling/nsis-installer/acmp-connector-api-installer.exe
+

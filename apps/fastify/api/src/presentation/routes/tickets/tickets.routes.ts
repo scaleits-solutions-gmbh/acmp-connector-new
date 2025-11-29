@@ -1,0 +1,35 @@
+import { FastifyInstance } from 'fastify';
+import { ZodTypeProvider } from 'fastify-type-provider-zod';
+import {
+  getTicketsHttpMetadata,
+  getTicketsHttpRequestSchema,
+  getTicketByIdHttpMetadata,
+  getTicketByIdHttpRequestSchema,
+} from '@scaleits-solutions-gmbh/acmp-connector-lib-global-common-kit';
+import {
+  FindPaginatedTicketsQueryPrimaryPort,
+  FindTicketByIdQueryPrimaryPort,
+} from '@repo/business/bounded-contexts/acmp-connector-bounded-context';
+import { createFindPaginatedTicketsHandler } from '@/presentation/handlers/tickets/find-paginated-tickets.handler';
+import { createFindTicketByIdHandler } from '@/presentation/handlers/tickets/find-ticket-by-id.handler';
+import { buildFastifySchema, toFastifyPath } from '@/utils';
+
+export async function ticketsRoutes(
+  fastify: FastifyInstance,
+  findPaginatedTicketsQuery: FindPaginatedTicketsQueryPrimaryPort,
+  findTicketByIdQuery: FindTicketByIdQueryPrimaryPort,
+) {
+  fastify.withTypeProvider<ZodTypeProvider>().route({
+    method: getTicketsHttpMetadata.method,
+    url: toFastifyPath(getTicketsHttpMetadata.path),
+    schema: buildFastifySchema(getTicketsHttpRequestSchema),
+    handler: createFindPaginatedTicketsHandler(findPaginatedTicketsQuery),
+  });
+
+  fastify.withTypeProvider<ZodTypeProvider>().route({
+    method: getTicketByIdHttpMetadata.method,
+    url: toFastifyPath(getTicketByIdHttpMetadata.path),
+    schema: buildFastifySchema(getTicketByIdHttpRequestSchema),
+    handler: createFindTicketByIdHandler(findTicketByIdQuery),
+  });
+}
