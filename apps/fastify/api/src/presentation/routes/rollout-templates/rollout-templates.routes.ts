@@ -1,10 +1,10 @@
 import { FastifyInstance } from 'fastify';
 import { ZodTypeProvider } from 'fastify-type-provider-zod';
 import {
-  getRolloutsHttpMetadata,
-  getRolloutsHttpRequestSchema,
-  getRolloutByIdHttpMetadata,
-  getRolloutByIdHttpRequestSchema,
+  getRolloutTemplatesHttpMetadata,
+  getRolloutTemplatesHttpRequestSchema,
+  getRolloutTemplateByIdHttpMetadata,
+  getRolloutTemplateByIdHttpRequestSchema,
   pushRolloutTemplateHttpMetadata,
   pushRolloutTemplateHttpRequestSchema,
 } from '@scaleits-solutions-gmbh/acmp-connector-lib-global-common-kit';
@@ -25,16 +25,16 @@ export async function rolloutTemplatesRoutes(
   pushRolloutTemplateCommand: PushRolloutTemplateCommandPrimaryPort,
 ) {
   fastify.withTypeProvider<ZodTypeProvider>().route({
-    method: getRolloutsHttpMetadata.method,
-    url: toFastifyPath(getRolloutsHttpMetadata.path),
-    schema: buildFastifySchema(getRolloutsHttpRequestSchema),
+    method: getRolloutTemplatesHttpMetadata.method,
+    url: toFastifyPath(getRolloutTemplatesHttpMetadata.path),
+    schema: buildFastifySchema(getRolloutTemplatesHttpRequestSchema),
     handler: createFindPaginatedRolloutTemplatesHandler(findPaginatedRolloutTemplatesQuery),
   });
 
   fastify.withTypeProvider<ZodTypeProvider>().route({
-    method: getRolloutByIdHttpMetadata.method,
-    url: toFastifyPath(getRolloutByIdHttpMetadata.path),
-    schema: buildFastifySchema(getRolloutByIdHttpRequestSchema),
+    method: getRolloutTemplateByIdHttpMetadata.method,
+    url: toFastifyPath(getRolloutTemplateByIdHttpMetadata.path),
+    schema: buildFastifySchema(getRolloutTemplateByIdHttpRequestSchema),
     handler: createFindRolloutTemplateByIdHandler(findRolloutTemplateByIdQuery),
   });
 

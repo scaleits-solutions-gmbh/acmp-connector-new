@@ -1,7 +1,7 @@
 import { FindPaginatedRolloutTemplatesOut } from '@repo/business/bounded-contexts/acmp-connector-bounded-context';
-import { GetRolloutsHttpResponse } from '@scaleits-solutions-gmbh/acmp-connector-lib-global-common-kit';
+import { GetRolloutTemplatesHttpResponse } from '@scaleits-solutions-gmbh/acmp-connector-lib-global-common-kit';
 
-export function findPaginatedRolloutTemplatesHttpResponseMapper(response: FindPaginatedRolloutTemplatesOut): GetRolloutsHttpResponse {
+export function findPaginatedRolloutTemplatesHttpResponseMapper(response: FindPaginatedRolloutTemplatesOut): GetRolloutTemplatesHttpResponse {
   return {
     statusCode: 200,
     body: {

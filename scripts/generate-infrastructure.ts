@@ -213,7 +213,7 @@ import { findClientCountQueryMethod } from './find-client-count.query-method';`,
     sql: `\`
       SELECT
         c.CLIENTID AS id, c.CLIENTNO AS clientNo, cad.ComputerDomainFQDN AS domainFqdn,
-        c.COMPUTERNAME AS computerName, c.TenantId AS tenantId, t.Name AS tenantName,
+        c.COMPUTERNAME AS name, c.TenantId AS tenantId, t.Name AS tenantName,
         d.lastUpdate AS lastUpdate, d.osInstallationDate AS osInstallationDate,
         m.SystemManufacturer AS manufacturer, m.SystemModel AS model,
         cpu.PROCESSORNAME AS cpu, cpu.NumberOfCores AS cpuCoreCount,
@@ -268,7 +268,7 @@ import { MssqlUtils } from '@/infra/mssql/client';`,
     sql: `\`
       SELECT
         c.CLIENTID AS id, c.CLIENTNO AS clientNo, cad.ComputerDomainFQDN AS domainFqdn,
-        c.COMPUTERNAME AS computerName, c.TenantId AS tenantId, t.Name AS tenantName,
+        c.COMPUTERNAME AS name, c.TenantId AS tenantId, t.Name AS tenantName,
         d.lastUpdate, d.osInstallationDate, m.SystemManufacturer AS manufacturer,
         m.SystemModel AS model, cpu.PROCESSORNAME AS cpu, cpu.NumberOfCores AS cpuCoreCount,
         cpu.NumberOfLogicalProcessors AS cpuThreadCount, mem.PHYSICALTOTAL AS ram,
@@ -452,8 +452,8 @@ import { MssqlUtils } from '@/infra/mssql/client';
 import { FindPaginatedJobsFilters } from '@repo/business/bounded-contexts/acmp-connector-bounded-context';
 import { findJobCountQueryMethod } from './find-job-count.query-method';`,
     sql: `\`
-      SELECT jl.JobId AS id, jl.JobName AS jobName,
-        CASE WHEN jl.JobKind = 4 THEN 'Client Command' WHEN jl.JobKind = 25 THEN 'Rollout' ELSE 'Other' END AS kind,
+      SELECT jl.JobId AS id, jl.JobName AS name,
+        CASE WHEN jl.JobKind = 4 THEN 'Client Command' WHEN jl.JobKind = 25 THEN 'Rollout' ELSE 'Other' END AS type,
         CASE WHEN jl.Origin = 0 THEN 'Pushed' WHEN jl.Origin = 1 THEN 'Scheduled' ELSE 'Other' END AS origin,
         DATEADD(SECOND, (jl.CreationDate - FLOOR(jl.CreationDate)) * 86400, DATEADD(DAY, FLOOR(jl.CreationDate), '1899-12-30')) AS dateTime
       FROM SYS_Jobs_Logs AS jl
@@ -474,8 +474,8 @@ import { findJobCountQueryMethod } from './find-job-count.query-method';`,
     imports: `import { AcmpJobReadModel } from '@scaleits-solutions-gmbh/acmp-connector-lib-global-common-kit';
 import { MssqlUtils } from '@/infra/mssql/client';`,
     sql: `\`
-      SELECT TOP 1 jl.JobId AS id, jl.JobName AS jobName,
-        CASE WHEN jl.JobKind = 4 THEN 'Client Command' WHEN jl.JobKind = 25 THEN 'Rollout' ELSE 'Other' END AS kind,
+      SELECT TOP 1 jl.JobId AS id, jl.JobName AS name,
+        CASE WHEN jl.JobKind = 4 THEN 'Client Command' WHEN jl.JobKind = 25 THEN 'Rollout' ELSE 'Other' END AS type,
         CASE WHEN jl.Origin = 0 THEN 'Pushed' WHEN jl.Origin = 1 THEN 'Scheduled' ELSE 'Other' END AS origin,
         DATEADD(SECOND, (jl.CreationDate - FLOOR(jl.CreationDate)) * 86400, DATEADD(DAY, FLOOR(jl.CreationDate), '1899-12-30')) AS dateTime
       FROM SYS_Jobs_Logs AS jl WHERE jl.JobId = @id

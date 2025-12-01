@@ -248,8 +248,8 @@ const routes: RouteConfig[] = [
         type: 'query',
         httpMethod: 'GET',
         hasPathParams: false,
-        metadataImport: 'getRolloutsHttpMetadata',
-        schemaImport: 'getRolloutsHttpQueryParamsRequestSchema',
+        metadataImport: 'getRolloutTemplatesHttpMetadata',
+        schemaImport: 'getRolloutTemplatesHttpQueryParamsRequestSchema',
         primaryPortImport: 'FindPaginatedRolloutTemplatesQueryPrimaryPort',
         mapperImports: {
           request: 'findPaginatedRolloutTemplatesHttpRequestMapper',
@@ -262,7 +262,7 @@ const routes: RouteConfig[] = [
         httpMethod: 'GET',
         hasPathParams: true,
         pathParam: 'id',
-        metadataImport: 'getRolloutByIdHttpMetadata',
+        metadataImport: 'getRolloutTemplateByIdHttpMetadata',
         primaryPortImport: 'FindRolloutTemplateByIdQueryPrimaryPort',
         mapperImports: {
           request: 'findRolloutTemplateByIdHttpRequestMapper',

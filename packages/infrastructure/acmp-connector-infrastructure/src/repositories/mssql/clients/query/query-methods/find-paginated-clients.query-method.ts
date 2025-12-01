@@ -12,7 +12,7 @@ export async function findPaginatedClientsQueryMethod(pagination: PaginationOpti
   const query = `
       SELECT
         c.CLIENTID AS id, c.CLIENTNO AS clientNo, cad.ComputerDomainFQDN AS domainFqdn,
-        c.COMPUTERNAME AS computerName, c.TenantId AS tenantId, t.Name AS tenantName,
+        c.COMPUTERNAME AS name, c.TenantId AS tenantId, t.Name AS tenantName,
         d.lastUpdate AS lastUpdate, d.osInstallationDate AS osInstallationDate,
         m.SystemManufacturer AS manufacturer, m.SystemModel AS model,
         cpu.PROCESSORNAME AS cpu, cpu.NumberOfCores AS cpuCoreCount,

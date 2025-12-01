@@ -9,7 +9,7 @@ export async function findPaginatedClientNetworkCardsQueryMethod(clientId: strin
   const pageSize = pagination.pageSize ?? 10;
 
   const query = `
-      SELECT Name AS name, IPs AS ip, Mac AS mac, DNSServerIP AS dns, Gateways AS gateway,
+      SELECT Name AS name, IPs AS ipAddress, Mac AS macAddress, DNSServerIP AS dns, Gateways AS gateway,
         Netmasks AS subnetMask, CASE WHEN UseDHCP = 1 THEN 'DHCP' ELSE 'Static' END AS addressType
       FROM CLT_HDW_NETCARDS WHERE CLIENTID = @clientId
       ORDER BY Name ASC OFFSET @offset ROWS FETCH NEXT @pageSize ROWS ONLY
@@ -17,7 +17,15 @@ export async function findPaginatedClientNetworkCardsQueryMethod(clientId: strin
   const offset = (page - 1) * pageSize;
   const rows = await MssqlUtils.query(query, { clientId, offset, pageSize });
   const total = await findClientNetworkCardCountQueryMethod(clientId);
-  const data = rows.map((r, i) => ({ id: `${clientId}:${r.name}:${i}`, ...r }));
+  const data = rows.map((r, i) => ({ 
+    id: `${clientId}:${r.name}:${i}`, 
+    ...r,
+    ipAddress: r.ipAddress ?? '',
+    macAddress: r.macAddress ?? '',
+    dns: r.dns ?? '',
+    gateway: r.gateway ?? '',
+    subnetMask: r.subnetMask ?? '',
+  }));
   const totalPages = Math.ceil(total / pageSize);
   return { data, total, page, pageSize, totalPages };
 }

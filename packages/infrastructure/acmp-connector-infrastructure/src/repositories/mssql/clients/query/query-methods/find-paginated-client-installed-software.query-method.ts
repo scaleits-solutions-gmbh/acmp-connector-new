@@ -21,7 +21,12 @@ export async function findPaginatedClientInstalledSoftwareQueryMethod(clientId: 
   const params = { clientId, offset, pageSize, searchPattern: filters?.searchTerm ? `%${filters.searchTerm}%` : null };
   const rows = await MssqlUtils.query(query, params);
   const total = await findClientInstalledSoftwareCountQueryMethod(clientId, filters);
-  const data = rows.map(r => ({ ...r, version: r.version ?? '', publisher: r.publisher ?? '' }));
+  const data = rows.map(r => ({ 
+    ...r, 
+    version: r.version ?? '', 
+    publisher: r.publisher ?? '',
+    installDate: r.installDate ?? undefined,
+  }));
   const totalPages = Math.ceil(total / pageSize);
   return { data, total, page, pageSize, totalPages };
 }

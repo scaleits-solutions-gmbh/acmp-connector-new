@@ -5,7 +5,7 @@ export async function findClientByIdQueryMethod(id: string): Promise<AcmpClientR
   const query = `
       SELECT
         c.CLIENTID AS id, c.CLIENTNO AS clientNo, cad.ComputerDomainFQDN AS domainFqdn,
-        c.COMPUTERNAME AS computerName, c.TenantId AS tenantId, t.Name AS tenantName,
+        c.COMPUTERNAME AS name, c.TenantId AS tenantId, t.Name AS tenantName,
         d.lastUpdate, d.osInstallationDate, m.SystemManufacturer AS manufacturer,
         m.SystemModel AS model, cpu.PROCESSORNAME AS cpu, cpu.NumberOfCores AS cpuCoreCount,
         cpu.NumberOfLogicalProcessors AS cpuThreadCount, mem.PHYSICALTOTAL AS ram,

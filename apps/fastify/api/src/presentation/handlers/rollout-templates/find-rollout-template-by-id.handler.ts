@@ -4,14 +4,14 @@ import {
   findRolloutTemplateByIdHttpResponseMapper,
 } from '@repo/business/boundaries';
 import { FindRolloutTemplateByIdQueryPrimaryPort } from '@repo/business/bounded-contexts/acmp-connector-bounded-context';
-import { GetRolloutByIdHttpRequest } from '@scaleits-solutions-gmbh/acmp-connector-lib-global-common-kit';
+import { GetRolloutTemplateByIdHttpRequest } from '@scaleits-solutions-gmbh/acmp-connector-lib-global-common-kit';
 import { mapFastifyRequest } from '@/utils';
 
 export function createFindRolloutTemplateByIdHandler(
   query: FindRolloutTemplateByIdQueryPrimaryPort,
 ) {
   return async (request: FastifyRequest, reply: FastifyReply) => {
-    const httpRequest = mapFastifyRequest<GetRolloutByIdHttpRequest>(request);
+    const httpRequest = mapFastifyRequest<GetRolloutTemplateByIdHttpRequest>(request);
     const input = findRolloutTemplateByIdHttpRequestMapper(httpRequest);
 
     const output = await query.execute(input);

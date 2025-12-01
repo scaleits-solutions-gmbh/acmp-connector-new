@@ -389,12 +389,12 @@ const mappers: MapperDef[] = [
   {
     resource: 'rollout-templates',
     operation: 'find-paginated-rollout-templates',
-    httpEndpoint: 'get-rollouts',
+    httpEndpoint: 'get-rollout-templates',
     type: 'query',
     bcInClass: 'FindPaginatedRolloutTemplatesIn',
     bcOutClass: 'FindPaginatedRolloutTemplatesOut',
-    httpRequestType: 'GetRolloutsHttpRequest',
-    httpResponseType: 'GetRolloutsHttpResponse',
+    httpRequestType: 'GetRolloutTemplatesHttpRequest',
+    httpResponseType: 'GetRolloutTemplatesHttpResponse',
     requestMapperBody: `return FindPaginatedRolloutTemplatesIn.create({
     paginationOptions: {
       page: request.queryParams.page,
@@ -418,12 +418,12 @@ const mappers: MapperDef[] = [
   {
     resource: 'rollout-templates',
     operation: 'find-rollout-template-by-id',
-    httpEndpoint: 'get-rollout-by-id',
+    httpEndpoint: 'get-rollout-template-by-id',
     type: 'query',
     bcInClass: 'FindRolloutTemplateByIdIn',
     bcOutClass: 'FindRolloutTemplateByIdOut',
-    httpRequestType: 'GetRolloutByIdHttpRequest',
-    httpResponseType: 'GetRolloutByIdHttpResponse',
+    httpRequestType: 'GetRolloutTemplateByIdHttpRequest',
+    httpResponseType: 'GetRolloutTemplateByIdHttpResponse',
     requestMapperBody: `return FindRolloutTemplateByIdIn.create({
     id: request.pathParams.id,
   });`,
