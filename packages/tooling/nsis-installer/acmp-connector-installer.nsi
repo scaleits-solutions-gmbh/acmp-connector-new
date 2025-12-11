@@ -20,9 +20,13 @@
 !define APP_VERSION "1.0.0"
 !define APP_PUBLISHER "ScaleITS Solutions"
 !define APP_EXE_NAME "acmp-connector-api.exe"
-!define APP_INSTALL_DIR "$LOCALAPPDATA\ACMPConnector"
+!define APP_INSTALL_DIR "C:\Program Files\Ominnode\ACMP_API_Connector"
 !define APP_UNINSTALL_KEY "Software\Microsoft\Windows\CurrentVersion\Uninstall\${APP_NAME}"
-!define DOWNLOAD_URL "https://github.com/scaleits-solutions-gmbh/acmp-connector-new/releases/download/test/acmp-connector-api.exe" ;
+!define DOWNLOAD_URL "https://github.com/scaleits-solutions-gmbh/acmp-connector-releases/releases/download/release/acmp-connector-api.exe" ;
+!define SERVICE_NAME "Omninode ACMP API Connector"
+!define SERVICE_DESCRIPTION "API Service to connect ACMP to Omninode Cloud Plattform"
+!define NSSM_EXE "nssm.exe"
+!define NSSM_DOWNLOAD_URL "https://nssm.cc/release/nssm-2.24.zip"
 
 ; Installer configuration
 Name "${APP_NAME}"
@@ -77,16 +81,45 @@ Section "ACMP Connector API" SecMain
     
     SetOutPath "$INSTDIR"
     
-    ; Stop existing process if running
-    DetailPrint "Stopping existing ${APP_NAME} process..."
-    nsExec::ExecToLog 'taskkill /F /IM ${APP_EXE_NAME}'
+    ; Stop existing service if running (using NSSM if available, fallback to sc)
+    DetailPrint "Stopping existing ${SERVICE_NAME} service..."
+    ${If} ${FileExists} "$INSTDIR\${NSSM_EXE}"
+        nsExec::ExecToLog '"$INSTDIR\${NSSM_EXE}" stop "${SERVICE_NAME}"'
+    ${Else}
+        nsExec::ExecToLog 'sc stop "${SERVICE_NAME}"'
+    ${EndIf}
+    Pop $0
+    ; Wait a moment for service to stop
+    Sleep 2000
+    
+    ; Delete existing service if it exists (for reinstall/upgrade)
+    DetailPrint "Removing existing service (if any)..."
+    ${If} ${FileExists} "$INSTDIR\${NSSM_EXE}"
+        nsExec::ExecToLog '"$INSTDIR\${NSSM_EXE}" remove "${SERVICE_NAME}" confirm'
+    ${Else}
+        nsExec::ExecToLog 'sc delete "${SERVICE_NAME}"'
+    ${EndIf}
+    Pop $0
+    ${If} $0 == 0
+        DetailPrint "Service deleted successfully."
+    ${ElseIf} $0 == 1062
+        DetailPrint "Service does not exist (not installed yet)."
+    ${Else}
+        DetailPrint "Warning: Service deletion returned code $0 (service may still exist)"
+    ${EndIf}
+    ; Wait a moment for service to be removed
+    Sleep 2000
+    
+    ; Also stop any running process instances (fallback)
+    nsExec::ExecToLog 'taskkill /F /IM ${APP_EXE_NAME} 2>nul'
+    nsExec::ExecToLog 'taskkill /F /IM ${NSSM_EXE} 2>nul'
     Pop $0 ; consume return value
     
     ; Download executable using INetC plugin (fast with progress bar)
-    DetailPrint "Downloading ${APP_EXE_NAME}..."
+    DetailPrint "Downloading latest service components..."
     
     ; INetC::get shows a progress bar and is much faster
-    INetC::get /CAPTION "Downloading ${APP_NAME}..." /BANNER "Please wait while ${APP_EXE_NAME} is being downloaded..." "${DOWNLOAD_URL}" "$INSTDIR\${APP_EXE_NAME}" /END
+    INetC::get /CAPTION "Downloading latest service components" /BANNER "Please wait..." "${DOWNLOAD_URL}" "$INSTDIR\${APP_EXE_NAME}" /END
     Pop $0
     
     ${If} $0 != "OK"
@@ -100,6 +133,10 @@ Section "ACMP Connector API" SecMain
         Abort
     ${EndIf}
     DetailPrint "Download completed successfully."
+    
+    ; Install NSSM (Non-Sucking Service Manager) - bundled with installer
+    DetailPrint "Installing NSSM service manager..."
+    File "nssm.exe"
     
     ; Create .env file only if it doesn't exist (preserve user config on reinstall/upgrade)
     ${IfNot} ${FileExists} "$INSTDIR\.env"
@@ -143,37 +180,104 @@ Section "ACMP Connector API" SecMain
     FileWrite $0 "WshShell.Run $\"${APP_EXE_NAME}$\", 0, False$\r$\n"
     FileClose $0
     
-    ; start.bat (calls start.vbs for users who double-click)
+    ; start.bat (starts the Windows service using NSSM)
     FileOpen $0 "$INSTDIR\start.bat" w
     FileWrite $0 "@echo off$\r$\n"
     FileWrite $0 "cd /d $\"%~dp0$\"$\r$\n"
-    FileWrite $0 "wscript.exe start.vbs$\r$\n"
-    FileClose $0
-    
-    ; stop.bat
-    FileOpen $0 "$INSTDIR\stop.bat" w
-    FileWrite $0 "@echo off$\r$\n"
-    FileWrite $0 "taskkill /F /IM ${APP_EXE_NAME} 2>nul$\r$\n"
+    FileWrite $0 "echo Starting ${SERVICE_NAME}...$\r$\n"
+    FileWrite $0 "nssm.exe start $\"${SERVICE_NAME}$\"$\r$\n"
     FileWrite $0 "if %errorlevel%==0 ($\r$\n"
-    FileWrite $0 "    echo ${APP_NAME} stopped.$\r$\n"
+    FileWrite $0 "    echo Service started successfully.$\r$\n"
     FileWrite $0 ") else ($\r$\n"
-    FileWrite $0 "    echo ${APP_NAME} is not running.$\r$\n"
+    FileWrite $0 "    echo Failed to start service. Trying sc...$\r$\n"
+    FileWrite $0 "    sc start $\"${SERVICE_NAME}$\"$\r$\n"
     FileWrite $0 ")$\r$\n"
     FileWrite $0 "timeout /t 2 >nul$\r$\n"
     FileClose $0
     
-    ; status.bat
+    ; stop.bat (stops the Windows service using NSSM)
+    FileOpen $0 "$INSTDIR\stop.bat" w
+    FileWrite $0 "@echo off$\r$\n"
+    FileWrite $0 "cd /d $\"%~dp0$\"$\r$\n"
+    FileWrite $0 "echo Stopping ${SERVICE_NAME}...$\r$\n"
+    FileWrite $0 "nssm.exe stop $\"${SERVICE_NAME}$\"$\r$\n"
+    FileWrite $0 "if %errorlevel%==0 ($\r$\n"
+    FileWrite $0 "    echo Service stopped successfully.$\r$\n"
+    FileWrite $0 ") else ($\r$\n"
+    FileWrite $0 "    echo Service is not running or could not be stopped.$\r$\n"
+    FileWrite $0 ")$\r$\n"
+    FileWrite $0 "timeout /t 2 >nul$\r$\n"
+    FileClose $0
+    
+    ; status.bat (checks service status using NSSM)
     FileOpen $0 "$INSTDIR\status.bat" w
     FileWrite $0 "@echo off$\r$\n"
-    FileWrite $0 "echo Checking ${APP_NAME} status...$\r$\n"
-    FileWrite $0 "tasklist /FI $\"IMAGENAME eq ${APP_EXE_NAME}$\" 2>nul | find /I $\"${APP_EXE_NAME}$\" >nul$\r$\n"
-    FileWrite $0 "if %errorlevel%==0 ($\r$\n"
-    FileWrite $0 "    echo Status: RUNNING$\r$\n"
-    FileWrite $0 ") else ($\r$\n"
-    FileWrite $0 "    echo Status: NOT RUNNING$\r$\n"
-    FileWrite $0 ")$\r$\n"
+    FileWrite $0 "cd /d $\"%~dp0$\"$\r$\n"
+    FileWrite $0 "echo Checking ${SERVICE_NAME} status...$\r$\n"
+    FileWrite $0 "echo.$\r$\n"
+    FileWrite $0 "nssm.exe status $\"${SERVICE_NAME}$\"$\r$\n"
+    FileWrite $0 "echo.$\r$\n"
+    FileWrite $0 "echo Service details:$\r$\n"
+    FileWrite $0 "sc query $\"${SERVICE_NAME}$\"$\r$\n"
     FileWrite $0 "pause$\r$\n"
     FileClose $0
+    
+    ; Install Windows Service using NSSM
+    DetailPrint "Installing Windows Service using NSSM..."
+    
+    ; Install the service with NSSM
+    nsExec::ExecToLog '"$INSTDIR\${NSSM_EXE}" install "${SERVICE_NAME}" "$INSTDIR\${APP_EXE_NAME}"'
+    Pop $0
+    
+    ${If} $0 != 0
+        DetailPrint "Warning: NSSM service installation returned code $0"
+        ; Service might already exist, try to update it
+        DetailPrint "Attempting to update existing service..."
+        nsExec::ExecToLog '"$INSTDIR\${NSSM_EXE}" set "${SERVICE_NAME}" Application "$INSTDIR\${APP_EXE_NAME}"'
+        Pop $0
+    ${Else}
+        DetailPrint "Service installed successfully."
+    ${EndIf}
+    
+    ; Configure service settings with NSSM
+    DetailPrint "Configuring service settings..."
+    
+    ; Set the application directory (working directory)
+    nsExec::ExecToLog '"$INSTDIR\${NSSM_EXE}" set "${SERVICE_NAME}" AppDirectory "$INSTDIR"'
+    Pop $0
+    
+    ; Set service display name
+    nsExec::ExecToLog '"$INSTDIR\${NSSM_EXE}" set "${SERVICE_NAME}" DisplayName "${SERVICE_NAME}"'
+    Pop $0
+    
+    ; Set service description
+    nsExec::ExecToLog '"$INSTDIR\${NSSM_EXE}" set "${SERVICE_NAME}" Description "${SERVICE_DESCRIPTION}"'
+    Pop $0
+    
+    ; Set service to start automatically
+    nsExec::ExecToLog '"$INSTDIR\${NSSM_EXE}" set "${SERVICE_NAME}" Start SERVICE_AUTO_START'
+    Pop $0
+    
+    ; Configure stdout and stderr logging
+    nsExec::ExecToLog '"$INSTDIR\${NSSM_EXE}" set "${SERVICE_NAME}" AppStdout "$INSTDIR\logs\service.log"'
+    Pop $0
+    nsExec::ExecToLog '"$INSTDIR\${NSSM_EXE}" set "${SERVICE_NAME}" AppStderr "$INSTDIR\logs\error.log"'
+    Pop $0
+    
+    ; Create logs directory
+    CreateDirectory "$INSTDIR\logs"
+    
+    ; Configure graceful shutdown
+    nsExec::ExecToLog '"$INSTDIR\${NSSM_EXE}" set "${SERVICE_NAME}" AppStopMethodSkip 0'
+    Pop $0
+    nsExec::ExecToLog '"$INSTDIR\${NSSM_EXE}" set "${SERVICE_NAME}" AppStopMethodConsole 3000'
+    Pop $0
+    nsExec::ExecToLog '"$INSTDIR\${NSSM_EXE}" set "${SERVICE_NAME}" AppStopMethodWindow 3000'
+    Pop $0
+    nsExec::ExecToLog '"$INSTDIR\${NSSM_EXE}" set "${SERVICE_NAME}" AppStopMethodThreads 3000'
+    Pop $0
+    
+    DetailPrint "Service configuration completed."
     
     ; Write registry keys for uninstaller
     WriteRegStr HKLM "${APP_UNINSTALL_KEY}" "DisplayName" "${APP_NAME}"
@@ -204,16 +308,33 @@ Section "Start Menu Shortcuts" SecShortcuts
 SectionEnd
 
 Section "Auto-start on Windows Login" SecAutoStart
-    DetailPrint "Setting up auto-start..."
-    
-    ; Use wscript to run start.vbs completely hidden (no window flash at all)
-    CreateShortcut "$SMSTARTUP\ACMPConnector.lnk" "wscript.exe" '"$INSTDIR\start.vbs"' "$INSTDIR\${APP_EXE_NAME}" 0 SW_SHOWNORMAL
+    DetailPrint "Service is configured to start automatically with Windows..."
+    ; Service is already configured with start= auto, so no additional setup needed
+    ; This section is kept for compatibility but the service handles auto-start
 SectionEnd
 
 Section "Start Service Now" SecStartNow
-    DetailPrint "Starting ${APP_NAME}..."
-    ; Start the service completely hidden using VBScript
-    Exec 'wscript.exe "$INSTDIR\start.vbs"'
+    DetailPrint "Starting ${SERVICE_NAME}..."
+    ; Start the Windows service using NSSM
+    nsExec::ExecToLog '"$INSTDIR\${NSSM_EXE}" start "${SERVICE_NAME}"'
+    Pop $0
+    ${If} $0 != 0
+        DetailPrint "Warning: Service start returned code $0"
+        ; Try using sc as fallback
+        nsExec::ExecToLog 'sc start "${SERVICE_NAME}"'
+        Pop $0
+        ${If} $0 != 0
+            ${If} $0 == 1056
+                DetailPrint "Service is already running."
+            ${Else}
+                MessageBox MB_OK|MB_ICONEXCLAMATION "Failed to start service.$\r$\n$\r$\nError code: $0$\r$\n$\r$\nYou can start it manually using the Start Menu shortcut or by running: sc start $\"${SERVICE_NAME}$\""
+            ${EndIf}
+        ${Else}
+            DetailPrint "Service started successfully."
+        ${EndIf}
+    ${Else}
+        DetailPrint "Service started successfully."
+    ${EndIf}
 SectionEnd
 
 ; ─────────────────────────────────────────────────────────────────────────────
@@ -237,6 +358,9 @@ LangString DESC_SecStartNow ${LANG_ENGLISH} "Start ${APP_NAME} immediately after
 ; ─────────────────────────────────────────────────────────────────────────────
 
 Function .onInit
+    ; Set required space to 120MB (120 * 1024 KB) for the main section
+    SectionSetSize ${SecMain} 122880
+    
     ; Set default values
     StrCpy $Port "3000"
     StrCpy $ApiKey ""
@@ -245,9 +369,9 @@ Function .onInit
     StrCpy $ProxyPath "/acmp-connector"
     
     ; Check if existing .env exists and read the PORT from it
-    ${If} ${FileExists} "$LOCALAPPDATA\ACMPConnector\.env"
+    ${If} ${FileExists} "${APP_INSTALL_DIR}\.env"
         ; Read existing port from .env file
-        ${ConfigRead} "$LOCALAPPDATA\ACMPConnector\.env" "PORT=" $0
+        ${ConfigRead} "${APP_INSTALL_DIR}\.env" "PORT=" $0
         ${IfNot} ${Errors}
             StrCpy $Port $0
             DetailPrint "Found existing configuration with PORT=$Port"
@@ -260,20 +384,48 @@ FunctionEnd
 ; ─────────────────────────────────────────────────────────────────────────────
 
 Section "Uninstall"
-    ; Stop the service
-    DetailPrint "Stopping ${APP_NAME}..."
-    nsExec::ExecToLog 'taskkill /F /IM ${APP_EXE_NAME}'
+    ; Stop and delete the Windows service using NSSM
+    DetailPrint "Stopping ${SERVICE_NAME}..."
+    ${If} ${FileExists} "$INSTDIR\${NSSM_EXE}"
+        nsExec::ExecToLog '"$INSTDIR\${NSSM_EXE}" stop "${SERVICE_NAME}"'
+        Pop $0
+        Sleep 2000 ; Wait for service to stop
+        
+        DetailPrint "Removing ${SERVICE_NAME}..."
+        nsExec::ExecToLog '"$INSTDIR\${NSSM_EXE}" remove "${SERVICE_NAME}" confirm'
+        Pop $0
+        ${If} $0 != 0
+            DetailPrint "Warning: NSSM service removal returned code $0"
+            ; Try sc as fallback
+            nsExec::ExecToLog 'sc delete "${SERVICE_NAME}"'
+            Pop $0
+        ${EndIf}
+    ${Else}
+        ; Fallback to sc if NSSM not found
+        nsExec::ExecToLog 'sc stop "${SERVICE_NAME}"'
+        Pop $0
+        Sleep 2000
+        nsExec::ExecToLog 'sc delete "${SERVICE_NAME}"'
+        Pop $0
+    ${EndIf}
+    
+    ; Fallback: Stop any running process instances
+    nsExec::ExecToLog 'taskkill /F /IM ${APP_EXE_NAME} 2>nul'
     Pop $0
     
     ; Remove files (but keep .env for user configuration)
     DetailPrint "Removing files..."
     Delete "$INSTDIR\${APP_EXE_NAME}"
+    Delete "$INSTDIR\${NSSM_EXE}"
     Delete "$INSTDIR\start.bat"
     Delete "$INSTDIR\start.vbs"
     Delete "$INSTDIR\stop.bat"
     Delete "$INSTDIR\status.bat"
     Delete "$INSTDIR\uninstall.exe"
     ; NOTE: .env is intentionally NOT deleted to preserve user configuration
+    
+    ; Remove logs directory
+    RMDir /r "$INSTDIR\logs"
     
     ; Remove shortcuts
     DetailPrint "Removing shortcuts..."

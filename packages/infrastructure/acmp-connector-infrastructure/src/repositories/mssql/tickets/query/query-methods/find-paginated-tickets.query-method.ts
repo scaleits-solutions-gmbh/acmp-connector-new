@@ -10,7 +10,7 @@ export async function findPaginatedTicketsQueryMethod(pagination: PaginationOpti
   const pageSize = pagination.pageSize ?? 10;
 
   const query = `
-      SELECT sht.TicketID AS ticketId, sht.IntTicketID AS intTicketId, sht.Caption AS caption,
+      SELECT sht.TicketID AS id, sht.IntTicketID AS intId, sht.Caption AS caption,
         DATEADD(SECOND, (sht.CreationDate - FLOOR(sht.CreationDate)) * 86400, DATEADD(DAY, FLOOR(sht.CreationDate), '1899-12-30')) AS creationDate,
         DATEADD(SECOND, (sht.LastModified - FLOOR(sht.LastModified)) * 86400, DATEADD(DAY, FLOOR(sht.LastModified), '1899-12-30')) AS lastModified,
         shc.CategoryPath_en AS categoryEn, shc.CategoryPath_de AS categoryDe, sht.Priority AS priority,

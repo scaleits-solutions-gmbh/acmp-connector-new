@@ -37,7 +37,26 @@ export async function findPaginatedAssetsQueryMethod(pagination: PaginationOptio
   const params = { searchPattern: filters?.searchTerm ? `%${filters.searchTerm}%` : null, typeId: filters?.assetType || null, offset, pageSize };
   const rows = await MssqlUtils.query(query, params);
   const total = await findAssetCountQueryMethod(filters);
-  const data = rows.map(r => ({ ...r, assetType: r.assetType ?? undefined, location: r.location ?? undefined, costCenter: r.costCenter ?? undefined, department: r.department ?? undefined, vendor: r.vendor ?? undefined, manufacturer: r.manufacturer ?? undefined, servicePartner: r.servicePartner ?? undefined, stateEn: r.stateEn ?? undefined, stateDe: r.stateDe ?? undefined, inventoryNumber: r.inventoryNumber ?? undefined, serialNumber: r.serialNumber ?? undefined, model: r.model ?? undefined }));
+  const data = rows.map((r) => ({
+    ...r,
+    // Ensure required fields from the read model schema are present
+    name: r.name ?? r.assetName,
+    lastUpdate: r.lastUpdate ?? r.lastModifiedDate,
+    // Normalize optional fields to `undefined` when null
+    type: r.type ?? r.assetType ?? undefined,
+    assetType: r.assetType ?? undefined,
+    location: r.location ?? undefined,
+    costCenter: r.costCenter ?? undefined,
+    department: r.department ?? undefined,
+    vendor: r.vendor ?? undefined,
+    manufacturer: r.manufacturer ?? undefined,
+    servicePartner: r.servicePartner ?? undefined,
+    stateEn: r.stateEn ?? undefined,
+    stateDe: r.stateDe ?? undefined,
+    inventoryNumber: r.inventoryNumber ?? undefined,
+    serialNumber: r.serialNumber ?? undefined,
+    model: r.model ?? undefined,
+  }));
   const totalPages = Math.ceil(total / pageSize);
   return { data, total, page, pageSize, totalPages };
 }
