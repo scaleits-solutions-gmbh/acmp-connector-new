@@ -1,8 +1,8 @@
+import { BaseApi, PaginationOption } from '@scaleits-solutions-gmbh/org-lib-backend-common-kit/common';
 import { FindPaginatedClientCommandsIn } from '@/application/ports/primary/client-commands/queries/find-paginated-client-commands/find-paginated-client-commands.in';
 import { FindPaginatedClientCommandsOut } from '@/application/ports/primary/client-commands/queries/find-paginated-client-commands/find-paginated-client-commands.out';
 import { FindPaginatedClientCommandsQueryPrimaryPort } from '@/application/ports/primary/client-commands/queries/find-paginated-client-commands/find-paginated-client-commands.query.port';
 import { ClientCommandQueryRepositorySecondaryPort } from '@/application/ports/secondary/repositories/client-commands/client-command.query-repository';
-import { BaseApi, PaginationOption } from '@scaleits-solutions-gmbh/org-lib-backend-common-kit/common';
 
 export class FindPaginatedClientCommandsQuery extends BaseApi<FindPaginatedClientCommandsIn, FindPaginatedClientCommandsOut> implements FindPaginatedClientCommandsQueryPrimaryPort {
   public constructor(private readonly clientCommandQueryRepository: ClientCommandQueryRepositorySecondaryPort) {

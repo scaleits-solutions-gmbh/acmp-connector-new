@@ -1,7 +1,7 @@
-import { safeGenericObjectCreate } from '@scaleits-solutions-gmbh/org-lib-backend-common-kit';
-import { z } from 'zod';
 import { acmpJobReadModelSchema } from '@scaleits-solutions-gmbh/acmp-connector-lib-global-common-kit';
+import { safeGenericObjectCreate } from '@scaleits-solutions-gmbh/org-lib-backend-common-kit';
 import { paginatedDataSchema } from '@scaleits-solutions-gmbh/org-lib-global-common-kit';
+import { z } from 'zod';
 
 export class FindPaginatedJobsOut {
   public static schema = paginatedDataSchema({

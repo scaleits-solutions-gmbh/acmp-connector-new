@@ -1,8 +1,8 @@
+import { BaseApi, PaginationOption } from '@scaleits-solutions-gmbh/org-lib-backend-common-kit/common';
 import { FindPaginatedClientsIn } from '@/application/ports/primary/clients/queries/find-paginated-clients/find-paginated-clients.in';
 import { FindPaginatedClientsOut } from '@/application/ports/primary/clients/queries/find-paginated-clients/find-paginated-clients.out';
 import { FindPaginatedClientsQueryPrimaryPort } from '@/application/ports/primary/clients/queries/find-paginated-clients/find-paginated-clients.query.port';
 import { ClientQueryRepositorySecondaryPort } from '@/application/ports/secondary/repositories/clients/client.query-repository';
-import { BaseApi, PaginationOption } from '@scaleits-solutions-gmbh/org-lib-backend-common-kit/common';
 
 export class FindPaginatedClientsQuery extends BaseApi<FindPaginatedClientsIn, FindPaginatedClientsOut> implements FindPaginatedClientsQueryPrimaryPort {
   public constructor(private readonly clientQueryRepository: ClientQueryRepositorySecondaryPort) {

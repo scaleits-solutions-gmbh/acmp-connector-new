@@ -23,9 +23,9 @@
   },
   "dependencies": {
     "@repo/business/bounded-contexts/acmp-connector-bounded-context": "workspace:*",
-    "@scaleits-solutions-gmbh/acmp-connector-lib-global-common-kit": "link:/Users/bernardocabral/Projects/ScaleITS/OmniNode_New/acmp-connector-workspace/acmp-connector-lib-global-common-kit",
-    "@scaleits-solutions-gmbh/org-lib-backend-common-kit": "0.0.68",
-    "@scaleits-solutions-gmbh/org-lib-global-common-kit": "^0.0.6"
+    "@scaleits-solutions-gmbh/acmp-connector-lib-global-common-kit": "0.0.7",
+    "@scaleits-solutions-gmbh/org-lib-backend-common-kit": "0.0.71",
+    "@scaleits-solutions-gmbh/org-lib-global-common-kit": "^0.0.7"
   },
   "devDependencies": {
     "@eslint/js": "^9.38.0",

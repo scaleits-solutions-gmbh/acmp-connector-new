@@ -24,22 +24,22 @@
   },
   "dependencies": {
     "@repo/business/bounded-contexts/acmp-connector-bounded-context": "workspace:*",
-    "@scaleits-solutions-gmbh/acmp-connector-lib-global-common-kit": "link:/Users/bernardocabral/Projects/ScaleITS/OmniNode_New/acmp-connector-workspace/acmp-connector-lib-global-common-kit",
-    "@scaleits-solutions-gmbh/org-lib-backend-common-kit": "0.0.68",
-    "@scaleits-solutions-gmbh/org-lib-global-common-kit": "^0.0.6",
+    "@scaleits-solutions-gmbh/acmp-connector-lib-global-common-kit": "0.0.7",
+    "@scaleits-solutions-gmbh/org-lib-backend-common-kit": "0.0.71",
+    "@scaleits-solutions-gmbh/org-lib-global-common-kit": "^0.0.7",
     "mssql": "^11.0.1",
-    "zod": "^4.1.12"
+    "zod": "4.1.13"
   },
   "devDependencies": {
-    "@eslint/js": "^9.38.0",
-    "@types/mssql": "^9.1.5",
-    "@types/node": "^24.9.1",
-    "eslint": "^9.38.0",
+    "@eslint/js": "^9.39.1",
+    "@types/mssql": "^9.1.8",
+    "@types/node": "^24.10.3",
+    "eslint": "^9.39.1",
     "eslint-plugin-import-x": "^4.16.1",
     "eslint-plugin-unused-imports": "^4.3.0",
-    "prettier": "^3.6.2",
-    "tsup": "^8.5.0",
+    "prettier": "^3.7.4",
+    "tsup": "^8.5.1",
     "typescript": "5.9.3",
-    "typescript-eslint": "^8.46.2"
+    "typescript-eslint": "^8.49.0"
   }
 }

@@ -1,8 +1,8 @@
+import { BaseApi } from '@scaleits-solutions-gmbh/org-lib-backend-common-kit/common';
 import { FindAssetCountIn } from '@/application/ports/primary/assets/queries/find-asset-count/find-asset-count.in';
 import { FindAssetCountOut } from '@/application/ports/primary/assets/queries/find-asset-count/find-asset-count.out';
 import { FindAssetCountQueryPrimaryPort } from '@/application/ports/primary/assets/queries/find-asset-count/find-asset-count.query.port';
 import { AssetQueryRepositorySecondaryPort } from '@/application/ports/secondary/repositories/assets/asset.query-repository';
-import { BaseApi } from '@scaleits-solutions-gmbh/org-lib-backend-common-kit/common';
 
 export class FindAssetCountQuery extends BaseApi<FindAssetCountIn, FindAssetCountOut> implements FindAssetCountQueryPrimaryPort {
   public constructor(private readonly assetQueryRepository: AssetQueryRepositorySecondaryPort) {

@@ -1,8 +1,8 @@
+import { BaseApi, PaginationOption } from '@scaleits-solutions-gmbh/org-lib-backend-common-kit/common';
 import { FindPaginatedAssetsIn } from '@/application/ports/primary/assets/queries/find-paginated-assets/find-paginated-assets.in';
 import { FindPaginatedAssetsOut } from '@/application/ports/primary/assets/queries/find-paginated-assets/find-paginated-assets.out';
 import { FindPaginatedAssetsQueryPrimaryPort } from '@/application/ports/primary/assets/queries/find-paginated-assets/find-paginated-assets.query.port';
 import { AssetQueryRepositorySecondaryPort } from '@/application/ports/secondary/repositories/assets/asset.query-repository';
-import { BaseApi, PaginationOption } from '@scaleits-solutions-gmbh/org-lib-backend-common-kit/common';
 
 export class FindPaginatedAssetsQuery extends BaseApi<FindPaginatedAssetsIn, FindPaginatedAssetsOut> implements FindPaginatedAssetsQueryPrimaryPort {
   public constructor(private readonly assetQueryRepository: AssetQueryRepositorySecondaryPort) {

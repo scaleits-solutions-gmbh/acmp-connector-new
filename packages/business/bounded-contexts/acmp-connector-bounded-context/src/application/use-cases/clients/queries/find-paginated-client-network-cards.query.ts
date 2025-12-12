@@ -1,8 +1,8 @@
+import { BaseApi, PaginationOption } from '@scaleits-solutions-gmbh/org-lib-backend-common-kit/common';
 import { FindPaginatedClientNetworkCardsIn } from '@/application/ports/primary/clients/queries/find-paginated-client-network-cards/find-paginated-client-network-cards.in';
 import { FindPaginatedClientNetworkCardsOut } from '@/application/ports/primary/clients/queries/find-paginated-client-network-cards/find-paginated-client-network-cards.out';
 import { FindPaginatedClientNetworkCardsQueryPrimaryPort } from '@/application/ports/primary/clients/queries/find-paginated-client-network-cards/find-paginated-client-network-cards.query.port';
 import { ClientNetworkCardQueryRepositorySecondaryPort } from '@/application/ports/secondary/repositories/clients/client-network-card.query-repository';
-import { BaseApi, PaginationOption } from '@scaleits-solutions-gmbh/org-lib-backend-common-kit/common';
 
 export class FindPaginatedClientNetworkCardsQuery extends BaseApi<FindPaginatedClientNetworkCardsIn, FindPaginatedClientNetworkCardsOut> implements FindPaginatedClientNetworkCardsQueryPrimaryPort {
   public constructor(private readonly clientNetworkCardQueryRepository: ClientNetworkCardQueryRepositorySecondaryPort) {

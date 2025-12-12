@@ -1,8 +1,8 @@
+import { BaseApi } from '@scaleits-solutions-gmbh/org-lib-backend-common-kit/common';
 import { FindJobCountIn } from '@/application/ports/primary/jobs/queries/find-job-count/find-job-count.in';
 import { FindJobCountOut } from '@/application/ports/primary/jobs/queries/find-job-count/find-job-count.out';
 import { FindJobCountQueryPrimaryPort } from '@/application/ports/primary/jobs/queries/find-job-count/find-job-count.query.port';
 import { JobQueryRepositorySecondaryPort } from '@/application/ports/secondary/repositories/jobs/job.query-repository';
-import { BaseApi } from '@scaleits-solutions-gmbh/org-lib-backend-common-kit/common';
 
 export class FindJobCountQuery extends BaseApi<FindJobCountIn, FindJobCountOut> implements FindJobCountQueryPrimaryPort {
   public constructor(private readonly jobQueryRepository: JobQueryRepositorySecondaryPort) {

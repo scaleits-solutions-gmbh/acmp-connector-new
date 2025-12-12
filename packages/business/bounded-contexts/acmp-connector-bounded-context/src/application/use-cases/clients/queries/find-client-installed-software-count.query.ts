@@ -1,8 +1,8 @@
+import { BaseApi } from '@scaleits-solutions-gmbh/org-lib-backend-common-kit/common';
 import { FindClientInstalledSoftwareCountIn } from '@/application/ports/primary/clients/queries/find-client-installed-software-count/find-client-installed-software-count.in';
 import { FindClientInstalledSoftwareCountOut } from '@/application/ports/primary/clients/queries/find-client-installed-software-count/find-client-installed-software-count.out';
 import { FindClientInstalledSoftwareCountQueryPrimaryPort } from '@/application/ports/primary/clients/queries/find-client-installed-software-count/find-client-installed-software-count.query.port';
 import { ClientInstalledSoftwareQueryRepositorySecondaryPort } from '@/application/ports/secondary/repositories/clients/client-installed-software.query-repository';
-import { BaseApi } from '@scaleits-solutions-gmbh/org-lib-backend-common-kit/common';
 
 export class FindClientInstalledSoftwareCountQuery extends BaseApi<FindClientInstalledSoftwareCountIn, FindClientInstalledSoftwareCountOut> implements FindClientInstalledSoftwareCountQueryPrimaryPort {
   public constructor(private readonly clientInstalledSoftwareQueryRepository: ClientInstalledSoftwareQueryRepositorySecondaryPort) {

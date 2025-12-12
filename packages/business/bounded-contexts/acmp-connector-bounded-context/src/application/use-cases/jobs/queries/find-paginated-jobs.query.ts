@@ -1,8 +1,8 @@
+import { BaseApi, PaginationOption } from '@scaleits-solutions-gmbh/org-lib-backend-common-kit/common';
 import { FindPaginatedJobsIn } from '@/application/ports/primary/jobs/queries/find-paginated-jobs/find-paginated-jobs.in';
 import { FindPaginatedJobsOut } from '@/application/ports/primary/jobs/queries/find-paginated-jobs/find-paginated-jobs.out';
 import { FindPaginatedJobsQueryPrimaryPort } from '@/application/ports/primary/jobs/queries/find-paginated-jobs/find-paginated-jobs.query.port';
 import { JobQueryRepositorySecondaryPort } from '@/application/ports/secondary/repositories/jobs/job.query-repository';
-import { BaseApi, PaginationOption } from '@scaleits-solutions-gmbh/org-lib-backend-common-kit/common';
 
 export class FindPaginatedJobsQuery extends BaseApi<FindPaginatedJobsIn, FindPaginatedJobsOut> implements FindPaginatedJobsQueryPrimaryPort {
   public constructor(private readonly jobQueryRepository: JobQueryRepositorySecondaryPort) {

@@ -1,6 +1,6 @@
+import { acmpClientCommandReadModelSchema } from '@scaleits-solutions-gmbh/acmp-connector-lib-global-common-kit';
 import { safeGenericObjectCreate } from '@scaleits-solutions-gmbh/org-lib-backend-common-kit';
 import { z } from 'zod';
-import { acmpClientCommandReadModelSchema } from '@scaleits-solutions-gmbh/acmp-connector-lib-global-common-kit';
 
 export class FindClientCommandByIdOut {
   public static schema = acmpClientCommandReadModelSchema;

@@ -1,8 +1,8 @@
+import { BaseApi } from '@scaleits-solutions-gmbh/org-lib-backend-common-kit/common';
 import { FindRolloutTemplateCountIn } from '@/application/ports/primary/rollout-templates/queries/find-rollout-template-count/find-rollout-template-count.in';
 import { FindRolloutTemplateCountOut } from '@/application/ports/primary/rollout-templates/queries/find-rollout-template-count/find-rollout-template-count.out';
 import { FindRolloutTemplateCountQueryPrimaryPort } from '@/application/ports/primary/rollout-templates/queries/find-rollout-template-count/find-rollout-template-count.query.port';
 import { RolloutTemplateQueryRepositorySecondaryPort } from '@/application/ports/secondary/repositories/rollout-templates/rollout-template.query-repository';
-import { BaseApi } from '@scaleits-solutions-gmbh/org-lib-backend-common-kit/common';
 
 export class FindRolloutTemplateCountQuery extends BaseApi<FindRolloutTemplateCountIn, FindRolloutTemplateCountOut> implements FindRolloutTemplateCountQueryPrimaryPort {
   public constructor(private readonly rolloutTemplateQueryRepository: RolloutTemplateQueryRepositorySecondaryPort) {

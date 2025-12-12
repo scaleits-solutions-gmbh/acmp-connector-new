@@ -1,8 +1,8 @@
+import { BaseApi, PaginationOption } from '@scaleits-solutions-gmbh/org-lib-backend-common-kit/common';
 import { FindPaginatedTicketsIn } from '@/application/ports/primary/tickets/queries/find-paginated-tickets/find-paginated-tickets.in';
 import { FindPaginatedTicketsOut } from '@/application/ports/primary/tickets/queries/find-paginated-tickets/find-paginated-tickets.out';
 import { FindPaginatedTicketsQueryPrimaryPort } from '@/application/ports/primary/tickets/queries/find-paginated-tickets/find-paginated-tickets.query.port';
 import { TicketQueryRepositorySecondaryPort } from '@/application/ports/secondary/repositories/tickets/ticket.query-repository';
-import { BaseApi, PaginationOption } from '@scaleits-solutions-gmbh/org-lib-backend-common-kit/common';
 
 export class FindPaginatedTicketsQuery extends BaseApi<FindPaginatedTicketsIn, FindPaginatedTicketsOut> implements FindPaginatedTicketsQueryPrimaryPort {
   public constructor(private readonly ticketQueryRepository: TicketQueryRepositorySecondaryPort) {
