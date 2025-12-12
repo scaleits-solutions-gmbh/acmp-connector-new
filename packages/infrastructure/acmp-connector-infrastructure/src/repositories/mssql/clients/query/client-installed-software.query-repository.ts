@@ -8,8 +8,11 @@ import { AcmpClientInstalledSoftwareListItemReadModel } from '@scaleits-solution
 
 import { findPaginatedClientInstalledSoftwareQueryMethod } from './query-methods/find-paginated-client-installed-software.query-method';
 import { findClientInstalledSoftwareCountQueryMethod } from './query-methods/find-client-installed-software-count.query-method';
-
-export class MssqlClientInstalledSoftwareQueryRepository implements ClientInstalledSoftwareQueryRepositorySecondaryPort {
+import { BaseSpi } from '@scaleits-solutions-gmbh/org-lib-backend-common-kit/common';
+export class MssqlClientInstalledSoftwareQueryRepository extends BaseSpi implements ClientInstalledSoftwareQueryRepositorySecondaryPort {
+  public constructor() {
+    super();
+  }
   /**
    * Find paginated list of installed software for a client
    */

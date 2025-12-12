@@ -2,12 +2,14 @@ import { FindPaginatedJobsIn } from '@/application/ports/primary/jobs/queries/fi
 import { FindPaginatedJobsOut } from '@/application/ports/primary/jobs/queries/find-paginated-jobs/find-paginated-jobs.out';
 import { FindPaginatedJobsQueryPrimaryPort } from '@/application/ports/primary/jobs/queries/find-paginated-jobs/find-paginated-jobs.query.port';
 import { JobQueryRepositorySecondaryPort } from '@/application/ports/secondary/repositories/jobs/job.query-repository';
-import { PaginationOption } from '@scaleits-solutions-gmbh/org-lib-backend-common-kit';
+import { BaseApi, PaginationOption } from '@scaleits-solutions-gmbh/org-lib-backend-common-kit/common';
 
-export class FindPaginatedJobsQuery implements FindPaginatedJobsQueryPrimaryPort {
-  public constructor(private readonly jobQueryRepository: JobQueryRepositorySecondaryPort) {}
+export class FindPaginatedJobsQuery extends BaseApi<FindPaginatedJobsIn, FindPaginatedJobsOut> implements FindPaginatedJobsQueryPrimaryPort {
+  public constructor(private readonly jobQueryRepository: JobQueryRepositorySecondaryPort) {
+    super();
+  }
 
-  public async execute(input: FindPaginatedJobsIn): Promise<FindPaginatedJobsOut> {
+  protected async handle(input: FindPaginatedJobsIn): Promise<FindPaginatedJobsOut> {
     const paginationOption: PaginationOption = {
       page: input.paginationOptions.page,
       pageSize: input.paginationOptions.pageSize,

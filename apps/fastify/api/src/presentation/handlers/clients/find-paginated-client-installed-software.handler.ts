@@ -3,9 +3,9 @@ import {
   findPaginatedClientInstalledSoftwareHttpRequestMapper,
   findPaginatedClientInstalledSoftwareHttpResponseMapper,
 } from '@repo/business/boundaries';
-import { FindPaginatedClientInstalledSoftwareQueryPrimaryPort } from '@repo/business/bounded-contexts/acmp-connector-bounded-context';
+import type { FindPaginatedClientInstalledSoftwareQueryPrimaryPort } from '@repo/business/bounded-contexts/acmp-connector-bounded-context';
 import { GetClientInstalledSoftwareHttpRequest } from '@scaleits-solutions-gmbh/acmp-connector-lib-global-common-kit';
-import { mapFastifyRequest } from '@/utils';
+import { mapFastifyRequest } from '@scaleits-solutions-gmbh/org-lib-backend-common-kit/frameworks/fastify';
 
 export function createFindPaginatedClientInstalledSoftwareHandler(
   query: FindPaginatedClientInstalledSoftwareQueryPrimaryPort,

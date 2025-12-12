@@ -8,15 +8,15 @@ import {
   pushRolloutTemplateHttpMetadata,
   pushRolloutTemplateHttpRequestSchema,
 } from '@scaleits-solutions-gmbh/acmp-connector-lib-global-common-kit';
-import {
+import type {
   FindPaginatedRolloutTemplatesQueryPrimaryPort,
   FindRolloutTemplateByIdQueryPrimaryPort,
   PushRolloutTemplateCommandPrimaryPort,
 } from '@repo/business/bounded-contexts/acmp-connector-bounded-context';
+import { buildFastifySchema, toFastifyPath } from '@scaleits-solutions-gmbh/org-lib-backend-common-kit/frameworks/fastify';
 import { createFindPaginatedRolloutTemplatesHandler } from '@/presentation/handlers/rollout-templates/find-paginated-rollout-templates.handler';
 import { createFindRolloutTemplateByIdHandler } from '@/presentation/handlers/rollout-templates/find-rollout-template-by-id.handler';
 import { createPushRolloutTemplateHandler } from '@/presentation/handlers/rollout-templates/push-rollout-template.handler';
-import { buildFastifySchema, toFastifyPath } from '@/utils';
 
 export async function rolloutTemplatesRoutes(
   fastify: FastifyInstance,

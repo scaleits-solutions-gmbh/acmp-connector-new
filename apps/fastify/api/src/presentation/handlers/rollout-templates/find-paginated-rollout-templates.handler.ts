@@ -3,9 +3,9 @@ import {
   findPaginatedRolloutTemplatesHttpRequestMapper,
   findPaginatedRolloutTemplatesHttpResponseMapper,
 } from '@repo/business/boundaries';
-import { FindPaginatedRolloutTemplatesQueryPrimaryPort } from '@repo/business/bounded-contexts/acmp-connector-bounded-context';
+import type { FindPaginatedRolloutTemplatesQueryPrimaryPort } from '@repo/business/bounded-contexts/acmp-connector-bounded-context';
 import { GetRolloutTemplatesHttpRequest } from '@scaleits-solutions-gmbh/acmp-connector-lib-global-common-kit';
-import { mapFastifyRequest } from '@/utils';
+import { mapFastifyRequest } from '@scaleits-solutions-gmbh/org-lib-backend-common-kit/frameworks/fastify';
 
 export function createFindPaginatedRolloutTemplatesHandler(
   query: FindPaginatedRolloutTemplatesQueryPrimaryPort,

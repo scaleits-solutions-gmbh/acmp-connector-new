@@ -2,12 +2,14 @@ import { FindPaginatedClientHardDrivesIn } from '@/application/ports/primary/cli
 import { FindPaginatedClientHardDrivesOut } from '@/application/ports/primary/clients/queries/find-paginated-client-hard-drives/find-paginated-client-hard-drives.out';
 import { FindPaginatedClientHardDrivesQueryPrimaryPort } from '@/application/ports/primary/clients/queries/find-paginated-client-hard-drives/find-paginated-client-hard-drives.query.port';
 import { ClientHardDriveQueryRepositorySecondaryPort } from '@/application/ports/secondary/repositories/clients/client-hard-drive.query-repository';
-import { PaginationOption } from '@scaleits-solutions-gmbh/org-lib-backend-common-kit';
+import { BaseApi, PaginationOption } from '@scaleits-solutions-gmbh/org-lib-backend-common-kit/common';
 
-export class FindPaginatedClientHardDrivesQuery implements FindPaginatedClientHardDrivesQueryPrimaryPort {
-  public constructor(private readonly clientHardDriveQueryRepository: ClientHardDriveQueryRepositorySecondaryPort) {}
+export class FindPaginatedClientHardDrivesQuery extends BaseApi<FindPaginatedClientHardDrivesIn, FindPaginatedClientHardDrivesOut> implements FindPaginatedClientHardDrivesQueryPrimaryPort {
+  public constructor(private readonly clientHardDriveQueryRepository: ClientHardDriveQueryRepositorySecondaryPort) {
+    super();
+  }
 
-  public async execute(input: FindPaginatedClientHardDrivesIn): Promise<FindPaginatedClientHardDrivesOut> {
+  protected async handle(input: FindPaginatedClientHardDrivesIn): Promise<FindPaginatedClientHardDrivesOut> {
     const paginationOption: PaginationOption = {
       page: input.paginationOptions.page,
       pageSize: input.paginationOptions.pageSize,

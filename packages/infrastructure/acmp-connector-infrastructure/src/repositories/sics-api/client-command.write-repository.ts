@@ -1,10 +1,14 @@
 import { ClientCommandWriteRepositorySecondaryPort } from '@repo/business/bounded-contexts/acmp-connector-bounded-context';
 import { getSicsApiAdapter } from '@/adapters/sics-api';
+import { BaseSpi } from '@scaleits-solutions-gmbh/org-lib-backend-common-kit/common';
 
 /**
  * Write repository implementation for client commands using SICS API.
  */
-export class SicsApiClientCommandWriteRepository implements ClientCommandWriteRepositorySecondaryPort {
+export class SicsApiClientCommandWriteRepository extends BaseSpi implements ClientCommandWriteRepositorySecondaryPort {
+  public constructor() {
+    super();
+  }
   /**
    * Push a client command to selected clients via SICS API.
    *

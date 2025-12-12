@@ -10,8 +10,12 @@ import { findPaginatedAssetsQueryMethod } from './query-methods/find-paginated-a
 import { findAssetByIdQueryMethod } from './query-methods/find-asset-by-id.query-method';
 import { findAssetCountQueryMethod } from './query-methods/find-asset-count.query-method';
 import { findAssetTypesQueryMethod } from './query-methods/find-asset-types.query-method';
+import { BaseSpi } from '@scaleits-solutions-gmbh/org-lib-backend-common-kit/common';
 
-export class MssqlAssetQueryRepository implements AssetQueryRepositorySecondaryPort {
+export class MssqlAssetQueryRepository extends BaseSpi implements AssetQueryRepositorySecondaryPort {
+  public constructor() {
+    super();
+  }
   /**
    * Find paginated list of assets
    */

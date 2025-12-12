@@ -5,8 +5,11 @@ import { AcmpClientNetworkCardListItemReadModel } from '@scaleits-solutions-gmbh
 
 import { findPaginatedClientNetworkCardsQueryMethod } from './query-methods/find-paginated-client-network-cards.query-method';
 import { findClientNetworkCardCountQueryMethod } from './query-methods/find-client-network-card-count.query-method';
-
-export class MssqlClientNetworkCardQueryRepository implements ClientNetworkCardQueryRepositorySecondaryPort {
+import { BaseSpi } from '@scaleits-solutions-gmbh/org-lib-backend-common-kit/common';
+export class MssqlClientNetworkCardQueryRepository extends BaseSpi implements ClientNetworkCardQueryRepositorySecondaryPort {
+  public constructor() {
+    super();
+  }
   /**
    * Find paginated list of network cards for a client
    */

@@ -22,13 +22,62 @@ import {
   FindPaginatedRolloutTemplatesQuery,
   FindRolloutTemplateByIdQuery,
   PushRolloutTemplateCommand,
+  // Primary ports (for typing)
+  FindPaginatedClientsQueryPrimaryPort,
+  FindClientByIdQueryPrimaryPort,
+  FindPaginatedClientHardDrivesQueryPrimaryPort,
+  FindPaginatedClientNetworkCardsQueryPrimaryPort,
+  FindPaginatedClientInstalledSoftwareQueryPrimaryPort,
+  FindPaginatedJobsQueryPrimaryPort,
+  FindPaginatedTicketsQueryPrimaryPort,
+  FindTicketByIdQueryPrimaryPort,
+  FindPaginatedAssetsQueryPrimaryPort,
+  FindAssetByIdQueryPrimaryPort,
+  FindAssetTypesQueryPrimaryPort,
+  FindPaginatedClientCommandsQueryPrimaryPort,
+  FindClientCommandByIdQueryPrimaryPort,
+  PushClientCommandCommandPrimaryPort,
+  FindPaginatedRolloutTemplatesQueryPrimaryPort,
+  FindRolloutTemplateByIdQueryPrimaryPort,
+  PushRolloutTemplateCommandPrimaryPort,
 } from '@repo/business/bounded-contexts/acmp-connector-bounded-context';
 import { bootstrapRepositories } from '@/bootstrap/repositories.bootstrap';
 
 /**
  * Bootstrap all use cases with their dependencies injected
  */
-export const bootstrapUseCases = {
+export interface UseCases {
+  // Clients
+  findPaginatedClientsQuery: FindPaginatedClientsQueryPrimaryPort;
+  findClientByIdQuery: FindClientByIdQueryPrimaryPort;
+  findPaginatedClientHardDrivesQuery: FindPaginatedClientHardDrivesQueryPrimaryPort;
+  findPaginatedClientNetworkCardsQuery: FindPaginatedClientNetworkCardsQueryPrimaryPort;
+  findPaginatedClientInstalledSoftwareQuery: FindPaginatedClientInstalledSoftwareQueryPrimaryPort;
+
+  // Jobs
+  findPaginatedJobsQuery: FindPaginatedJobsQueryPrimaryPort;
+
+  // Tickets
+  findPaginatedTicketsQuery: FindPaginatedTicketsQueryPrimaryPort;
+  findTicketByIdQuery: FindTicketByIdQueryPrimaryPort;
+
+  // Assets
+  findPaginatedAssetsQuery: FindPaginatedAssetsQueryPrimaryPort;
+  findAssetByIdQuery: FindAssetByIdQueryPrimaryPort;
+  findAssetTypesQuery: FindAssetTypesQueryPrimaryPort;
+
+  // Client Commands
+  findPaginatedClientCommandsQuery: FindPaginatedClientCommandsQueryPrimaryPort;
+  findClientCommandByIdQuery: FindClientCommandByIdQueryPrimaryPort;
+  pushClientCommandCommand: PushClientCommandCommandPrimaryPort;
+
+  // Rollout Templates
+  findPaginatedRolloutTemplatesQuery: FindPaginatedRolloutTemplatesQueryPrimaryPort;
+  findRolloutTemplateByIdQuery: FindRolloutTemplateByIdQueryPrimaryPort;
+  pushRolloutTemplateCommand: PushRolloutTemplateCommandPrimaryPort;
+}
+
+export const bootstrapUseCases: UseCases = {
   // Clients
   findPaginatedClientsQuery: new FindPaginatedClientsQuery(
     bootstrapRepositories.clientQueryRepository,
@@ -92,5 +141,3 @@ export const bootstrapUseCases = {
     bootstrapRepositories.rolloutTemplateWriteRepository,
   ),
 };
-
-export type UseCases = typeof bootstrapUseCases;

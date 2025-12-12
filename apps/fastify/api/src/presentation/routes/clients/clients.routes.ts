@@ -12,19 +12,19 @@ import {
   getClientInstalledSoftwareHttpMetadata,
   getClientInstalledSoftwareHttpRequestSchema,
 } from '@scaleits-solutions-gmbh/acmp-connector-lib-global-common-kit';
-import {
+import type {
   FindPaginatedClientsQueryPrimaryPort,
   FindClientByIdQueryPrimaryPort,
   FindPaginatedClientHardDrivesQueryPrimaryPort,
   FindPaginatedClientNetworkCardsQueryPrimaryPort,
   FindPaginatedClientInstalledSoftwareQueryPrimaryPort,
 } from '@repo/business/bounded-contexts/acmp-connector-bounded-context';
+import { buildFastifySchema, toFastifyPath } from '@scaleits-solutions-gmbh/org-lib-backend-common-kit/frameworks/fastify';
 import { createFindPaginatedClientsHandler } from '@/presentation/handlers/clients/find-paginated-clients.handler';
 import { createFindClientByIdHandler } from '@/presentation/handlers/clients/find-client-by-id.handler';
 import { createFindPaginatedClientHardDrivesHandler } from '@/presentation/handlers/clients/find-paginated-client-hard-drives.handler';
 import { createFindPaginatedClientNetworkCardsHandler } from '@/presentation/handlers/clients/find-paginated-client-network-cards.handler';
 import { createFindPaginatedClientInstalledSoftwareHandler } from '@/presentation/handlers/clients/find-paginated-client-installed-software.handler';
-import { buildFastifySchema, toFastifyPath } from '@/utils';
 
 export async function clientsRoutes(
   fastify: FastifyInstance,

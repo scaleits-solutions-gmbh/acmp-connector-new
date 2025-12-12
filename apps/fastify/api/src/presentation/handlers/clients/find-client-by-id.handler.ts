@@ -3,9 +3,9 @@ import {
   findClientByIdHttpRequestMapper,
   findClientByIdHttpResponseMapper,
 } from '@repo/business/boundaries';
-import { FindClientByIdQueryPrimaryPort } from '@repo/business/bounded-contexts/acmp-connector-bounded-context';
+import type { FindClientByIdQueryPrimaryPort } from '@repo/business/bounded-contexts/acmp-connector-bounded-context';
 import { GetClientByIdHttpRequest } from '@scaleits-solutions-gmbh/acmp-connector-lib-global-common-kit';
-import { mapFastifyRequest } from '@/utils';
+import { mapFastifyRequest } from '@scaleits-solutions-gmbh/org-lib-backend-common-kit/frameworks/fastify';
 
 export function createFindClientByIdHandler(
   query: FindClientByIdQueryPrimaryPort,

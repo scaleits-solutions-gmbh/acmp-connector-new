@@ -2,12 +2,14 @@ import { FindPaginatedRolloutTemplatesIn } from '@/application/ports/primary/rol
 import { FindPaginatedRolloutTemplatesOut } from '@/application/ports/primary/rollout-templates/queries/find-paginated-rollout-templates/find-paginated-rollout-templates.out';
 import { FindPaginatedRolloutTemplatesQueryPrimaryPort } from '@/application/ports/primary/rollout-templates/queries/find-paginated-rollout-templates/find-paginated-rollout-templates.query.port';
 import { RolloutTemplateQueryRepositorySecondaryPort } from '@/application/ports/secondary/repositories/rollout-templates/rollout-template.query-repository';
-import { PaginationOption } from '@scaleits-solutions-gmbh/org-lib-backend-common-kit';
+import { BaseApi, PaginationOption } from '@scaleits-solutions-gmbh/org-lib-backend-common-kit/common';
 
-export class FindPaginatedRolloutTemplatesQuery implements FindPaginatedRolloutTemplatesQueryPrimaryPort {
-  public constructor(private readonly rolloutTemplateQueryRepository: RolloutTemplateQueryRepositorySecondaryPort) {}
+export class FindPaginatedRolloutTemplatesQuery extends BaseApi<FindPaginatedRolloutTemplatesIn, FindPaginatedRolloutTemplatesOut> implements FindPaginatedRolloutTemplatesQueryPrimaryPort {
+  public constructor(private readonly rolloutTemplateQueryRepository: RolloutTemplateQueryRepositorySecondaryPort) {
+    super();
+  }
 
-  public async execute(input: FindPaginatedRolloutTemplatesIn): Promise<FindPaginatedRolloutTemplatesOut> {
+  protected async handle(input: FindPaginatedRolloutTemplatesIn): Promise<FindPaginatedRolloutTemplatesOut> {
     const paginationOption: PaginationOption = {
       page: input.paginationOptions.page,
       pageSize: input.paginationOptions.pageSize,

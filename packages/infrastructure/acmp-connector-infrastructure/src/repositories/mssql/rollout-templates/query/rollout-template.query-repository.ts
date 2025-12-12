@@ -6,8 +6,12 @@ import { AcmpRolloutTemplateListItemReadModel } from '@scaleits-solutions-gmbh/a
 import { findPaginatedRolloutTemplatesQueryMethod } from './query-methods/find-paginated-rollout-templates.query-method';
 import { findRolloutTemplateByIdQueryMethod } from './query-methods/find-rollout-template-by-id.query-method';
 import { findRolloutTemplateCountQueryMethod } from './query-methods/find-rollout-template-count.query-method';
+import { BaseSpi } from '@scaleits-solutions-gmbh/org-lib-backend-common-kit/common';
 
-export class MssqlRolloutTemplateQueryRepository implements RolloutTemplateQueryRepositorySecondaryPort {
+export class MssqlRolloutTemplateQueryRepository extends BaseSpi implements RolloutTemplateQueryRepositorySecondaryPort {
+  public constructor() {
+    super();
+  }
   /**
    * Find paginated list of rollout templates
    */

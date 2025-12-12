@@ -6,13 +6,13 @@ import {
   getTicketByIdHttpMetadata,
   getTicketByIdHttpRequestSchema,
 } from '@scaleits-solutions-gmbh/acmp-connector-lib-global-common-kit';
-import {
+import type {
   FindPaginatedTicketsQueryPrimaryPort,
   FindTicketByIdQueryPrimaryPort,
 } from '@repo/business/bounded-contexts/acmp-connector-bounded-context';
+import { buildFastifySchema, toFastifyPath } from '@scaleits-solutions-gmbh/org-lib-backend-common-kit/frameworks/fastify';
 import { createFindPaginatedTicketsHandler } from '@/presentation/handlers/tickets/find-paginated-tickets.handler';
 import { createFindTicketByIdHandler } from '@/presentation/handlers/tickets/find-ticket-by-id.handler';
-import { buildFastifySchema, toFastifyPath } from '@/utils';
 
 export async function ticketsRoutes(
   fastify: FastifyInstance,

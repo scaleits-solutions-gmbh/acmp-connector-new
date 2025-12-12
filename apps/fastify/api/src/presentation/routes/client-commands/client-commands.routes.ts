@@ -8,15 +8,15 @@ import {
   pushClientCommandHttpMetadata,
   pushClientCommandHttpRequestSchema,
 } from '@scaleits-solutions-gmbh/acmp-connector-lib-global-common-kit';
-import {
+import type {
   FindPaginatedClientCommandsQueryPrimaryPort,
   FindClientCommandByIdQueryPrimaryPort,
   PushClientCommandCommandPrimaryPort,
 } from '@repo/business/bounded-contexts/acmp-connector-bounded-context';
+import { buildFastifySchema, toFastifyPath } from '@scaleits-solutions-gmbh/org-lib-backend-common-kit/frameworks/fastify';
 import { createFindPaginatedClientCommandsHandler } from '@/presentation/handlers/client-commands/find-paginated-client-commands.handler';
 import { createFindClientCommandByIdHandler } from '@/presentation/handlers/client-commands/find-client-command-by-id.handler';
 import { createPushClientCommandHandler } from '@/presentation/handlers/client-commands/push-client-command.handler';
-import { buildFastifySchema, toFastifyPath } from '@/utils';
 
 export async function clientCommandsRoutes(
   fastify: FastifyInstance,

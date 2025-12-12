@@ -24,7 +24,7 @@
   "dependencies": {
     "@repo/business/bounded-contexts/acmp-connector-bounded-context": "workspace:*",
     "@scaleits-solutions-gmbh/acmp-connector-lib-global-common-kit": "link:/Users/bernardocabral/Projects/ScaleITS/OmniNode_New/acmp-connector-workspace/acmp-connector-lib-global-common-kit",
-    "@scaleits-solutions-gmbh/org-lib-backend-common-kit": "^0.0.53",
+    "@scaleits-solutions-gmbh/org-lib-backend-common-kit": "0.0.68",
     "@scaleits-solutions-gmbh/org-lib-global-common-kit": "^0.0.6"
   },
   "devDependencies": {

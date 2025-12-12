@@ -1,10 +1,14 @@
 import { RolloutTemplateWriteRepositorySecondaryPort } from '@repo/business/bounded-contexts/acmp-connector-bounded-context';
 import { getSicsApiAdapter } from '@/adapters/sics-api';
+import { BaseSpi } from '@scaleits-solutions-gmbh/org-lib-backend-common-kit/common';
 
 /**
  * Write repository implementation for rollout templates using SICS API.
  */
-export class SicsApiRolloutTemplateWriteRepository implements RolloutTemplateWriteRepositorySecondaryPort {
+export class SicsApiRolloutTemplateWriteRepository extends BaseSpi implements RolloutTemplateWriteRepositorySecondaryPort {
+  public constructor() {
+    super();
+  }
   /**
    * Push a rollout template to selected clients via SICS API.
    *
@@ -26,4 +30,3 @@ export class SicsApiRolloutTemplateWriteRepository implements RolloutTemplateWri
     }
   }
 }
-

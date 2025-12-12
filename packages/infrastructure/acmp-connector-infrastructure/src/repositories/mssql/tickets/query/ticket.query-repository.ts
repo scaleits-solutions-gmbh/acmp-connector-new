@@ -10,8 +10,12 @@ import { findPaginatedTicketsQueryMethod } from './query-methods/find-paginated-
 import { findTicketByIdQueryMethod } from './query-methods/find-ticket-by-id.query-method';
 import { findTicketDetailsByIdQueryMethod } from './query-methods/find-ticket-details-by-id.query-method';
 import { findTicketCountQueryMethod } from './query-methods/find-ticket-count.query-method';
+import { BaseSpi } from '@scaleits-solutions-gmbh/org-lib-backend-common-kit/common';
 
-export class MssqlTicketQueryRepository implements TicketQueryRepositorySecondaryPort {
+export class MssqlTicketQueryRepository extends BaseSpi implements TicketQueryRepositorySecondaryPort {
+  public constructor() {
+    super();
+  }
   /**
    * Find paginated list of tickets
    */

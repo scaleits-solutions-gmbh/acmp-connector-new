@@ -3,9 +3,9 @@ import {
   findPaginatedClientsHttpRequestMapper,
   findPaginatedClientsHttpResponseMapper,
 } from '@repo/business/boundaries';
-import { FindPaginatedClientsQueryPrimaryPort } from '@repo/business/bounded-contexts/acmp-connector-bounded-context';
+import type { FindPaginatedClientsQueryPrimaryPort } from '@repo/business/bounded-contexts/acmp-connector-bounded-context';
 import { GetClientsHttpRequest } from '@scaleits-solutions-gmbh/acmp-connector-lib-global-common-kit';
-import { mapFastifyRequest } from '@/utils';
+import { mapFastifyRequest } from '@scaleits-solutions-gmbh/org-lib-backend-common-kit/frameworks/fastify';
 
 export function createFindPaginatedClientsHandler(
   query: FindPaginatedClientsQueryPrimaryPort,

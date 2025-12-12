@@ -3,9 +3,9 @@ import {
   findPaginatedJobsHttpRequestMapper,
   findPaginatedJobsHttpResponseMapper,
 } from '@repo/business/boundaries';
-import { FindPaginatedJobsQueryPrimaryPort } from '@repo/business/bounded-contexts/acmp-connector-bounded-context';
+import type { FindPaginatedJobsQueryPrimaryPort } from '@repo/business/bounded-contexts/acmp-connector-bounded-context';
 import { GetJobsHttpRequest } from '@scaleits-solutions-gmbh/acmp-connector-lib-global-common-kit';
-import { mapFastifyRequest } from '@/utils';
+import { mapFastifyRequest } from '@scaleits-solutions-gmbh/org-lib-backend-common-kit/frameworks/fastify';
 
 export function createFindPaginatedJobsHandler(
   query: FindPaginatedJobsQueryPrimaryPort,

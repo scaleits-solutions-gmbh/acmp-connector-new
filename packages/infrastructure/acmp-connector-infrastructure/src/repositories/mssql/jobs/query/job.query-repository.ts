@@ -9,8 +9,12 @@ import { AcmpJobReadModel } from '@scaleits-solutions-gmbh/acmp-connector-lib-gl
 import { findPaginatedJobsQueryMethod } from './query-methods/find-paginated-jobs.query-method';
 import { findJobByIdQueryMethod } from './query-methods/find-job-by-id.query-method';
 import { findJobCountQueryMethod } from './query-methods/find-job-count.query-method';
+import { BaseSpi } from '@scaleits-solutions-gmbh/org-lib-backend-common-kit/common';
 
-export class MssqlJobQueryRepository implements JobQueryRepositorySecondaryPort {
+export class MssqlJobQueryRepository extends BaseSpi implements JobQueryRepositorySecondaryPort {
+  public constructor() {
+    super();
+  }
   /**
    * Find paginated list of jobs
    */

@@ -2,11 +2,14 @@ import { FindJobCountIn } from '@/application/ports/primary/jobs/queries/find-jo
 import { FindJobCountOut } from '@/application/ports/primary/jobs/queries/find-job-count/find-job-count.out';
 import { FindJobCountQueryPrimaryPort } from '@/application/ports/primary/jobs/queries/find-job-count/find-job-count.query.port';
 import { JobQueryRepositorySecondaryPort } from '@/application/ports/secondary/repositories/jobs/job.query-repository';
+import { BaseApi } from '@scaleits-solutions-gmbh/org-lib-backend-common-kit/common';
 
-export class FindJobCountQuery implements FindJobCountQueryPrimaryPort {
-  public constructor(private readonly jobQueryRepository: JobQueryRepositorySecondaryPort) {}
+export class FindJobCountQuery extends BaseApi<FindJobCountIn, FindJobCountOut> implements FindJobCountQueryPrimaryPort {
+  public constructor(private readonly jobQueryRepository: JobQueryRepositorySecondaryPort) {
+    super();
+  }
 
-  public async execute(input: FindJobCountIn): Promise<FindJobCountOut> {
+  protected async handle(input: FindJobCountIn): Promise<FindJobCountOut> {
     const filters = input.filters ? {
       searchTerm: input.filters?.searchTerm,
       kind: input.filters?.kind,

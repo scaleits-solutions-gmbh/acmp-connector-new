@@ -2,12 +2,14 @@ import { FindPaginatedAssetsIn } from '@/application/ports/primary/assets/querie
 import { FindPaginatedAssetsOut } from '@/application/ports/primary/assets/queries/find-paginated-assets/find-paginated-assets.out';
 import { FindPaginatedAssetsQueryPrimaryPort } from '@/application/ports/primary/assets/queries/find-paginated-assets/find-paginated-assets.query.port';
 import { AssetQueryRepositorySecondaryPort } from '@/application/ports/secondary/repositories/assets/asset.query-repository';
-import { PaginationOption } from '@scaleits-solutions-gmbh/org-lib-backend-common-kit';
+import { BaseApi, PaginationOption } from '@scaleits-solutions-gmbh/org-lib-backend-common-kit/common';
 
-export class FindPaginatedAssetsQuery implements FindPaginatedAssetsQueryPrimaryPort {
-  public constructor(private readonly assetQueryRepository: AssetQueryRepositorySecondaryPort) {}
+export class FindPaginatedAssetsQuery extends BaseApi<FindPaginatedAssetsIn, FindPaginatedAssetsOut> implements FindPaginatedAssetsQueryPrimaryPort {
+  public constructor(private readonly assetQueryRepository: AssetQueryRepositorySecondaryPort) {
+    super();
+  }
 
-  public async execute(input: FindPaginatedAssetsIn): Promise<FindPaginatedAssetsOut> {
+  protected async handle(input: FindPaginatedAssetsIn): Promise<FindPaginatedAssetsOut> {
     const paginationOption: PaginationOption = {
       page: input.paginationOptions.page,
       pageSize: input.paginationOptions.pageSize,

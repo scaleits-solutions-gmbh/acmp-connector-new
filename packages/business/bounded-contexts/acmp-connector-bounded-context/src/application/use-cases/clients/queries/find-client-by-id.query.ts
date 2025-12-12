@@ -2,15 +2,18 @@ import { FindClientByIdIn } from '@/application/ports/primary/clients/queries/fi
 import { FindClientByIdOut } from '@/application/ports/primary/clients/queries/find-client-by-id/find-client-by-id.out';
 import { FindClientByIdQueryPrimaryPort } from '@/application/ports/primary/clients/queries/find-client-by-id/find-client-by-id.query.port';
 import { ClientQueryRepositorySecondaryPort } from '@/application/ports/secondary/repositories/clients/client.query-repository';
+import { BaseApi, NotFoundError } from '@scaleits-solutions-gmbh/org-lib-backend-common-kit/common';
 
-export class FindClientByIdQuery implements FindClientByIdQueryPrimaryPort {
-  public constructor(private readonly clientQueryRepository: ClientQueryRepositorySecondaryPort) {}
+export class FindClientByIdQuery extends BaseApi<FindClientByIdIn, FindClientByIdOut> implements FindClientByIdQueryPrimaryPort {
+  public constructor(private readonly clientQueryRepository: ClientQueryRepositorySecondaryPort) {
+    super();
+  }
 
-  public async execute(input: FindClientByIdIn): Promise<FindClientByIdOut> {
+  protected async handle(input: FindClientByIdIn): Promise<FindClientByIdOut> {
     const client = await this.clientQueryRepository.findClientById(input.id);
 
     if (!client) {
-      throw new Error('Client not found');
+      throw new NotFoundError({ message: 'Client not found' });
     }
 
     return FindClientByIdOut.create(client);

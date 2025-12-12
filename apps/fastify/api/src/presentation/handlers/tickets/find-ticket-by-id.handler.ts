@@ -3,9 +3,9 @@ import {
   findTicketByIdHttpRequestMapper,
   findTicketByIdHttpResponseMapper,
 } from '@repo/business/boundaries';
-import { FindTicketByIdQueryPrimaryPort } from '@repo/business/bounded-contexts/acmp-connector-bounded-context';
+import type { FindTicketByIdQueryPrimaryPort } from '@repo/business/bounded-contexts/acmp-connector-bounded-context';
 import { GetTicketByIdHttpRequest } from '@scaleits-solutions-gmbh/acmp-connector-lib-global-common-kit';
-import { mapFastifyRequest } from '@/utils';
+import { mapFastifyRequest } from '@scaleits-solutions-gmbh/org-lib-backend-common-kit/frameworks/fastify';
 
 export function createFindTicketByIdHandler(
   query: FindTicketByIdQueryPrimaryPort,

@@ -2,12 +2,14 @@ import { FindPaginatedClientsIn } from '@/application/ports/primary/clients/quer
 import { FindPaginatedClientsOut } from '@/application/ports/primary/clients/queries/find-paginated-clients/find-paginated-clients.out';
 import { FindPaginatedClientsQueryPrimaryPort } from '@/application/ports/primary/clients/queries/find-paginated-clients/find-paginated-clients.query.port';
 import { ClientQueryRepositorySecondaryPort } from '@/application/ports/secondary/repositories/clients/client.query-repository';
-import { PaginationOption } from '@scaleits-solutions-gmbh/org-lib-backend-common-kit';
+import { BaseApi, PaginationOption } from '@scaleits-solutions-gmbh/org-lib-backend-common-kit/common';
 
-export class FindPaginatedClientsQuery implements FindPaginatedClientsQueryPrimaryPort {
-  public constructor(private readonly clientQueryRepository: ClientQueryRepositorySecondaryPort) {}
+export class FindPaginatedClientsQuery extends BaseApi<FindPaginatedClientsIn, FindPaginatedClientsOut> implements FindPaginatedClientsQueryPrimaryPort {
+  public constructor(private readonly clientQueryRepository: ClientQueryRepositorySecondaryPort) {
+    super();
+  }
 
-  public async execute(input: FindPaginatedClientsIn): Promise<FindPaginatedClientsOut> {
+  protected async handle(input: FindPaginatedClientsIn): Promise<FindPaginatedClientsOut> {
     const paginationOption: PaginationOption = {
       page: input.paginationOptions.page,
       pageSize: input.paginationOptions.pageSize,

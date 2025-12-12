@@ -2,12 +2,14 @@ import { FindPaginatedTicketsIn } from '@/application/ports/primary/tickets/quer
 import { FindPaginatedTicketsOut } from '@/application/ports/primary/tickets/queries/find-paginated-tickets/find-paginated-tickets.out';
 import { FindPaginatedTicketsQueryPrimaryPort } from '@/application/ports/primary/tickets/queries/find-paginated-tickets/find-paginated-tickets.query.port';
 import { TicketQueryRepositorySecondaryPort } from '@/application/ports/secondary/repositories/tickets/ticket.query-repository';
-import { PaginationOption } from '@scaleits-solutions-gmbh/org-lib-backend-common-kit';
+import { BaseApi, PaginationOption } from '@scaleits-solutions-gmbh/org-lib-backend-common-kit/common';
 
-export class FindPaginatedTicketsQuery implements FindPaginatedTicketsQueryPrimaryPort {
-  public constructor(private readonly ticketQueryRepository: TicketQueryRepositorySecondaryPort) {}
+export class FindPaginatedTicketsQuery extends BaseApi<FindPaginatedTicketsIn, FindPaginatedTicketsOut> implements FindPaginatedTicketsQueryPrimaryPort {
+  public constructor(private readonly ticketQueryRepository: TicketQueryRepositorySecondaryPort) {
+    super();
+  }
 
-  public async execute(input: FindPaginatedTicketsIn): Promise<FindPaginatedTicketsOut> {
+  protected async handle(input: FindPaginatedTicketsIn): Promise<FindPaginatedTicketsOut> {
     const paginationOption: PaginationOption = {
       page: input.paginationOptions.page,
       pageSize: input.paginationOptions.pageSize,

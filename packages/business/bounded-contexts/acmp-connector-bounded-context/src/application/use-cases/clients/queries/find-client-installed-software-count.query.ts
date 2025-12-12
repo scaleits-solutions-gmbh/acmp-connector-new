@@ -2,11 +2,14 @@ import { FindClientInstalledSoftwareCountIn } from '@/application/ports/primary/
 import { FindClientInstalledSoftwareCountOut } from '@/application/ports/primary/clients/queries/find-client-installed-software-count/find-client-installed-software-count.out';
 import { FindClientInstalledSoftwareCountQueryPrimaryPort } from '@/application/ports/primary/clients/queries/find-client-installed-software-count/find-client-installed-software-count.query.port';
 import { ClientInstalledSoftwareQueryRepositorySecondaryPort } from '@/application/ports/secondary/repositories/clients/client-installed-software.query-repository';
+import { BaseApi } from '@scaleits-solutions-gmbh/org-lib-backend-common-kit/common';
 
-export class FindClientInstalledSoftwareCountQuery implements FindClientInstalledSoftwareCountQueryPrimaryPort {
-  public constructor(private readonly clientInstalledSoftwareQueryRepository: ClientInstalledSoftwareQueryRepositorySecondaryPort) {}
+export class FindClientInstalledSoftwareCountQuery extends BaseApi<FindClientInstalledSoftwareCountIn, FindClientInstalledSoftwareCountOut> implements FindClientInstalledSoftwareCountQueryPrimaryPort {
+  public constructor(private readonly clientInstalledSoftwareQueryRepository: ClientInstalledSoftwareQueryRepositorySecondaryPort) {
+    super();
+  }
 
-  public async execute(input: FindClientInstalledSoftwareCountIn): Promise<FindClientInstalledSoftwareCountOut> {
+  protected async handle(input: FindClientInstalledSoftwareCountIn): Promise<FindClientInstalledSoftwareCountOut> {
     const filters = input.filters ? { searchTerm: input.filters?.searchTerm } : undefined;
 
     const count = await this.clientInstalledSoftwareQueryRepository.findClientInstalledSoftwareCount(input.clientId, filters);

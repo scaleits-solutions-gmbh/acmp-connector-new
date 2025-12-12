@@ -2,11 +2,14 @@ import { FindClientNetworkCardCountIn } from '@/application/ports/primary/client
 import { FindClientNetworkCardCountOut } from '@/application/ports/primary/clients/queries/find-client-network-card-count/find-client-network-card-count.out';
 import { FindClientNetworkCardCountQueryPrimaryPort } from '@/application/ports/primary/clients/queries/find-client-network-card-count/find-client-network-card-count.query.port';
 import { ClientNetworkCardQueryRepositorySecondaryPort } from '@/application/ports/secondary/repositories/clients/client-network-card.query-repository';
+import { BaseApi } from '@scaleits-solutions-gmbh/org-lib-backend-common-kit/common';
 
-export class FindClientNetworkCardCountQuery implements FindClientNetworkCardCountQueryPrimaryPort {
-  public constructor(private readonly clientNetworkCardQueryRepository: ClientNetworkCardQueryRepositorySecondaryPort) {}
+export class FindClientNetworkCardCountQuery extends BaseApi<FindClientNetworkCardCountIn, FindClientNetworkCardCountOut> implements FindClientNetworkCardCountQueryPrimaryPort {
+  public constructor(private readonly clientNetworkCardQueryRepository: ClientNetworkCardQueryRepositorySecondaryPort) {
+    super();
+  }
 
-  public async execute(input: FindClientNetworkCardCountIn): Promise<FindClientNetworkCardCountOut> {
+  protected async handle(input: FindClientNetworkCardCountIn): Promise<FindClientNetworkCardCountOut> {
     const count = await this.clientNetworkCardQueryRepository.findClientNetworkCardCount(input.clientId);
 
     return FindClientNetworkCardCountOut.create({ count });

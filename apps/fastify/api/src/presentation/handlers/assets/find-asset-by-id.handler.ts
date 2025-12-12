@@ -3,9 +3,9 @@ import {
   findAssetByIdHttpRequestMapper,
   findAssetByIdHttpResponseMapper,
 } from '@repo/business/boundaries';
-import { FindAssetByIdQueryPrimaryPort } from '@repo/business/bounded-contexts/acmp-connector-bounded-context';
+import type { FindAssetByIdQueryPrimaryPort } from '@repo/business/bounded-contexts/acmp-connector-bounded-context';
 import { GetAssetByIdHttpRequest } from '@scaleits-solutions-gmbh/acmp-connector-lib-global-common-kit';
-import { mapFastifyRequest } from '@/utils';
+import { mapFastifyRequest } from '@scaleits-solutions-gmbh/org-lib-backend-common-kit/frameworks/fastify';
 
 export function createFindAssetByIdHandler(
   query: FindAssetByIdQueryPrimaryPort,

@@ -9,8 +9,12 @@ import { AcmpClientReadModel } from '@scaleits-solutions-gmbh/acmp-connector-lib
 import { findPaginatedClientsQueryMethod } from './query-methods/find-paginated-clients.query-method';
 import { findClientByIdQueryMethod } from './query-methods/find-client-by-id.query-method';
 import { findClientCountQueryMethod } from './query-methods/find-client-count.query-method';
+import { BaseSpi } from '@scaleits-solutions-gmbh/org-lib-backend-common-kit/common';
 
-export class MssqlClientQueryRepository implements ClientQueryRepositorySecondaryPort {
+export class MssqlClientQueryRepository extends BaseSpi implements ClientQueryRepositorySecondaryPort {
+  public constructor() {
+    super();
+  }
   /**
    * Find paginated list of clients
    */

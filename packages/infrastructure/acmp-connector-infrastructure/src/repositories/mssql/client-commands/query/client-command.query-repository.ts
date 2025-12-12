@@ -12,8 +12,11 @@ import { AcmpClientCommandReadModel } from '@scaleits-solutions-gmbh/acmp-connec
 import { findPaginatedClientCommandsQueryMethod } from './query-methods/find-paginated-client-commands.query-method';
 import { findClientCommandByIdQueryMethod } from './query-methods/find-client-command-by-id.query-method';
 import { findClientCommandCountQueryMethod } from './query-methods/find-client-command-count.query-method';
-
-export class MssqlClientCommandQueryRepository implements ClientCommandQueryRepositorySecondaryPort {
+import { BaseSpi } from '@scaleits-solutions-gmbh/org-lib-backend-common-kit/common';
+export class MssqlClientCommandQueryRepository extends BaseSpi implements ClientCommandQueryRepositorySecondaryPort {
+  public constructor() {
+    super();
+  }
   /**
    * Find paginated list of client commands
    */

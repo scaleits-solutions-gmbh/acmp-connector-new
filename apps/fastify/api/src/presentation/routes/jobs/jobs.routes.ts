@@ -4,11 +4,11 @@ import {
   getJobsHttpMetadata,
   getJobsHttpRequestSchema,
 } from '@scaleits-solutions-gmbh/acmp-connector-lib-global-common-kit';
-import {
+import type {
   FindPaginatedJobsQueryPrimaryPort,
 } from '@repo/business/bounded-contexts/acmp-connector-bounded-context';
+import { buildFastifySchema, toFastifyPath } from '@scaleits-solutions-gmbh/org-lib-backend-common-kit/frameworks/fastify';
 import { createFindPaginatedJobsHandler } from '@/presentation/handlers/jobs/find-paginated-jobs.handler';
-import { buildFastifySchema, toFastifyPath } from '@/utils';
 
 export async function jobsRoutes(
   fastify: FastifyInstance,

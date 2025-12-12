@@ -5,8 +5,11 @@ import { AcmpClientHardDriveListItemReadModel } from '@scaleits-solutions-gmbh/a
 
 import { findPaginatedClientHardDrivesQueryMethod } from './query-methods/find-paginated-client-hard-drives.query-method';
 import { findClientHardDriveCountQueryMethod } from './query-methods/find-client-hard-drive-count.query-method';
-
-export class MssqlClientHardDriveQueryRepository implements ClientHardDriveQueryRepositorySecondaryPort {
+import { BaseSpi } from '@scaleits-solutions-gmbh/org-lib-backend-common-kit/common';
+export class MssqlClientHardDriveQueryRepository extends BaseSpi implements ClientHardDriveQueryRepositorySecondaryPort {
+  public constructor() {
+    super();
+  }
   /**
    * Find paginated list of hard drives for a client
    */

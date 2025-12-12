@@ -2,12 +2,14 @@ import { FindPaginatedClientCommandsIn } from '@/application/ports/primary/clien
 import { FindPaginatedClientCommandsOut } from '@/application/ports/primary/client-commands/queries/find-paginated-client-commands/find-paginated-client-commands.out';
 import { FindPaginatedClientCommandsQueryPrimaryPort } from '@/application/ports/primary/client-commands/queries/find-paginated-client-commands/find-paginated-client-commands.query.port';
 import { ClientCommandQueryRepositorySecondaryPort } from '@/application/ports/secondary/repositories/client-commands/client-command.query-repository';
-import { PaginationOption } from '@scaleits-solutions-gmbh/org-lib-backend-common-kit';
+import { BaseApi, PaginationOption } from '@scaleits-solutions-gmbh/org-lib-backend-common-kit/common';
 
-export class FindPaginatedClientCommandsQuery implements FindPaginatedClientCommandsQueryPrimaryPort {
-  public constructor(private readonly clientCommandQueryRepository: ClientCommandQueryRepositorySecondaryPort) {}
+export class FindPaginatedClientCommandsQuery extends BaseApi<FindPaginatedClientCommandsIn, FindPaginatedClientCommandsOut> implements FindPaginatedClientCommandsQueryPrimaryPort {
+  public constructor(private readonly clientCommandQueryRepository: ClientCommandQueryRepositorySecondaryPort) {
+    super();
+  }
 
-  public async execute(input: FindPaginatedClientCommandsIn): Promise<FindPaginatedClientCommandsOut> {
+  protected async handle(input: FindPaginatedClientCommandsIn): Promise<FindPaginatedClientCommandsOut> {
     const paginationOption: PaginationOption = {
       page: input.paginationOptions.page,
       pageSize: input.paginationOptions.pageSize,

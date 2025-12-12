@@ -2,11 +2,13 @@ import { FindClientCommandCountIn } from '@/application/ports/primary/client-com
 import { FindClientCommandCountOut } from '@/application/ports/primary/client-commands/queries/find-client-command-count/find-client-command-count.out';
 import { FindClientCommandCountQueryPrimaryPort } from '@/application/ports/primary/client-commands/queries/find-client-command-count/find-client-command-count.query.port';
 import { ClientCommandQueryRepositorySecondaryPort } from '@/application/ports/secondary/repositories/client-commands/client-command.query-repository';
+import { BaseApi } from '@scaleits-solutions-gmbh/org-lib-backend-common-kit/common';
+export class FindClientCommandCountQuery extends BaseApi<FindClientCommandCountIn, FindClientCommandCountOut> implements FindClientCommandCountQueryPrimaryPort {
+  public constructor(private readonly clientCommandQueryRepository: ClientCommandQueryRepositorySecondaryPort) {
+    super();
+  }
 
-export class FindClientCommandCountQuery implements FindClientCommandCountQueryPrimaryPort {
-  public constructor(private readonly clientCommandQueryRepository: ClientCommandQueryRepositorySecondaryPort) {}
-
-  public async execute(input: FindClientCommandCountIn): Promise<FindClientCommandCountOut> {
+  protected async handle(input: FindClientCommandCountIn): Promise<FindClientCommandCountOut> {
     const filters = input.filters ? { searchTerm: input.filters?.searchTerm } : undefined;
 
     const count = await this.clientCommandQueryRepository.findClientCommandCount(filters);
