@@ -1,37 +1,41 @@
-import * as fs from 'fs';
-import * as path from 'path';
-import { fileURLToPath } from 'url';
+import * as fs from "fs";
+import * as path from "path";
+import { fileURLToPath } from "url";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
-const APP_PATH = path.join(__dirname, '../apps/fastify/api/src');
+const APP_PATH = path.join(__dirname, "../apps/fastify/api/src");
 
 function getRelativePath(from: string, to: string): string {
   const relative = path.relative(path.dirname(from), to);
-  return relative.replace(/\\/g, '/');
+  return relative.replace(/\\/g, "/");
 }
 
 function convertToAlias(filePath: string, importPath: string): string {
   // Skip if already using alias or external package
-  if (importPath.startsWith('@/') || importPath.startsWith('@') || !importPath.startsWith('.')) {
+  if (
+    importPath.startsWith("@/") ||
+    importPath.startsWith("@") ||
+    !importPath.startsWith(".")
+  ) {
     return importPath;
   }
 
   // Resolve the actual file path
   const dir = path.dirname(filePath);
   const resolvedPath = path.resolve(dir, importPath);
-  
+
   // Convert to alias path
   const relativeToSrc = path.relative(APP_PATH, resolvedPath);
-  const aliasPath = '@/'.concat(relativeToSrc.replace(/\\/g, '/'));
-  
+  const aliasPath = "@/".concat(relativeToSrc.replace(/\\/g, "/"));
+
   // Remove .ts extension
-  return aliasPath.replace(/\.ts$/, '');
+  return aliasPath.replace(/\.ts$/, "");
 }
 
 function fixFile(filePath: string): void {
-  let content = fs.readFileSync(filePath, 'utf8');
+  let content = fs.readFileSync(filePath, "utf8");
   let changed = false;
 
   // Match import statements
@@ -41,8 +45,8 @@ function fixFile(filePath: string): void {
   for (const match of matches) {
     const oldImport = match[1];
     const newImport = convertToAlias(filePath, oldImport);
-    
-    if (oldImport !== newImport && newImport.startsWith('@/')) {
+
+    if (oldImport !== newImport && newImport.startsWith("@/")) {
       content = content.replace(match[0], `from '${newImport}'`);
       changed = true;
     }
@@ -63,13 +67,12 @@ function walkDir(dir: string): void {
 
     if (stat.isDirectory()) {
       walkDir(filePath);
-    } else if (file.endsWith('.ts')) {
+    } else if (file.endsWith(".ts")) {
       fixFile(filePath);
     }
   }
 }
 
-console.log('🔧 Converting relative imports to @/ alias...\n');
+console.log("🔧 Converting relative imports to @/ alias...\n");
 walkDir(APP_PATH);
-console.log('\n✅ Done!');
-
+console.log("\n✅ Done!");

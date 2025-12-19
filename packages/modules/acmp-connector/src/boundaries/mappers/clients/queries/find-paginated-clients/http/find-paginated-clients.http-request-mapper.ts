@@ -1,0 +1,15 @@
+import { FindPaginatedClientsIn } from 'acmp-connector-bounded-context';
+import { GetClientsHttpRequest } from '@scaleits-solutions-gmbh/acmp-connector-lib-global-common-kit';
+
+export function findPaginatedClientsHttpRequestMapper(request: GetClientsHttpRequest): FindPaginatedClientsIn {
+  return FindPaginatedClientsIn.create({
+    paginationOptions: {
+      page: request.queryParams.page ?? 1,
+      pageSize: request.queryParams.pageSize ?? 10,
+    },
+    filters: {
+      searchTerm: request.queryParams.searchTerm,
+      tenantId: request.queryParams.tenantId,
+    },
+  });
+}

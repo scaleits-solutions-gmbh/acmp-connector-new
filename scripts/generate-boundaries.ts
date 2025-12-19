@@ -4,10 +4,10 @@
  * Run with: npx tsx scripts/generate-boundaries.ts
  */
 
-import * as fs from 'fs';
-import * as path from 'path';
+import * as fs from "fs";
+import * as path from "path";
 
-const BOUNDARIES_PATH = 'packages/business/boundaries/src';
+const BOUNDARIES_PATH = "packages/business/boundaries/src";
 
 // ============================================================================
 // HELPERS
@@ -15,9 +15,9 @@ const BOUNDARIES_PATH = 'packages/business/boundaries/src';
 
 function toPascalCase(str: string): string {
   return str
-    .split('-')
+    .split("-")
     .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
-    .join('');
+    .join("");
 }
 
 function toCamelCase(str: string): string {
@@ -45,7 +45,7 @@ interface MapperDef {
   resource: string;
   operation: string;
   httpEndpoint: string;
-  type: 'query' | 'command';
+  type: "query" | "command";
   bcInClass: string;
   bcOutClass: string;
   httpRequestType: string;
@@ -57,14 +57,14 @@ interface MapperDef {
 const mappers: MapperDef[] = [
   // CLIENTS
   {
-    resource: 'clients',
-    operation: 'find-paginated-clients',
-    httpEndpoint: 'get-clients',
-    type: 'query',
-    bcInClass: 'FindPaginatedClientsIn',
-    bcOutClass: 'FindPaginatedClientsOut',
-    httpRequestType: 'GetClientsHttpRequest',
-    httpResponseType: 'GetClientsHttpResponse',
+    resource: "clients",
+    operation: "find-paginated-clients",
+    httpEndpoint: "get-clients",
+    type: "query",
+    bcInClass: "FindPaginatedClientsIn",
+    bcOutClass: "FindPaginatedClientsOut",
+    httpRequestType: "GetClientsHttpRequest",
+    httpResponseType: "GetClientsHttpResponse",
     requestMapperBody: `return FindPaginatedClientsIn.create({
     paginationOptions: {
       page: request.queryParams.page,
@@ -87,14 +87,14 @@ const mappers: MapperDef[] = [
   };`,
   },
   {
-    resource: 'clients',
-    operation: 'find-client-by-id',
-    httpEndpoint: 'get-client-by-id',
-    type: 'query',
-    bcInClass: 'FindClientByIdIn',
-    bcOutClass: 'FindClientByIdOut',
-    httpRequestType: 'GetClientByIdHttpRequest',
-    httpResponseType: 'GetClientByIdHttpResponse',
+    resource: "clients",
+    operation: "find-client-by-id",
+    httpEndpoint: "get-client-by-id",
+    type: "query",
+    bcInClass: "FindClientByIdIn",
+    bcOutClass: "FindClientByIdOut",
+    httpRequestType: "GetClientByIdHttpRequest",
+    httpResponseType: "GetClientByIdHttpResponse",
     requestMapperBody: `return FindClientByIdIn.create({
     id: request.pathParams.id,
   });`,
@@ -106,14 +106,14 @@ const mappers: MapperDef[] = [
 
   // CLIENT HARD DRIVES
   {
-    resource: 'client-hard-drives',
-    operation: 'find-paginated-client-hard-drives',
-    httpEndpoint: 'get-client-hard-drives',
-    type: 'query',
-    bcInClass: 'FindPaginatedClientHardDrivesIn',
-    bcOutClass: 'FindPaginatedClientHardDrivesOut',
-    httpRequestType: 'GetClientHardDrivesHttpRequest',
-    httpResponseType: 'GetClientHardDrivesHttpResponse',
+    resource: "client-hard-drives",
+    operation: "find-paginated-client-hard-drives",
+    httpEndpoint: "get-client-hard-drives",
+    type: "query",
+    bcInClass: "FindPaginatedClientHardDrivesIn",
+    bcOutClass: "FindPaginatedClientHardDrivesOut",
+    httpRequestType: "GetClientHardDrivesHttpRequest",
+    httpResponseType: "GetClientHardDrivesHttpResponse",
     requestMapperBody: `return FindPaginatedClientHardDrivesIn.create({
     clientId: request.pathParams.clientId,
     paginationOptions: {
@@ -135,14 +135,14 @@ const mappers: MapperDef[] = [
 
   // CLIENT NETWORK CARDS
   {
-    resource: 'client-network-cards',
-    operation: 'find-paginated-client-network-cards',
-    httpEndpoint: 'get-client-network-cards',
-    type: 'query',
-    bcInClass: 'FindPaginatedClientNetworkCardsIn',
-    bcOutClass: 'FindPaginatedClientNetworkCardsOut',
-    httpRequestType: 'GetClientNetworkCardsHttpRequest',
-    httpResponseType: 'GetClientNetworkCardsHttpResponse',
+    resource: "client-network-cards",
+    operation: "find-paginated-client-network-cards",
+    httpEndpoint: "get-client-network-cards",
+    type: "query",
+    bcInClass: "FindPaginatedClientNetworkCardsIn",
+    bcOutClass: "FindPaginatedClientNetworkCardsOut",
+    httpRequestType: "GetClientNetworkCardsHttpRequest",
+    httpResponseType: "GetClientNetworkCardsHttpResponse",
     requestMapperBody: `return FindPaginatedClientNetworkCardsIn.create({
     clientId: request.pathParams.clientId,
     paginationOptions: {
@@ -164,14 +164,14 @@ const mappers: MapperDef[] = [
 
   // CLIENT INSTALLED SOFTWARE
   {
-    resource: 'client-installed-software',
-    operation: 'find-paginated-client-installed-software',
-    httpEndpoint: 'get-client-installed-software',
-    type: 'query',
-    bcInClass: 'FindPaginatedClientInstalledSoftwareIn',
-    bcOutClass: 'FindPaginatedClientInstalledSoftwareOut',
-    httpRequestType: 'GetClientInstalledSoftwareHttpRequest',
-    httpResponseType: 'GetClientInstalledSoftwareHttpResponse',
+    resource: "client-installed-software",
+    operation: "find-paginated-client-installed-software",
+    httpEndpoint: "get-client-installed-software",
+    type: "query",
+    bcInClass: "FindPaginatedClientInstalledSoftwareIn",
+    bcOutClass: "FindPaginatedClientInstalledSoftwareOut",
+    httpRequestType: "GetClientInstalledSoftwareHttpRequest",
+    httpResponseType: "GetClientInstalledSoftwareHttpResponse",
     requestMapperBody: `return FindPaginatedClientInstalledSoftwareIn.create({
     clientId: request.pathParams.clientId,
     paginationOptions: {
@@ -196,14 +196,14 @@ const mappers: MapperDef[] = [
 
   // JOBS
   {
-    resource: 'jobs',
-    operation: 'find-paginated-jobs',
-    httpEndpoint: 'get-jobs',
-    type: 'query',
-    bcInClass: 'FindPaginatedJobsIn',
-    bcOutClass: 'FindPaginatedJobsOut',
-    httpRequestType: 'GetJobsHttpRequest',
-    httpResponseType: 'GetJobsHttpResponse',
+    resource: "jobs",
+    operation: "find-paginated-jobs",
+    httpEndpoint: "get-jobs",
+    type: "query",
+    bcInClass: "FindPaginatedJobsIn",
+    bcOutClass: "FindPaginatedJobsOut",
+    httpRequestType: "GetJobsHttpRequest",
+    httpResponseType: "GetJobsHttpResponse",
     requestMapperBody: `return FindPaginatedJobsIn.create({
     paginationOptions: {
       page: request.queryParams.page,
@@ -227,14 +227,14 @@ const mappers: MapperDef[] = [
 
   // TICKETS
   {
-    resource: 'tickets',
-    operation: 'find-paginated-tickets',
-    httpEndpoint: 'get-tickets',
-    type: 'query',
-    bcInClass: 'FindPaginatedTicketsIn',
-    bcOutClass: 'FindPaginatedTicketsOut',
-    httpRequestType: 'GetTicketsHttpRequest',
-    httpResponseType: 'GetTicketsHttpResponse',
+    resource: "tickets",
+    operation: "find-paginated-tickets",
+    httpEndpoint: "get-tickets",
+    type: "query",
+    bcInClass: "FindPaginatedTicketsIn",
+    bcOutClass: "FindPaginatedTicketsOut",
+    httpRequestType: "GetTicketsHttpRequest",
+    httpResponseType: "GetTicketsHttpResponse",
     requestMapperBody: `return FindPaginatedTicketsIn.create({
     paginationOptions: {
       page: request.queryParams.page,
@@ -256,14 +256,14 @@ const mappers: MapperDef[] = [
   };`,
   },
   {
-    resource: 'tickets',
-    operation: 'find-ticket-by-id',
-    httpEndpoint: 'get-ticket-by-id',
-    type: 'query',
-    bcInClass: 'FindTicketByIdIn',
-    bcOutClass: 'FindTicketByIdOut',
-    httpRequestType: 'GetTicketByIdHttpRequest',
-    httpResponseType: 'GetTicketByIdHttpResponse',
+    resource: "tickets",
+    operation: "find-ticket-by-id",
+    httpEndpoint: "get-ticket-by-id",
+    type: "query",
+    bcInClass: "FindTicketByIdIn",
+    bcOutClass: "FindTicketByIdOut",
+    httpRequestType: "GetTicketByIdHttpRequest",
+    httpResponseType: "GetTicketByIdHttpResponse",
     requestMapperBody: `return FindTicketByIdIn.create({
     id: request.pathParams.id,
   });`,
@@ -275,14 +275,14 @@ const mappers: MapperDef[] = [
 
   // ASSETS
   {
-    resource: 'assets',
-    operation: 'find-paginated-assets',
-    httpEndpoint: 'get-assets',
-    type: 'query',
-    bcInClass: 'FindPaginatedAssetsIn',
-    bcOutClass: 'FindPaginatedAssetsOut',
-    httpRequestType: 'GetAssetsHttpRequest',
-    httpResponseType: 'GetAssetsHttpResponse',
+    resource: "assets",
+    operation: "find-paginated-assets",
+    httpEndpoint: "get-assets",
+    type: "query",
+    bcInClass: "FindPaginatedAssetsIn",
+    bcOutClass: "FindPaginatedAssetsOut",
+    httpRequestType: "GetAssetsHttpRequest",
+    httpResponseType: "GetAssetsHttpResponse",
     requestMapperBody: `return FindPaginatedAssetsIn.create({
     paginationOptions: {
       page: request.queryParams.page,
@@ -305,14 +305,14 @@ const mappers: MapperDef[] = [
   };`,
   },
   {
-    resource: 'assets',
-    operation: 'find-asset-by-id',
-    httpEndpoint: 'get-asset-by-id',
-    type: 'query',
-    bcInClass: 'FindAssetByIdIn',
-    bcOutClass: 'FindAssetByIdOut',
-    httpRequestType: 'GetAssetByIdHttpRequest',
-    httpResponseType: 'GetAssetByIdHttpResponse',
+    resource: "assets",
+    operation: "find-asset-by-id",
+    httpEndpoint: "get-asset-by-id",
+    type: "query",
+    bcInClass: "FindAssetByIdIn",
+    bcOutClass: "FindAssetByIdOut",
+    httpRequestType: "GetAssetByIdHttpRequest",
+    httpResponseType: "GetAssetByIdHttpResponse",
     requestMapperBody: `return FindAssetByIdIn.create({
     id: request.pathParams.id,
   });`,
@@ -322,14 +322,14 @@ const mappers: MapperDef[] = [
   };`,
   },
   {
-    resource: 'assets',
-    operation: 'find-asset-types',
-    httpEndpoint: 'get-asset-types',
-    type: 'query',
-    bcInClass: 'FindAssetTypesIn',
-    bcOutClass: 'FindAssetTypesOut',
-    httpRequestType: 'GetAssetTypesHttpRequest',
-    httpResponseType: 'GetAssetTypesHttpResponse',
+    resource: "assets",
+    operation: "find-asset-types",
+    httpEndpoint: "get-asset-types",
+    type: "query",
+    bcInClass: "FindAssetTypesIn",
+    bcOutClass: "FindAssetTypesOut",
+    httpRequestType: "GetAssetTypesHttpRequest",
+    httpResponseType: "GetAssetTypesHttpResponse",
     requestMapperBody: `return FindAssetTypesIn.create({});`,
     responseMapperBody: `return {
     statusCode: 200,
@@ -339,14 +339,14 @@ const mappers: MapperDef[] = [
 
   // CLIENT COMMANDS
   {
-    resource: 'client-commands',
-    operation: 'find-paginated-client-commands',
-    httpEndpoint: 'get-client-commands',
-    type: 'query',
-    bcInClass: 'FindPaginatedClientCommandsIn',
-    bcOutClass: 'FindPaginatedClientCommandsOut',
-    httpRequestType: 'GetClientCommandsHttpRequest',
-    httpResponseType: 'GetClientCommandsHttpResponse',
+    resource: "client-commands",
+    operation: "find-paginated-client-commands",
+    httpEndpoint: "get-client-commands",
+    type: "query",
+    bcInClass: "FindPaginatedClientCommandsIn",
+    bcOutClass: "FindPaginatedClientCommandsOut",
+    httpRequestType: "GetClientCommandsHttpRequest",
+    httpResponseType: "GetClientCommandsHttpResponse",
     requestMapperBody: `return FindPaginatedClientCommandsIn.create({
     paginationOptions: {
       page: request.queryParams.page,
@@ -368,14 +368,14 @@ const mappers: MapperDef[] = [
   };`,
   },
   {
-    resource: 'client-commands',
-    operation: 'find-client-command-by-id',
-    httpEndpoint: 'get-client-command-by-id',
-    type: 'query',
-    bcInClass: 'FindClientCommandByIdIn',
-    bcOutClass: 'FindClientCommandByIdOut',
-    httpRequestType: 'GetClientCommandByIdHttpRequest',
-    httpResponseType: 'GetClientCommandByIdHttpResponse',
+    resource: "client-commands",
+    operation: "find-client-command-by-id",
+    httpEndpoint: "get-client-command-by-id",
+    type: "query",
+    bcInClass: "FindClientCommandByIdIn",
+    bcOutClass: "FindClientCommandByIdOut",
+    httpRequestType: "GetClientCommandByIdHttpRequest",
+    httpResponseType: "GetClientCommandByIdHttpResponse",
     requestMapperBody: `return FindClientCommandByIdIn.create({
     id: request.pathParams.id,
   });`,
@@ -387,14 +387,14 @@ const mappers: MapperDef[] = [
 
   // ROLLOUT TEMPLATES
   {
-    resource: 'rollout-templates',
-    operation: 'find-paginated-rollout-templates',
-    httpEndpoint: 'get-rollout-templates',
-    type: 'query',
-    bcInClass: 'FindPaginatedRolloutTemplatesIn',
-    bcOutClass: 'FindPaginatedRolloutTemplatesOut',
-    httpRequestType: 'GetRolloutTemplatesHttpRequest',
-    httpResponseType: 'GetRolloutTemplatesHttpResponse',
+    resource: "rollout-templates",
+    operation: "find-paginated-rollout-templates",
+    httpEndpoint: "get-rollout-templates",
+    type: "query",
+    bcInClass: "FindPaginatedRolloutTemplatesIn",
+    bcOutClass: "FindPaginatedRolloutTemplatesOut",
+    httpRequestType: "GetRolloutTemplatesHttpRequest",
+    httpResponseType: "GetRolloutTemplatesHttpResponse",
     requestMapperBody: `return FindPaginatedRolloutTemplatesIn.create({
     paginationOptions: {
       page: request.queryParams.page,
@@ -416,14 +416,14 @@ const mappers: MapperDef[] = [
   };`,
   },
   {
-    resource: 'rollout-templates',
-    operation: 'find-rollout-template-by-id',
-    httpEndpoint: 'get-rollout-template-by-id',
-    type: 'query',
-    bcInClass: 'FindRolloutTemplateByIdIn',
-    bcOutClass: 'FindRolloutTemplateByIdOut',
-    httpRequestType: 'GetRolloutTemplateByIdHttpRequest',
-    httpResponseType: 'GetRolloutTemplateByIdHttpResponse',
+    resource: "rollout-templates",
+    operation: "find-rollout-template-by-id",
+    httpEndpoint: "get-rollout-template-by-id",
+    type: "query",
+    bcInClass: "FindRolloutTemplateByIdIn",
+    bcOutClass: "FindRolloutTemplateByIdOut",
+    httpRequestType: "GetRolloutTemplateByIdHttpRequest",
+    httpResponseType: "GetRolloutTemplateByIdHttpResponse",
     requestMapperBody: `return FindRolloutTemplateByIdIn.create({
     id: request.pathParams.id,
   });`,
@@ -439,7 +439,7 @@ const mappers: MapperDef[] = [
 // ============================================================================
 
 function generateRequestMapper(m: MapperDef): string {
-  return `import { ${m.bcInClass} } from '@repo/business/bounded-contexts/acmp-connector-bounded-context';
+  return `import { ${m.bcInClass} } from '@repo/modules/acmp-connector';
 import { ${m.httpRequestType} } from '@scaleits-solutions-gmbh/acmp-connector-lib-global-common-kit';
 
 export function ${toCamelCase(m.operation)}HttpRequestMapper(request: ${m.httpRequestType}): ${m.bcInClass} {
@@ -449,7 +449,7 @@ export function ${toCamelCase(m.operation)}HttpRequestMapper(request: ${m.httpRe
 }
 
 function generateResponseMapper(m: MapperDef): string {
-  return `import { ${m.bcOutClass} } from '@repo/business/bounded-contexts/acmp-connector-bounded-context';
+  return `import { ${m.bcOutClass} } from '@repo/modules/acmp-connector';
 import { ${m.httpResponseType} } from '@scaleits-solutions-gmbh/acmp-connector-lib-global-common-kit';
 
 export function ${toCamelCase(m.operation)}HttpResponseMapper(response: ${m.bcOutClass}): ${m.httpResponseType} {
@@ -474,17 +474,20 @@ function generateOperationIndex(): string {
 // ============================================================================
 
 function main(): void {
-  console.log('🚀 Generating Boundary Mappers for ACMP Connector\n');
+  console.log("🚀 Generating Boundary Mappers for ACMP Connector\n");
 
-  const mappersPath = path.join(BOUNDARIES_PATH, 'mappers');
+  const mappersPath = path.join(BOUNDARIES_PATH, "mappers");
   ensureDir(mappersPath);
 
   // Group mappers by resource
-  const byResource = mappers.reduce((acc, m) => {
-    if (!acc[m.resource]) acc[m.resource] = [];
-    acc[m.resource].push(m);
-    return acc;
-  }, {} as Record<string, MapperDef[]>);
+  const byResource = mappers.reduce(
+    (acc, m) => {
+      if (!acc[m.resource]) acc[m.resource] = [];
+      acc[m.resource].push(m);
+      return acc;
+    },
+    {} as Record<string, MapperDef[]>,
+  );
 
   const resources = Object.keys(byResource);
 
@@ -492,38 +495,54 @@ function main(): void {
     console.log(`\n📦 Processing resource: ${resource}`);
     const resourceMappers = byResource[resource];
 
-    const queriesPath = path.join(mappersPath, resource, 'queries');
+    const queriesPath = path.join(mappersPath, resource, "queries");
     ensureDir(queriesPath);
 
     for (const m of resourceMappers) {
       console.log(`  📝 Creating mapper: ${m.operation}`);
       const operationPath = path.join(queriesPath, m.operation);
-      const httpPath = path.join(operationPath, 'http');
+      const httpPath = path.join(operationPath, "http");
       ensureDir(httpPath);
 
       // Write mapper files
-      writeFile(path.join(httpPath, `${m.operation}.http-request-mapper.ts`), generateRequestMapper(m));
-      writeFile(path.join(httpPath, `${m.operation}.http-response-mapper.ts`), generateResponseMapper(m));
-      writeFile(path.join(httpPath, 'index.ts'), generateHttpIndex(m));
-      writeFile(path.join(operationPath, 'index.ts'), generateOperationIndex());
+      writeFile(
+        path.join(httpPath, `${m.operation}.http-request-mapper.ts`),
+        generateRequestMapper(m),
+      );
+      writeFile(
+        path.join(httpPath, `${m.operation}.http-response-mapper.ts`),
+        generateResponseMapper(m),
+      );
+      writeFile(path.join(httpPath, "index.ts"), generateHttpIndex(m));
+      writeFile(path.join(operationPath, "index.ts"), generateOperationIndex());
     }
 
     // Resource queries index
-    const queriesIndexContent = resourceMappers.map(m => `export * from './${m.operation}';`).join('\n') + '\n';
-    writeFile(path.join(queriesPath, 'index.ts'), queriesIndexContent);
+    const queriesIndexContent =
+      resourceMappers
+        .map((m) => `export * from './${m.operation}';`)
+        .join("\n") + "\n";
+    writeFile(path.join(queriesPath, "index.ts"), queriesIndexContent);
 
     // Resource index
-    writeFile(path.join(mappersPath, resource, 'index.ts'), `export * from './queries';\n`);
+    writeFile(
+      path.join(mappersPath, resource, "index.ts"),
+      `export * from './queries';\n`,
+    );
   }
 
   // Main mappers index
-  const mappersIndexContent = resources.map(r => `export * from './${r}';`).join('\n') + '\n';
-  writeFile(path.join(mappersPath, 'index.ts'), mappersIndexContent);
+  const mappersIndexContent =
+    resources.map((r) => `export * from './${r}';`).join("\n") + "\n";
+  writeFile(path.join(mappersPath, "index.ts"), mappersIndexContent);
 
   // Main src index
-  writeFile(path.join(BOUNDARIES_PATH, 'index.ts'), `export * from './mappers';\n`);
+  writeFile(
+    path.join(BOUNDARIES_PATH, "index.ts"),
+    `export * from './mappers';\n`,
+  );
 
-  console.log('\n✅ Boundary mappers generation complete!');
+  console.log("\n✅ Boundary mappers generation complete!");
   console.log(`\n📊 Summary:`);
   console.log(`   Resources: ${resources.length}`);
   console.log(`   Mappers: ${mappers.length}`);

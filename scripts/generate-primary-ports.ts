@@ -4,11 +4,11 @@
  * Run with: npx tsx scripts/generate-primary-ports.ts
  */
 
-import * as fs from 'fs';
-import * as path from 'path';
+import * as fs from "fs";
+import * as path from "path";
 
 const BC_PATH =
-  'packages/business/bounded-contexts/acmp-connector-bounded-context/src/application/ports/primary';
+  "packages/business/bounded-contexts/acmp-connector-bounded-context/src/application/ports/primary";
 
 // ============================================================================
 // PORT DEFINITIONS
@@ -45,10 +45,10 @@ const resources: ResourceDefinition[] = [
   // CLIENTS
   // =========================================================================
   {
-    name: 'clients',
+    name: "clients",
     queries: [
       {
-        name: 'find-paginated-clients',
+        name: "find-paginated-clients",
         inFields: `
     paginationOptions: z.object({
       page: z.number().min(1),
@@ -94,7 +94,7 @@ const resources: ResourceDefinition[] = [
 import { paginatedDataSchema } from '@scaleits-solutions-gmbh/org-lib-global-common-kit';`,
       },
       {
-        name: 'find-client-by-id',
+        name: "find-client-by-id",
         inFields: `
     id: z.string(),`,
         inGetters: `
@@ -109,7 +109,7 @@ import { paginatedDataSchema } from '@scaleits-solutions-gmbh/org-lib-global-com
         outImports: `import { acmpClientReadModelSchema } from '@scaleits-solutions-gmbh/acmp-connector-lib-global-common-kit';`,
       },
       {
-        name: 'find-client-count',
+        name: "find-client-count",
         inFields: `
     filters: z.object({
       searchTerm: z.string().optional(),
@@ -128,7 +128,7 @@ import { paginatedDataSchema } from '@scaleits-solutions-gmbh/org-lib-global-com
   }`,
       },
       {
-        name: 'find-paginated-client-hard-drives',
+        name: "find-paginated-client-hard-drives",
         inFields: `
     clientId: z.string(),
     paginationOptions: z.object({
@@ -171,7 +171,7 @@ import { paginatedDataSchema } from '@scaleits-solutions-gmbh/org-lib-global-com
 import { paginatedDataSchema } from '@scaleits-solutions-gmbh/org-lib-global-common-kit';`,
       },
       {
-        name: 'find-client-hard-drive-count',
+        name: "find-client-hard-drive-count",
         inFields: `
     clientId: z.string(),`,
         inGetters: `
@@ -187,7 +187,7 @@ import { paginatedDataSchema } from '@scaleits-solutions-gmbh/org-lib-global-com
   }`,
       },
       {
-        name: 'find-paginated-client-network-cards',
+        name: "find-paginated-client-network-cards",
         inFields: `
     clientId: z.string(),
     paginationOptions: z.object({
@@ -230,7 +230,7 @@ import { paginatedDataSchema } from '@scaleits-solutions-gmbh/org-lib-global-com
 import { paginatedDataSchema } from '@scaleits-solutions-gmbh/org-lib-global-common-kit';`,
       },
       {
-        name: 'find-client-network-card-count',
+        name: "find-client-network-card-count",
         inFields: `
     clientId: z.string(),`,
         inGetters: `
@@ -246,7 +246,7 @@ import { paginatedDataSchema } from '@scaleits-solutions-gmbh/org-lib-global-com
   }`,
       },
       {
-        name: 'find-paginated-client-installed-software',
+        name: "find-paginated-client-installed-software",
         inFields: `
     clientId: z.string(),
     paginationOptions: z.object({
@@ -296,7 +296,7 @@ import { paginatedDataSchema } from '@scaleits-solutions-gmbh/org-lib-global-com
 import { paginatedDataSchema } from '@scaleits-solutions-gmbh/org-lib-global-common-kit';`,
       },
       {
-        name: 'find-client-installed-software-count',
+        name: "find-client-installed-software-count",
         inFields: `
     clientId: z.string(),
     filters: z.object({
@@ -325,10 +325,10 @@ import { paginatedDataSchema } from '@scaleits-solutions-gmbh/org-lib-global-com
   // JOBS
   // =========================================================================
   {
-    name: 'jobs',
+    name: "jobs",
     queries: [
       {
-        name: 'find-paginated-jobs',
+        name: "find-paginated-jobs",
         inFields: `
     paginationOptions: z.object({
       page: z.number().min(1),
@@ -375,7 +375,7 @@ import { paginatedDataSchema } from '@scaleits-solutions-gmbh/org-lib-global-com
 import { paginatedDataSchema } from '@scaleits-solutions-gmbh/org-lib-global-common-kit';`,
       },
       {
-        name: 'find-job-by-id',
+        name: "find-job-by-id",
         inFields: `
     id: z.string(),`,
         inGetters: `
@@ -390,7 +390,7 @@ import { paginatedDataSchema } from '@scaleits-solutions-gmbh/org-lib-global-com
         outImports: `import { acmpJobReadModelSchema } from '@scaleits-solutions-gmbh/acmp-connector-lib-global-common-kit';`,
       },
       {
-        name: 'find-job-count',
+        name: "find-job-count",
         inFields: `
     filters: z.object({
       searchTerm: z.string().optional(),
@@ -416,10 +416,10 @@ import { paginatedDataSchema } from '@scaleits-solutions-gmbh/org-lib-global-com
   // TICKETS
   // =========================================================================
   {
-    name: 'tickets',
+    name: "tickets",
     queries: [
       {
-        name: 'find-paginated-tickets',
+        name: "find-paginated-tickets",
         inFields: `
     paginationOptions: z.object({
       page: z.number().min(1),
@@ -464,7 +464,7 @@ import { paginatedDataSchema } from '@scaleits-solutions-gmbh/org-lib-global-com
 import { paginatedDataSchema } from '@scaleits-solutions-gmbh/org-lib-global-common-kit';`,
       },
       {
-        name: 'find-ticket-by-id',
+        name: "find-ticket-by-id",
         inFields: `
     id: z.string(),`,
         inGetters: `
@@ -479,7 +479,7 @@ import { paginatedDataSchema } from '@scaleits-solutions-gmbh/org-lib-global-com
         outImports: `import { acmpTicketListItemReadModelSchema } from '@scaleits-solutions-gmbh/acmp-connector-lib-global-common-kit';`,
       },
       {
-        name: 'find-ticket-details-by-id',
+        name: "find-ticket-details-by-id",
         inFields: `
     id: z.string(),`,
         inGetters: `
@@ -494,7 +494,7 @@ import { paginatedDataSchema } from '@scaleits-solutions-gmbh/org-lib-global-com
         outImports: `import { acmpTicketDetailsReadModelSchema } from '@scaleits-solutions-gmbh/acmp-connector-lib-global-common-kit';`,
       },
       {
-        name: 'find-ticket-count',
+        name: "find-ticket-count",
         inFields: `
     filters: z.object({
       searchTerm: z.string().optional(),
@@ -518,10 +518,10 @@ import { paginatedDataSchema } from '@scaleits-solutions-gmbh/org-lib-global-com
   // ASSETS
   // =========================================================================
   {
-    name: 'assets',
+    name: "assets",
     queries: [
       {
-        name: 'find-paginated-assets',
+        name: "find-paginated-assets",
         inFields: `
     paginationOptions: z.object({
       page: z.number().min(1),
@@ -567,7 +567,7 @@ import { paginatedDataSchema } from '@scaleits-solutions-gmbh/org-lib-global-com
 import { paginatedDataSchema } from '@scaleits-solutions-gmbh/org-lib-global-common-kit';`,
       },
       {
-        name: 'find-asset-by-id',
+        name: "find-asset-by-id",
         inFields: `
     id: z.string(),`,
         inGetters: `
@@ -582,7 +582,7 @@ import { paginatedDataSchema } from '@scaleits-solutions-gmbh/org-lib-global-com
         outImports: `import { acmpAssetListItemReadModelSchema } from '@scaleits-solutions-gmbh/acmp-connector-lib-global-common-kit';`,
       },
       {
-        name: 'find-asset-count',
+        name: "find-asset-count",
         inFields: `
     filters: z.object({
       searchTerm: z.string().optional(),
@@ -601,7 +601,7 @@ import { paginatedDataSchema } from '@scaleits-solutions-gmbh/org-lib-global-com
   }`,
       },
       {
-        name: 'find-asset-types',
+        name: "find-asset-types",
         inFields: ``,
         inGetters: ``,
         outSchema: `z.array(acmpAssetTypeListItemReadModelSchema)`,
@@ -618,10 +618,10 @@ import { paginatedDataSchema } from '@scaleits-solutions-gmbh/org-lib-global-com
   // CLIENT COMMANDS
   // =========================================================================
   {
-    name: 'client-commands',
+    name: "client-commands",
     queries: [
       {
-        name: 'find-paginated-client-commands',
+        name: "find-paginated-client-commands",
         inFields: `
     paginationOptions: z.object({
       page: z.number().min(1),
@@ -666,7 +666,7 @@ import { paginatedDataSchema } from '@scaleits-solutions-gmbh/org-lib-global-com
 import { paginatedDataSchema } from '@scaleits-solutions-gmbh/org-lib-global-common-kit';`,
       },
       {
-        name: 'find-client-command-by-id',
+        name: "find-client-command-by-id",
         inFields: `
     id: z.string(),`,
         inGetters: `
@@ -681,7 +681,7 @@ import { paginatedDataSchema } from '@scaleits-solutions-gmbh/org-lib-global-com
         outImports: `import { acmpClientCommandReadModelSchema } from '@scaleits-solutions-gmbh/acmp-connector-lib-global-common-kit';`,
       },
       {
-        name: 'find-client-command-count',
+        name: "find-client-command-count",
         inFields: `
     filters: z.object({
       searchTerm: z.string().optional(),
@@ -701,7 +701,7 @@ import { paginatedDataSchema } from '@scaleits-solutions-gmbh/org-lib-global-com
     ],
     commands: [
       {
-        name: 'push-client-command',
+        name: "push-client-command",
         inFields: `
     clientCommandId: z.string(),
     clientIds: z.array(z.string()),`,
@@ -733,10 +733,10 @@ import { paginatedDataSchema } from '@scaleits-solutions-gmbh/org-lib-global-com
   // ROLLOUT TEMPLATES
   // =========================================================================
   {
-    name: 'rollout-templates',
+    name: "rollout-templates",
     queries: [
       {
-        name: 'find-paginated-rollout-templates',
+        name: "find-paginated-rollout-templates",
         inFields: `
     paginationOptions: z.object({
       page: z.number().min(1),
@@ -782,7 +782,7 @@ import { paginatedDataSchema } from '@scaleits-solutions-gmbh/org-lib-global-com
 import { paginatedDataSchema } from '@scaleits-solutions-gmbh/org-lib-global-common-kit';`,
       },
       {
-        name: 'find-rollout-template-by-id',
+        name: "find-rollout-template-by-id",
         inFields: `
     id: z.string(),`,
         inGetters: `
@@ -797,7 +797,7 @@ import { paginatedDataSchema } from '@scaleits-solutions-gmbh/org-lib-global-com
         outImports: `import { acmpRolloutTemplateListItemReadModelSchema } from '@scaleits-solutions-gmbh/acmp-connector-lib-global-common-kit';`,
       },
       {
-        name: 'find-rollout-template-count',
+        name: "find-rollout-template-count",
         inFields: `
     filters: z.object({
       searchTerm: z.string().optional(),
@@ -818,7 +818,7 @@ import { paginatedDataSchema } from '@scaleits-solutions-gmbh/org-lib-global-com
     ],
     commands: [
       {
-        name: 'push-rollout-template',
+        name: "push-rollout-template",
         inFields: `
     rolloutTemplateId: z.string(),
     clientIds: z.array(z.string()),`,
@@ -853,9 +853,9 @@ import { paginatedDataSchema } from '@scaleits-solutions-gmbh/org-lib-global-com
 
 function toPascalCase(str: string): string {
   return str
-    .split('-')
+    .split("-")
     .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
-    .join('');
+    .join("");
 }
 
 function ensureDir(dirPath: string): void {
@@ -875,9 +875,9 @@ function writeFile(filePath: string, content: string): void {
 // ============================================================================
 
 function generateQueryIn(query: QueryDefinition, resourceName: string): string {
-  const className = toPascalCase(query.name) + 'In';
+  const className = toPascalCase(query.name) + "In";
 
-  return `import { safeGenericObjectCreate } from '@scaleits-solutions-gmbh/org-lib-backend-common-kit';
+  return `import { safeGenericObjectCreate } from '@scaleits-solutions-gmbh/org-lib-backend-common-kit/common';
 import { z } from 'zod';
 
 export class ${className} {
@@ -901,12 +901,12 @@ ${query.inGetters}
 
 function generateQueryOut(
   query: QueryDefinition,
-  resourceName: string
+  resourceName: string,
 ): string {
-  const className = toPascalCase(query.name) + 'Out';
-  const imports = query.outImports || '';
+  const className = toPascalCase(query.name) + "Out";
+  const imports = query.outImports || "";
 
-  return `import { safeGenericObjectCreate } from '@scaleits-solutions-gmbh/org-lib-backend-common-kit';
+  return `import { safeGenericObjectCreate } from '@scaleits-solutions-gmbh/org-lib-backend-common-kit/common';
 import { z } from 'zod';
 ${imports}
 
@@ -930,12 +930,12 @@ ${query.outGetters}
 
 function generateQueryPort(
   query: QueryDefinition,
-  resourceName: string
+  resourceName: string,
 ): string {
   const baseName = toPascalCase(query.name);
-  const inClass = baseName + 'In';
-  const outClass = baseName + 'Out';
-  const portName = baseName + 'QueryPrimaryPort';
+  const inClass = baseName + "In";
+  const outClass = baseName + "Out";
+  const portName = baseName + "QueryPrimaryPort";
   const kebabName = query.name;
 
   return `import { ${inClass} } from './${kebabName}.in';
@@ -949,12 +949,12 @@ export interface ${portName} {
 
 function generateCommandIn(
   command: CommandDefinition,
-  resourceName: string
+  resourceName: string,
 ): string {
-  const className = toPascalCase(command.name) + 'CommandIn';
-  const imports = command.inImports || '';
+  const className = toPascalCase(command.name) + "CommandIn";
+  const imports = command.inImports || "";
 
-  return `import { safeGenericObjectCreate } from '@scaleits-solutions-gmbh/org-lib-backend-common-kit';
+  return `import { safeGenericObjectCreate } from '@scaleits-solutions-gmbh/org-lib-backend-common-kit/common';
 import { z } from 'zod';
 ${imports}
 
@@ -979,12 +979,12 @@ ${command.inGetters}
 
 function generateCommandOut(
   command: CommandDefinition,
-  resourceName: string
+  resourceName: string,
 ): string {
-  const className = toPascalCase(command.name) + 'CommandOut';
-  const imports = command.outImports || '';
+  const className = toPascalCase(command.name) + "CommandOut";
+  const imports = command.outImports || "";
 
-  return `import { safeGenericObjectCreate } from '@scaleits-solutions-gmbh/org-lib-backend-common-kit';
+  return `import { safeGenericObjectCreate } from '@scaleits-solutions-gmbh/org-lib-backend-common-kit/common';
 import { z } from 'zod';
 ${imports}
 
@@ -1008,12 +1008,12 @@ ${command.outGetters}
 
 function generateCommandPort(
   command: CommandDefinition,
-  resourceName: string
+  resourceName: string,
 ): string {
   const baseName = toPascalCase(command.name);
-  const inClass = baseName + 'CommandIn';
-  const outClass = baseName + 'CommandOut';
-  const portName = baseName + 'CommandPrimaryPort';
+  const inClass = baseName + "CommandIn";
+  const outClass = baseName + "CommandOut";
+  const portName = baseName + "CommandPrimaryPort";
   const kebabName = command.name;
 
   return `import { ${inClass} } from './${kebabName}.command.in';
@@ -1042,11 +1042,11 @@ export * from './${kebabName}.command.port';
 }
 
 function generateQueriesIndex(queries: QueryDefinition[]): string {
-  return queries.map((q) => `export * from './${q.name}';`).join('\n') + '\n';
+  return queries.map((q) => `export * from './${q.name}';`).join("\n") + "\n";
 }
 
 function generateCommandsIndex(commands: CommandDefinition[]): string {
-  return commands.map((c) => `export * from './${c.name}';`).join('\n') + '\n';
+  return commands.map((c) => `export * from './${c.name}';`).join("\n") + "\n";
 }
 
 function generateResourceIndex(resource: ResourceDefinition): string {
@@ -1057,13 +1057,11 @@ function generateResourceIndex(resource: ResourceDefinition): string {
   if (resource.commands && resource.commands.length > 0) {
     exports.push(`export * from './commands';`);
   }
-  return exports.join('\n') + '\n';
+  return exports.join("\n") + "\n";
 }
 
 function generatePrimaryIndex(resources: ResourceDefinition[]): string {
-  return (
-    resources.map((r) => `export * from './${r.name}';`).join('\n') + '\n'
-  );
+  return resources.map((r) => `export * from './${r.name}';`).join("\n") + "\n";
 }
 
 // ============================================================================
@@ -1071,7 +1069,7 @@ function generatePrimaryIndex(resources: ResourceDefinition[]): string {
 // ============================================================================
 
 function main(): void {
-  console.log('🚀 Generating Primary Ports for ACMP Connector BC\n');
+  console.log("🚀 Generating Primary Ports for ACMP Connector BC\n");
 
   // Create primary ports directory
   ensureDir(BC_PATH);
@@ -1084,7 +1082,7 @@ function main(): void {
 
     // Generate queries
     if (resource.queries.length > 0) {
-      const queriesPath = path.join(resourcePath, 'queries');
+      const queriesPath = path.join(resourcePath, "queries");
       ensureDir(queriesPath);
 
       for (const query of resource.queries) {
@@ -1094,38 +1092,35 @@ function main(): void {
         // Generate .in.ts
         writeFile(
           path.join(queryPath, `${query.name}.in.ts`),
-          generateQueryIn(query, resource.name)
+          generateQueryIn(query, resource.name),
         );
 
         // Generate .out.ts
         writeFile(
           path.join(queryPath, `${query.name}.out.ts`),
-          generateQueryOut(query, resource.name)
+          generateQueryOut(query, resource.name),
         );
 
         // Generate .query.port.ts
         writeFile(
           path.join(queryPath, `${query.name}.query.port.ts`),
-          generateQueryPort(query, resource.name)
+          generateQueryPort(query, resource.name),
         );
 
         // Generate index.ts
-        writeFile(
-          path.join(queryPath, 'index.ts'),
-          generateQueryIndex(query)
-        );
+        writeFile(path.join(queryPath, "index.ts"), generateQueryIndex(query));
       }
 
       // Generate queries/index.ts
       writeFile(
-        path.join(queriesPath, 'index.ts'),
-        generateQueriesIndex(resource.queries)
+        path.join(queriesPath, "index.ts"),
+        generateQueriesIndex(resource.queries),
       );
     }
 
     // Generate commands
     if (resource.commands && resource.commands.length > 0) {
-      const commandsPath = path.join(resourcePath, 'commands');
+      const commandsPath = path.join(resourcePath, "commands");
       ensureDir(commandsPath);
 
       for (const command of resource.commands) {
@@ -1135,55 +1130,54 @@ function main(): void {
         // Generate .command.in.ts
         writeFile(
           path.join(commandPath, `${command.name}.command.in.ts`),
-          generateCommandIn(command, resource.name)
+          generateCommandIn(command, resource.name),
         );
 
         // Generate .command.out.ts
         writeFile(
           path.join(commandPath, `${command.name}.command.out.ts`),
-          generateCommandOut(command, resource.name)
+          generateCommandOut(command, resource.name),
         );
 
         // Generate .command.port.ts
         writeFile(
           path.join(commandPath, `${command.name}.command.port.ts`),
-          generateCommandPort(command, resource.name)
+          generateCommandPort(command, resource.name),
         );
 
         // Generate index.ts
         writeFile(
-          path.join(commandPath, 'index.ts'),
-          generateCommandIndex(command)
+          path.join(commandPath, "index.ts"),
+          generateCommandIndex(command),
         );
       }
 
       // Generate commands/index.ts
       writeFile(
-        path.join(commandsPath, 'index.ts'),
-        generateCommandsIndex(resource.commands)
+        path.join(commandsPath, "index.ts"),
+        generateCommandsIndex(resource.commands),
       );
     }
 
     // Generate resource index.ts
     writeFile(
-      path.join(resourcePath, 'index.ts'),
-      generateResourceIndex(resource)
+      path.join(resourcePath, "index.ts"),
+      generateResourceIndex(resource),
     );
   }
 
   // Generate primary/index.ts
-  writeFile(path.join(BC_PATH, 'index.ts'), generatePrimaryIndex(resources));
+  writeFile(path.join(BC_PATH, "index.ts"), generatePrimaryIndex(resources));
 
-  console.log('\n✅ Generation complete!');
+  console.log("\n✅ Generation complete!");
   console.log(`\n📊 Summary:`);
   console.log(`   Resources: ${resources.length}`);
   console.log(
-    `   Queries: ${resources.reduce((acc, r) => acc + r.queries.length, 0)}`
+    `   Queries: ${resources.reduce((acc, r) => acc + r.queries.length, 0)}`,
   );
   console.log(
-    `   Commands: ${resources.reduce((acc, r) => acc + (r.commands?.length || 0), 0)}`
+    `   Commands: ${resources.reduce((acc, r) => acc + (r.commands?.length || 0), 0)}`,
   );
 }
 
 main();
-

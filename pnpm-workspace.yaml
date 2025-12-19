@@ -1,8 +1,7 @@
 packages:
-  - "apps/**/*"
+  - "apps/*"
   - "packages/*"
-  - "packages/business/bounded-contexts/*"
-  - "packages/business/orchestrations/*"
-  - "packages/business/*"
+  - "packages/modules/*"
+  - "packages/modules/**/*"
   - "packages/infrastructure/*"
   - "packages/shared/*"

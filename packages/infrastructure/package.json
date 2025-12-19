@@ -1,0 +1,46 @@
+{
+  "name": "@repo/infrastructure",
+  "version": "1.0.0",
+  "description": "Infrastructure layer for ACMP Connector - MSSQL repositories",
+  "type": "module",
+  "main": "dist/index.cjs",
+  "module": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js",
+      "require": "./dist/index.cjs",
+      "default": "./dist/index.js"
+    }
+  },
+  "scripts": {
+    "build": "tsup",
+    "lint": "eslint .",
+    "typecheck": "tsc --noEmit",
+    "lint:fix": "eslint . --fix",
+    "format": "prettier --write \"**/*.{ts,tsx,md}\"",
+    "check:format": "prettier --check \"**/*.{ts,tsx,md}\"",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "dependencies": {
+    "@repo/modules/acmp-connector": "workspace:*",
+    "@scaleits-solutions-gmbh/acmp-connector-lib-global-common-kit": "0.0.8",
+    "@scaleits-solutions-gmbh/org-lib-backend-common-kit": "0.0.74",
+    "@scaleits-solutions-gmbh/org-lib-global-common-kit": "^0.0.7",
+    "mssql": "^11.0.1",
+    "zod": "4.1.13"
+  },
+  "devDependencies": {
+    "@eslint/js": "^9.39.1",
+    "@types/mssql": "^9.1.8",
+    "@types/node": "^24.10.3",
+    "eslint": "^9.39.1",
+    "eslint-plugin-import-x": "^4.16.1",
+    "eslint-plugin-unused-imports": "^4.3.0",
+    "prettier": "^3.7.4",
+    "tsup": "^8.5.1",
+    "typescript": "5.9.3",
+    "typescript-eslint": "^8.49.0"
+  }
+}

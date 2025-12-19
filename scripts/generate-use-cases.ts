@@ -4,11 +4,11 @@
  * Run with: npx tsx scripts/generate-use-cases.ts
  */
 
-import * as fs from 'fs';
-import * as path from 'path';
+import * as fs from "fs";
+import * as path from "path";
 
 const BC_PATH =
-  'packages/business/bounded-contexts/acmp-connector-bounded-context/src/application/use-cases';
+  "packages/business/bounded-contexts/acmp-connector-bounded-context/src/application/use-cases";
 
 // ============================================================================
 // HELPER FUNCTIONS
@@ -16,9 +16,9 @@ const BC_PATH =
 
 function toPascalCase(str: string): string {
   return str
-    .split('-')
+    .split("-")
     .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
-    .join('');
+    .join("");
 }
 
 function toCamelCase(str: string): string {
@@ -71,12 +71,12 @@ interface CommandUseCaseDefinition {
 
 const clientsQueries: QueryUseCaseDefinition[] = [
   {
-    name: 'find-paginated-clients',
-    resource: 'clients',
-    repositoryType: 'ClientQueryRepositorySecondaryPort',
-    repositoryImportPath: 'clients/client.query-repository',
-    repositoryMethod: 'findPaginatedClients',
-    repositoryMethodParams: 'paginationOption, filters',
+    name: "find-paginated-clients",
+    resource: "clients",
+    repositoryType: "ClientQueryRepositorySecondaryPort",
+    repositoryImportPath: "clients/client.query-repository",
+    repositoryMethod: "findPaginatedClients",
+    repositoryMethodParams: "paginationOption, filters",
     hasPagination: true,
     hasFilters: true,
     filtersMapping: `{
@@ -85,23 +85,23 @@ const clientsQueries: QueryUseCaseDefinition[] = [
     }`,
   },
   {
-    name: 'find-client-by-id',
-    resource: 'clients',
-    repositoryType: 'ClientQueryRepositorySecondaryPort',
-    repositoryImportPath: 'clients/client.query-repository',
-    repositoryMethod: 'findClientById',
-    repositoryMethodParams: 'input.id',
+    name: "find-client-by-id",
+    resource: "clients",
+    repositoryType: "ClientQueryRepositorySecondaryPort",
+    repositoryImportPath: "clients/client.query-repository",
+    repositoryMethod: "findClientById",
+    repositoryMethodParams: "input.id",
     hasPagination: false,
     hasFilters: false,
-    resultProperty: 'client',
+    resultProperty: "client",
   },
   {
-    name: 'find-client-count',
-    resource: 'clients',
-    repositoryType: 'ClientQueryRepositorySecondaryPort',
-    repositoryImportPath: 'clients/client.query-repository',
-    repositoryMethod: 'findClientCount',
-    repositoryMethodParams: 'filters',
+    name: "find-client-count",
+    resource: "clients",
+    repositoryType: "ClientQueryRepositorySecondaryPort",
+    repositoryImportPath: "clients/client.query-repository",
+    repositoryMethod: "findClientCount",
+    repositoryMethodParams: "filters",
     hasPagination: false,
     hasFilters: true,
     filtersMapping: `{
@@ -110,68 +110,68 @@ const clientsQueries: QueryUseCaseDefinition[] = [
     }`,
   },
   {
-    name: 'find-paginated-client-hard-drives',
-    resource: 'clients',
-    repositoryType: 'ClientHardDriveQueryRepositorySecondaryPort',
-    repositoryImportPath: 'clients/client-hard-drive.query-repository',
-    repositoryMethod: 'findPaginatedClientHardDrives',
-    repositoryMethodParams: 'input.clientId, paginationOption',
+    name: "find-paginated-client-hard-drives",
+    resource: "clients",
+    repositoryType: "ClientHardDriveQueryRepositorySecondaryPort",
+    repositoryImportPath: "clients/client-hard-drive.query-repository",
+    repositoryMethod: "findPaginatedClientHardDrives",
+    repositoryMethodParams: "input.clientId, paginationOption",
     hasPagination: true,
     hasFilters: false,
     requiresClientId: true,
   },
   {
-    name: 'find-client-hard-drive-count',
-    resource: 'clients',
-    repositoryType: 'ClientHardDriveQueryRepositorySecondaryPort',
-    repositoryImportPath: 'clients/client-hard-drive.query-repository',
-    repositoryMethod: 'findClientHardDriveCount',
-    repositoryMethodParams: 'input.clientId',
+    name: "find-client-hard-drive-count",
+    resource: "clients",
+    repositoryType: "ClientHardDriveQueryRepositorySecondaryPort",
+    repositoryImportPath: "clients/client-hard-drive.query-repository",
+    repositoryMethod: "findClientHardDriveCount",
+    repositoryMethodParams: "input.clientId",
     hasPagination: false,
     hasFilters: false,
     requiresClientId: true,
   },
   {
-    name: 'find-paginated-client-network-cards',
-    resource: 'clients',
-    repositoryType: 'ClientNetworkCardQueryRepositorySecondaryPort',
-    repositoryImportPath: 'clients/client-network-card.query-repository',
-    repositoryMethod: 'findPaginatedClientNetworkCards',
-    repositoryMethodParams: 'input.clientId, paginationOption',
+    name: "find-paginated-client-network-cards",
+    resource: "clients",
+    repositoryType: "ClientNetworkCardQueryRepositorySecondaryPort",
+    repositoryImportPath: "clients/client-network-card.query-repository",
+    repositoryMethod: "findPaginatedClientNetworkCards",
+    repositoryMethodParams: "input.clientId, paginationOption",
     hasPagination: true,
     hasFilters: false,
     requiresClientId: true,
   },
   {
-    name: 'find-client-network-card-count',
-    resource: 'clients',
-    repositoryType: 'ClientNetworkCardQueryRepositorySecondaryPort',
-    repositoryImportPath: 'clients/client-network-card.query-repository',
-    repositoryMethod: 'findClientNetworkCardCount',
-    repositoryMethodParams: 'input.clientId',
+    name: "find-client-network-card-count",
+    resource: "clients",
+    repositoryType: "ClientNetworkCardQueryRepositorySecondaryPort",
+    repositoryImportPath: "clients/client-network-card.query-repository",
+    repositoryMethod: "findClientNetworkCardCount",
+    repositoryMethodParams: "input.clientId",
     hasPagination: false,
     hasFilters: false,
     requiresClientId: true,
   },
   {
-    name: 'find-paginated-client-installed-software',
-    resource: 'clients',
-    repositoryType: 'ClientInstalledSoftwareQueryRepositorySecondaryPort',
-    repositoryImportPath: 'clients/client-installed-software.query-repository',
-    repositoryMethod: 'findPaginatedClientInstalledSoftware',
-    repositoryMethodParams: 'input.clientId, paginationOption, filters',
+    name: "find-paginated-client-installed-software",
+    resource: "clients",
+    repositoryType: "ClientInstalledSoftwareQueryRepositorySecondaryPort",
+    repositoryImportPath: "clients/client-installed-software.query-repository",
+    repositoryMethod: "findPaginatedClientInstalledSoftware",
+    repositoryMethodParams: "input.clientId, paginationOption, filters",
     hasPagination: true,
     hasFilters: true,
     filtersMapping: `{ searchTerm: input.filters?.searchTerm }`,
     requiresClientId: true,
   },
   {
-    name: 'find-client-installed-software-count',
-    resource: 'clients',
-    repositoryType: 'ClientInstalledSoftwareQueryRepositorySecondaryPort',
-    repositoryImportPath: 'clients/client-installed-software.query-repository',
-    repositoryMethod: 'findClientInstalledSoftwareCount',
-    repositoryMethodParams: 'input.clientId, filters',
+    name: "find-client-installed-software-count",
+    resource: "clients",
+    repositoryType: "ClientInstalledSoftwareQueryRepositorySecondaryPort",
+    repositoryImportPath: "clients/client-installed-software.query-repository",
+    repositoryMethod: "findClientInstalledSoftwareCount",
+    repositoryMethodParams: "input.clientId, filters",
     hasPagination: false,
     hasFilters: true,
     filtersMapping: `{ searchTerm: input.filters?.searchTerm }`,
@@ -185,12 +185,12 @@ const clientsQueries: QueryUseCaseDefinition[] = [
 
 const jobsQueries: QueryUseCaseDefinition[] = [
   {
-    name: 'find-paginated-jobs',
-    resource: 'jobs',
-    repositoryType: 'JobQueryRepositorySecondaryPort',
-    repositoryImportPath: 'jobs/job.query-repository',
-    repositoryMethod: 'findPaginatedJobs',
-    repositoryMethodParams: 'paginationOption, filters',
+    name: "find-paginated-jobs",
+    resource: "jobs",
+    repositoryType: "JobQueryRepositorySecondaryPort",
+    repositoryImportPath: "jobs/job.query-repository",
+    repositoryMethod: "findPaginatedJobs",
+    repositoryMethodParams: "paginationOption, filters",
     hasPagination: true,
     hasFilters: true,
     filtersMapping: `{
@@ -200,23 +200,23 @@ const jobsQueries: QueryUseCaseDefinition[] = [
     }`,
   },
   {
-    name: 'find-job-by-id',
-    resource: 'jobs',
-    repositoryType: 'JobQueryRepositorySecondaryPort',
-    repositoryImportPath: 'jobs/job.query-repository',
-    repositoryMethod: 'findJobById',
-    repositoryMethodParams: 'input.id',
+    name: "find-job-by-id",
+    resource: "jobs",
+    repositoryType: "JobQueryRepositorySecondaryPort",
+    repositoryImportPath: "jobs/job.query-repository",
+    repositoryMethod: "findJobById",
+    repositoryMethodParams: "input.id",
     hasPagination: false,
     hasFilters: false,
-    resultProperty: 'job',
+    resultProperty: "job",
   },
   {
-    name: 'find-job-count',
-    resource: 'jobs',
-    repositoryType: 'JobQueryRepositorySecondaryPort',
-    repositoryImportPath: 'jobs/job.query-repository',
-    repositoryMethod: 'findJobCount',
-    repositoryMethodParams: 'filters',
+    name: "find-job-count",
+    resource: "jobs",
+    repositoryType: "JobQueryRepositorySecondaryPort",
+    repositoryImportPath: "jobs/job.query-repository",
+    repositoryMethod: "findJobCount",
+    repositoryMethodParams: "filters",
     hasPagination: false,
     hasFilters: true,
     filtersMapping: `{
@@ -233,45 +233,45 @@ const jobsQueries: QueryUseCaseDefinition[] = [
 
 const ticketsQueries: QueryUseCaseDefinition[] = [
   {
-    name: 'find-paginated-tickets',
-    resource: 'tickets',
-    repositoryType: 'TicketQueryRepositorySecondaryPort',
-    repositoryImportPath: 'tickets/ticket.query-repository',
-    repositoryMethod: 'findPaginatedTickets',
-    repositoryMethodParams: 'paginationOption, filters',
+    name: "find-paginated-tickets",
+    resource: "tickets",
+    repositoryType: "TicketQueryRepositorySecondaryPort",
+    repositoryImportPath: "tickets/ticket.query-repository",
+    repositoryMethod: "findPaginatedTickets",
+    repositoryMethodParams: "paginationOption, filters",
     hasPagination: true,
     hasFilters: true,
     filtersMapping: `{ searchTerm: input.filters?.searchTerm }`,
   },
   {
-    name: 'find-ticket-by-id',
-    resource: 'tickets',
-    repositoryType: 'TicketQueryRepositorySecondaryPort',
-    repositoryImportPath: 'tickets/ticket.query-repository',
-    repositoryMethod: 'findTicketById',
-    repositoryMethodParams: 'input.id',
+    name: "find-ticket-by-id",
+    resource: "tickets",
+    repositoryType: "TicketQueryRepositorySecondaryPort",
+    repositoryImportPath: "tickets/ticket.query-repository",
+    repositoryMethod: "findTicketById",
+    repositoryMethodParams: "input.id",
     hasPagination: false,
     hasFilters: false,
-    resultProperty: 'ticket',
+    resultProperty: "ticket",
   },
   {
-    name: 'find-ticket-details-by-id',
-    resource: 'tickets',
-    repositoryType: 'TicketQueryRepositorySecondaryPort',
-    repositoryImportPath: 'tickets/ticket.query-repository',
-    repositoryMethod: 'findTicketDetailsById',
-    repositoryMethodParams: 'input.id',
+    name: "find-ticket-details-by-id",
+    resource: "tickets",
+    repositoryType: "TicketQueryRepositorySecondaryPort",
+    repositoryImportPath: "tickets/ticket.query-repository",
+    repositoryMethod: "findTicketDetailsById",
+    repositoryMethodParams: "input.id",
     hasPagination: false,
     hasFilters: false,
-    resultProperty: 'ticketDetails',
+    resultProperty: "ticketDetails",
   },
   {
-    name: 'find-ticket-count',
-    resource: 'tickets',
-    repositoryType: 'TicketQueryRepositorySecondaryPort',
-    repositoryImportPath: 'tickets/ticket.query-repository',
-    repositoryMethod: 'findTicketCount',
-    repositoryMethodParams: 'filters',
+    name: "find-ticket-count",
+    resource: "tickets",
+    repositoryType: "TicketQueryRepositorySecondaryPort",
+    repositoryImportPath: "tickets/ticket.query-repository",
+    repositoryMethod: "findTicketCount",
+    repositoryMethodParams: "filters",
     hasPagination: false,
     hasFilters: true,
     filtersMapping: `{ searchTerm: input.filters?.searchTerm }`,
@@ -284,12 +284,12 @@ const ticketsQueries: QueryUseCaseDefinition[] = [
 
 const assetsQueries: QueryUseCaseDefinition[] = [
   {
-    name: 'find-paginated-assets',
-    resource: 'assets',
-    repositoryType: 'AssetQueryRepositorySecondaryPort',
-    repositoryImportPath: 'assets/asset.query-repository',
-    repositoryMethod: 'findPaginatedAssets',
-    repositoryMethodParams: 'paginationOption, filters',
+    name: "find-paginated-assets",
+    resource: "assets",
+    repositoryType: "AssetQueryRepositorySecondaryPort",
+    repositoryImportPath: "assets/asset.query-repository",
+    repositoryMethod: "findPaginatedAssets",
+    repositoryMethodParams: "paginationOption, filters",
     hasPagination: true,
     hasFilters: true,
     filtersMapping: `{
@@ -298,23 +298,23 @@ const assetsQueries: QueryUseCaseDefinition[] = [
     }`,
   },
   {
-    name: 'find-asset-by-id',
-    resource: 'assets',
-    repositoryType: 'AssetQueryRepositorySecondaryPort',
-    repositoryImportPath: 'assets/asset.query-repository',
-    repositoryMethod: 'findAssetById',
-    repositoryMethodParams: 'input.id',
+    name: "find-asset-by-id",
+    resource: "assets",
+    repositoryType: "AssetQueryRepositorySecondaryPort",
+    repositoryImportPath: "assets/asset.query-repository",
+    repositoryMethod: "findAssetById",
+    repositoryMethodParams: "input.id",
     hasPagination: false,
     hasFilters: false,
-    resultProperty: 'asset',
+    resultProperty: "asset",
   },
   {
-    name: 'find-asset-count',
-    resource: 'assets',
-    repositoryType: 'AssetQueryRepositorySecondaryPort',
-    repositoryImportPath: 'assets/asset.query-repository',
-    repositoryMethod: 'findAssetCount',
-    repositoryMethodParams: 'filters',
+    name: "find-asset-count",
+    resource: "assets",
+    repositoryType: "AssetQueryRepositorySecondaryPort",
+    repositoryImportPath: "assets/asset.query-repository",
+    repositoryMethod: "findAssetCount",
+    repositoryMethodParams: "filters",
     hasPagination: false,
     hasFilters: true,
     filtersMapping: `{
@@ -323,12 +323,12 @@ const assetsQueries: QueryUseCaseDefinition[] = [
     }`,
   },
   {
-    name: 'find-asset-types',
-    resource: 'assets',
-    repositoryType: 'AssetQueryRepositorySecondaryPort',
-    repositoryImportPath: 'assets/asset.query-repository',
-    repositoryMethod: 'findAssetTypes',
-    repositoryMethodParams: '',
+    name: "find-asset-types",
+    resource: "assets",
+    repositoryType: "AssetQueryRepositorySecondaryPort",
+    repositoryImportPath: "assets/asset.query-repository",
+    repositoryMethod: "findAssetTypes",
+    repositoryMethodParams: "",
     hasPagination: false,
     hasFilters: false,
   },
@@ -340,34 +340,34 @@ const assetsQueries: QueryUseCaseDefinition[] = [
 
 const clientCommandsQueries: QueryUseCaseDefinition[] = [
   {
-    name: 'find-paginated-client-commands',
-    resource: 'client-commands',
-    repositoryType: 'ClientCommandQueryRepositorySecondaryPort',
-    repositoryImportPath: 'client-commands/client-command.query-repository',
-    repositoryMethod: 'findPaginatedClientCommands',
-    repositoryMethodParams: 'paginationOption, filters',
+    name: "find-paginated-client-commands",
+    resource: "client-commands",
+    repositoryType: "ClientCommandQueryRepositorySecondaryPort",
+    repositoryImportPath: "client-commands/client-command.query-repository",
+    repositoryMethod: "findPaginatedClientCommands",
+    repositoryMethodParams: "paginationOption, filters",
     hasPagination: true,
     hasFilters: true,
     filtersMapping: `{ searchTerm: input.filters?.searchTerm }`,
   },
   {
-    name: 'find-client-command-by-id',
-    resource: 'client-commands',
-    repositoryType: 'ClientCommandQueryRepositorySecondaryPort',
-    repositoryImportPath: 'client-commands/client-command.query-repository',
-    repositoryMethod: 'findClientCommandById',
-    repositoryMethodParams: 'input.id',
+    name: "find-client-command-by-id",
+    resource: "client-commands",
+    repositoryType: "ClientCommandQueryRepositorySecondaryPort",
+    repositoryImportPath: "client-commands/client-command.query-repository",
+    repositoryMethod: "findClientCommandById",
+    repositoryMethodParams: "input.id",
     hasPagination: false,
     hasFilters: false,
-    resultProperty: 'clientCommand',
+    resultProperty: "clientCommand",
   },
   {
-    name: 'find-client-command-count',
-    resource: 'client-commands',
-    repositoryType: 'ClientCommandQueryRepositorySecondaryPort',
-    repositoryImportPath: 'client-commands/client-command.query-repository',
-    repositoryMethod: 'findClientCommandCount',
-    repositoryMethodParams: 'filters',
+    name: "find-client-command-count",
+    resource: "client-commands",
+    repositoryType: "ClientCommandQueryRepositorySecondaryPort",
+    repositoryImportPath: "client-commands/client-command.query-repository",
+    repositoryMethod: "findClientCommandCount",
+    repositoryMethodParams: "filters",
     hasPagination: false,
     hasFilters: true,
     filtersMapping: `{ searchTerm: input.filters?.searchTerm }`,
@@ -376,12 +376,12 @@ const clientCommandsQueries: QueryUseCaseDefinition[] = [
 
 const clientCommandsCommands: CommandUseCaseDefinition[] = [
   {
-    name: 'push-client-command',
-    resource: 'client-commands',
-    repositoryType: 'ClientCommandWriteRepositorySecondaryPort',
-    repositoryImportPath: 'client-commands/client-command.write-repository',
-    repositoryMethod: 'pushClientCommand',
-    repositoryMethodParams: 'input.clientCommandId, input.clientIds',
+    name: "push-client-command",
+    resource: "client-commands",
+    repositoryType: "ClientCommandWriteRepositorySecondaryPort",
+    repositoryImportPath: "client-commands/client-command.write-repository",
+    repositoryMethod: "pushClientCommand",
+    repositoryMethodParams: "input.clientCommandId, input.clientIds",
   },
 ];
 
@@ -391,12 +391,12 @@ const clientCommandsCommands: CommandUseCaseDefinition[] = [
 
 const rolloutTemplatesQueries: QueryUseCaseDefinition[] = [
   {
-    name: 'find-paginated-rollout-templates',
-    resource: 'rollout-templates',
-    repositoryType: 'RolloutTemplateQueryRepositorySecondaryPort',
-    repositoryImportPath: 'rollout-templates/rollout-template.query-repository',
-    repositoryMethod: 'findPaginatedRolloutTemplates',
-    repositoryMethodParams: 'paginationOption, filters',
+    name: "find-paginated-rollout-templates",
+    resource: "rollout-templates",
+    repositoryType: "RolloutTemplateQueryRepositorySecondaryPort",
+    repositoryImportPath: "rollout-templates/rollout-template.query-repository",
+    repositoryMethod: "findPaginatedRolloutTemplates",
+    repositoryMethodParams: "paginationOption, filters",
     hasPagination: true,
     hasFilters: true,
     filtersMapping: `{
@@ -405,23 +405,23 @@ const rolloutTemplatesQueries: QueryUseCaseDefinition[] = [
     }`,
   },
   {
-    name: 'find-rollout-template-by-id',
-    resource: 'rollout-templates',
-    repositoryType: 'RolloutTemplateQueryRepositorySecondaryPort',
-    repositoryImportPath: 'rollout-templates/rollout-template.query-repository',
-    repositoryMethod: 'findRolloutTemplateById',
-    repositoryMethodParams: 'input.id',
+    name: "find-rollout-template-by-id",
+    resource: "rollout-templates",
+    repositoryType: "RolloutTemplateQueryRepositorySecondaryPort",
+    repositoryImportPath: "rollout-templates/rollout-template.query-repository",
+    repositoryMethod: "findRolloutTemplateById",
+    repositoryMethodParams: "input.id",
     hasPagination: false,
     hasFilters: false,
-    resultProperty: 'rolloutTemplate',
+    resultProperty: "rolloutTemplate",
   },
   {
-    name: 'find-rollout-template-count',
-    resource: 'rollout-templates',
-    repositoryType: 'RolloutTemplateQueryRepositorySecondaryPort',
-    repositoryImportPath: 'rollout-templates/rollout-template.query-repository',
-    repositoryMethod: 'findRolloutTemplateCount',
-    repositoryMethodParams: 'filters',
+    name: "find-rollout-template-count",
+    resource: "rollout-templates",
+    repositoryType: "RolloutTemplateQueryRepositorySecondaryPort",
+    repositoryImportPath: "rollout-templates/rollout-template.query-repository",
+    repositoryMethod: "findRolloutTemplateCount",
+    repositoryMethodParams: "filters",
     hasPagination: false,
     hasFilters: true,
     filtersMapping: `{
@@ -433,12 +433,12 @@ const rolloutTemplatesQueries: QueryUseCaseDefinition[] = [
 
 const rolloutTemplatesCommands: CommandUseCaseDefinition[] = [
   {
-    name: 'push-rollout-template',
-    resource: 'rollout-templates',
-    repositoryType: 'RolloutTemplateWriteRepositorySecondaryPort',
-    repositoryImportPath: 'rollout-templates/rollout-template.write-repository',
-    repositoryMethod: 'pushRolloutTemplate',
-    repositoryMethodParams: 'input.rolloutTemplateId, input.clientIds',
+    name: "push-rollout-template",
+    resource: "rollout-templates",
+    repositoryType: "RolloutTemplateWriteRepositorySecondaryPort",
+    repositoryImportPath: "rollout-templates/rollout-template.write-repository",
+    repositoryMethod: "pushRolloutTemplate",
+    repositoryMethodParams: "input.rolloutTemplateId, input.clientIds",
   },
 ];
 
@@ -447,11 +447,13 @@ const rolloutTemplatesCommands: CommandUseCaseDefinition[] = [
 // ============================================================================
 
 function generateQueryUseCase(query: QueryUseCaseDefinition): string {
-  const className = toPascalCase(query.name) + 'Query';
-  const inClass = toPascalCase(query.name) + 'In';
-  const outClass = toPascalCase(query.name) + 'Out';
-  const portInterface = toPascalCase(query.name) + 'QueryPrimaryPort';
-  const repoVarName = toCamelCase(query.repositoryType.replace('SecondaryPort', ''));
+  const className = toPascalCase(query.name) + "Query";
+  const inClass = toPascalCase(query.name) + "In";
+  const outClass = toPascalCase(query.name) + "Out";
+  const portInterface = toPascalCase(query.name) + "QueryPrimaryPort";
+  const repoVarName = toCamelCase(
+    query.repositoryType.replace("SecondaryPort", ""),
+  );
 
   // Build imports
   const primaryImportPath = `@/application/ports/primary/${query.resource}/queries/${query.name}`;
@@ -467,7 +469,7 @@ import { ${query.repositoryType} } from '${secondaryImportPath}';`;
   }
 
   // Build execute body
-  let executeBody = '';
+  let executeBody = "";
 
   if (query.hasPagination) {
     executeBody += `    const paginationOption: PaginationOption = {
@@ -490,12 +492,12 @@ import { ${query.repositoryType} } from '${secondaryImportPath}';`;
     }
 
     return ${outClass}.create(${query.resultProperty});`;
-  } else if (query.name.includes('count')) {
+  } else if (query.name.includes("count")) {
     // Count query
     executeBody += `    const count = await this.${repoVarName}.${query.repositoryMethod}(${query.repositoryMethodParams});
 
     return ${outClass}.create({ count });`;
-  } else if (query.name === 'find-asset-types') {
+  } else if (query.name === "find-asset-types") {
     // Special case for asset types (returns array)
     executeBody += `    const assetTypes = await this.${repoVarName}.${query.repositoryMethod}();
 
@@ -520,11 +522,13 @@ ${executeBody}
 }
 
 function generateCommandUseCase(command: CommandUseCaseDefinition): string {
-  const className = toPascalCase(command.name) + 'Command';
-  const inClass = toPascalCase(command.name) + 'CommandIn';
-  const outClass = toPascalCase(command.name) + 'CommandOut';
-  const portInterface = toPascalCase(command.name) + 'CommandPrimaryPort';
-  const repoVarName = toCamelCase(command.repositoryType.replace('SecondaryPort', ''));
+  const className = toPascalCase(command.name) + "Command";
+  const inClass = toPascalCase(command.name) + "CommandIn";
+  const outClass = toPascalCase(command.name) + "CommandOut";
+  const portInterface = toPascalCase(command.name) + "CommandPrimaryPort";
+  const repoVarName = toCamelCase(
+    command.repositoryType.replace("SecondaryPort", ""),
+  );
 
   const primaryImportPath = `@/application/ports/primary/${command.resource}/commands/${command.name}`;
   const secondaryImportPath = `@/application/ports/secondary/repositories/${command.repositoryImportPath}`;
@@ -547,11 +551,16 @@ export class ${className} implements ${portInterface} {
 }
 
 function generateQueriesIndex(queries: QueryUseCaseDefinition[]): string {
-  return queries.map((q) => `export * from './${q.name}.query';`).join('\n') + '\n';
+  return (
+    queries.map((q) => `export * from './${q.name}.query';`).join("\n") + "\n"
+  );
 }
 
 function generateCommandsIndex(commands: CommandUseCaseDefinition[]): string {
-  return commands.map((c) => `export * from './${c.name}.command';`).join('\n') + '\n';
+  return (
+    commands.map((c) => `export * from './${c.name}.command';`).join("\n") +
+    "\n"
+  );
 }
 
 // ============================================================================
@@ -565,12 +574,20 @@ interface ResourceGroup {
 }
 
 const resourceGroups: ResourceGroup[] = [
-  { name: 'clients', queries: clientsQueries, commands: [] },
-  { name: 'jobs', queries: jobsQueries, commands: [] },
-  { name: 'tickets', queries: ticketsQueries, commands: [] },
-  { name: 'assets', queries: assetsQueries, commands: [] },
-  { name: 'client-commands', queries: clientCommandsQueries, commands: clientCommandsCommands },
-  { name: 'rollout-templates', queries: rolloutTemplatesQueries, commands: rolloutTemplatesCommands },
+  { name: "clients", queries: clientsQueries, commands: [] },
+  { name: "jobs", queries: jobsQueries, commands: [] },
+  { name: "tickets", queries: ticketsQueries, commands: [] },
+  { name: "assets", queries: assetsQueries, commands: [] },
+  {
+    name: "client-commands",
+    queries: clientCommandsQueries,
+    commands: clientCommandsCommands,
+  },
+  {
+    name: "rollout-templates",
+    queries: rolloutTemplatesQueries,
+    commands: rolloutTemplatesCommands,
+  },
 ];
 
 // ============================================================================
@@ -578,7 +595,7 @@ const resourceGroups: ResourceGroup[] = [
 // ============================================================================
 
 function main(): void {
-  console.log('🚀 Generating Use Cases for ACMP Connector BC\n');
+  console.log("🚀 Generating Use Cases for ACMP Connector BC\n");
 
   ensureDir(BC_PATH);
 
@@ -593,34 +610,40 @@ function main(): void {
 
     // Generate queries
     if (group.queries.length > 0) {
-      const queriesPath = path.join(resourcePath, 'queries');
+      const queriesPath = path.join(resourcePath, "queries");
       ensureDir(queriesPath);
 
       for (const query of group.queries) {
         writeFile(
           path.join(queriesPath, `${query.name}.query.ts`),
-          generateQueryUseCase(query)
+          generateQueryUseCase(query),
         );
         totalQueries++;
       }
 
-      writeFile(path.join(queriesPath, 'index.ts'), generateQueriesIndex(group.queries));
+      writeFile(
+        path.join(queriesPath, "index.ts"),
+        generateQueriesIndex(group.queries),
+      );
     }
 
     // Generate commands
     if (group.commands.length > 0) {
-      const commandsPath = path.join(resourcePath, 'commands');
+      const commandsPath = path.join(resourcePath, "commands");
       ensureDir(commandsPath);
 
       for (const command of group.commands) {
         writeFile(
           path.join(commandsPath, `${command.name}.command.ts`),
-          generateCommandUseCase(command)
+          generateCommandUseCase(command),
         );
         totalCommands++;
       }
 
-      writeFile(path.join(commandsPath, 'index.ts'), generateCommandsIndex(group.commands));
+      writeFile(
+        path.join(commandsPath, "index.ts"),
+        generateCommandsIndex(group.commands),
+      );
     }
 
     // Generate resource index
@@ -631,18 +654,21 @@ function main(): void {
     if (group.commands.length > 0) {
       resourceExports.push(`export * from './commands';`);
     }
-    writeFile(path.join(resourcePath, 'index.ts'), resourceExports.join('\n') + '\n');
+    writeFile(
+      path.join(resourcePath, "index.ts"),
+      resourceExports.join("\n") + "\n",
+    );
   }
 
   // Generate use-cases/index.ts
-  const useCasesIndex = resourceGroups.map((g) => `export * from './${g.name}';`).join('\n') + '\n';
-  writeFile(path.join(BC_PATH, 'index.ts'), useCasesIndex);
+  const useCasesIndex =
+    resourceGroups.map((g) => `export * from './${g.name}';`).join("\n") + "\n";
+  writeFile(path.join(BC_PATH, "index.ts"), useCasesIndex);
 
-  console.log('\n✅ Generation complete!');
+  console.log("\n✅ Generation complete!");
   console.log(`\n📊 Summary:`);
   console.log(`   Query Use Cases: ${totalQueries}`);
   console.log(`   Command Use Cases: ${totalCommands}`);
 }
 
 main();
-

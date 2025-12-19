@@ -4,10 +4,10 @@
  * Run with: npx tsx scripts/generate-infrastructure.ts
  */
 
-import * as fs from 'fs';
-import * as path from 'path';
+import * as fs from "fs";
+import * as path from "path";
 
-const INFRA_PATH = 'packages/infrastructure/acmp-connector-infrastructure/src';
+const INFRA_PATH = "packages/infrastructure/acmp-connector-infrastructure/src";
 
 // ============================================================================
 // HELPER FUNCTIONS
@@ -15,9 +15,9 @@ const INFRA_PATH = 'packages/infrastructure/acmp-connector-infrastructure/src';
 
 function toPascalCase(str: string): string {
   return str
-    .split('-')
+    .split("-")
     .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
-    .join('');
+    .join("");
 }
 
 function toCamelCase(str: string): string {
@@ -200,15 +200,16 @@ interface QueryMethodDef {
 
 const clientQueryMethods: QueryMethodDef[] = [
   {
-    name: 'find-paginated-clients',
-    functionName: 'findPaginatedClientsQueryMethod',
-    params: 'pagination: PaginationOption, filters?: FindPaginatedClientsFilters',
-    returnType: 'Promise<PaginatedData<AcmpClientReadModel>>',
+    name: "find-paginated-clients",
+    functionName: "findPaginatedClientsQueryMethod",
+    params:
+      "pagination: PaginationOption, filters?: FindPaginatedClientsFilters",
+    returnType: "Promise<PaginatedData<AcmpClientReadModel>>",
     imports: `import { PaginationOption } from '@scaleits-solutions-gmbh/org-lib-backend-common-kit';
 import { PaginatedData, paginateExternalData } from '@scaleits-solutions-gmbh/org-lib-global-common-kit';
 import { AcmpClientReadModel } from '@scaleits-solutions-gmbh/acmp-connector-lib-global-common-kit';
 import { MssqlUtils } from '@/infra/mssql/client';
-import { FindPaginatedClientsFilters } from '@repo/business/bounded-contexts/acmp-connector-bounded-context';
+import { FindPaginatedClientsFilters } from '@repo/modules/acmp-connector';
 import { findClientCountQueryMethod } from './find-client-count.query-method';`,
     sql: `\`
       SELECT
@@ -259,10 +260,10 @@ import { findClientCountQueryMethod } from './find-client-count.query-method';`,
   return paginateExternalData(data, total, pagination.page, pagination.pageSize);`,
   },
   {
-    name: 'find-client-by-id',
-    functionName: 'findClientByIdQueryMethod',
-    params: 'id: string',
-    returnType: 'Promise<AcmpClientReadModel | null>',
+    name: "find-client-by-id",
+    functionName: "findClientByIdQueryMethod",
+    params: "id: string",
+    returnType: "Promise<AcmpClientReadModel | null>",
     imports: `import { AcmpClientReadModel } from '@scaleits-solutions-gmbh/acmp-connector-lib-global-common-kit';
 import { MssqlUtils } from '@/infra/mssql/client';`,
     sql: `\`
@@ -303,12 +304,12 @@ import { MssqlUtils } from '@/infra/mssql/client';`,
   };`,
   },
   {
-    name: 'find-client-count',
-    functionName: 'findClientCountQueryMethod',
-    params: 'filters?: FindPaginatedClientsFilters',
-    returnType: 'Promise<number>',
+    name: "find-client-count",
+    functionName: "findClientCountQueryMethod",
+    params: "filters?: FindPaginatedClientsFilters",
+    returnType: "Promise<number>",
     imports: `import { MssqlUtils } from '@/infra/mssql/client';
-import { FindPaginatedClientsFilters } from '@repo/business/bounded-contexts/acmp-connector-bounded-context';`,
+import { FindPaginatedClientsFilters } from '@repo/modules/acmp-connector';`,
     sql: `\`
       SELECT COUNT(*) as count FROM CLT_CLIENTS_TABLE
       WHERE COMPUTERNAME LIKE @searchPattern
@@ -325,10 +326,10 @@ import { FindPaginatedClientsFilters } from '@repo/business/bounded-contexts/acm
 // Hard Drives
 const clientHardDriveQueryMethods: QueryMethodDef[] = [
   {
-    name: 'find-paginated-client-hard-drives',
-    functionName: 'findPaginatedClientHardDrivesQueryMethod',
-    params: 'clientId: string, pagination: PaginationOption',
-    returnType: 'Promise<PaginatedData<AcmpClientHardDriveListItemReadModel>>',
+    name: "find-paginated-client-hard-drives",
+    functionName: "findPaginatedClientHardDrivesQueryMethod",
+    params: "clientId: string, pagination: PaginationOption",
+    returnType: "Promise<PaginatedData<AcmpClientHardDriveListItemReadModel>>",
     imports: `import { PaginationOption } from '@scaleits-solutions-gmbh/org-lib-backend-common-kit';
 import { PaginatedData, paginateExternalData } from '@scaleits-solutions-gmbh/org-lib-global-common-kit';
 import { AcmpClientHardDriveListItemReadModel } from '@scaleits-solutions-gmbh/acmp-connector-lib-global-common-kit';
@@ -346,10 +347,10 @@ import { findClientHardDriveCountQueryMethod } from './find-client-hard-drive-co
   return paginateExternalData(data, total, pagination.page, pagination.pageSize);`,
   },
   {
-    name: 'find-client-hard-drive-count',
-    functionName: 'findClientHardDriveCountQueryMethod',
-    params: 'clientId: string',
-    returnType: 'Promise<number>',
+    name: "find-client-hard-drive-count",
+    functionName: "findClientHardDriveCountQueryMethod",
+    params: "clientId: string",
+    returnType: "Promise<number>",
     imports: `import { MssqlUtils } from '@/infra/mssql/client';`,
     sql: `\`SELECT COUNT(*) as count FROM CLT_HDW_HARDDRIVES WHERE CLIENTID = @clientId\``,
     body: `return (await MssqlUtils.scalar<number>(query, { clientId })) || 0;`,
@@ -359,10 +360,11 @@ import { findClientHardDriveCountQueryMethod } from './find-client-hard-drive-co
 // Network Cards
 const clientNetworkCardQueryMethods: QueryMethodDef[] = [
   {
-    name: 'find-paginated-client-network-cards',
-    functionName: 'findPaginatedClientNetworkCardsQueryMethod',
-    params: 'clientId: string, pagination: PaginationOption',
-    returnType: 'Promise<PaginatedData<AcmpClientNetworkCardListItemReadModel>>',
+    name: "find-paginated-client-network-cards",
+    functionName: "findPaginatedClientNetworkCardsQueryMethod",
+    params: "clientId: string, pagination: PaginationOption",
+    returnType:
+      "Promise<PaginatedData<AcmpClientNetworkCardListItemReadModel>>",
     imports: `import { PaginationOption } from '@scaleits-solutions-gmbh/org-lib-backend-common-kit';
 import { PaginatedData, paginateExternalData } from '@scaleits-solutions-gmbh/org-lib-global-common-kit';
 import { AcmpClientNetworkCardListItemReadModel } from '@scaleits-solutions-gmbh/acmp-connector-lib-global-common-kit';
@@ -381,10 +383,10 @@ import { findClientNetworkCardCountQueryMethod } from './find-client-network-car
   return paginateExternalData(data, total, pagination.page, pagination.pageSize);`,
   },
   {
-    name: 'find-client-network-card-count',
-    functionName: 'findClientNetworkCardCountQueryMethod',
-    params: 'clientId: string',
-    returnType: 'Promise<number>',
+    name: "find-client-network-card-count",
+    functionName: "findClientNetworkCardCountQueryMethod",
+    params: "clientId: string",
+    returnType: "Promise<number>",
     imports: `import { MssqlUtils } from '@/infra/mssql/client';`,
     sql: `\`SELECT COUNT(*) as count FROM CLT_HDW_NETCARDS WHERE CLIENTID = @clientId\``,
     body: `return (await MssqlUtils.scalar<number>(query, { clientId })) || 0;`,
@@ -394,15 +396,17 @@ import { findClientNetworkCardCountQueryMethod } from './find-client-network-car
 // Installed Software
 const clientInstalledSoftwareQueryMethods: QueryMethodDef[] = [
   {
-    name: 'find-paginated-client-installed-software',
-    functionName: 'findPaginatedClientInstalledSoftwareQueryMethod',
-    params: 'clientId: string, pagination: PaginationOption, filters?: FindPaginatedClientInstalledSoftwareFilters',
-    returnType: 'Promise<PaginatedData<AcmpClientInstalledSoftwareListItemReadModel>>',
+    name: "find-paginated-client-installed-software",
+    functionName: "findPaginatedClientInstalledSoftwareQueryMethod",
+    params:
+      "clientId: string, pagination: PaginationOption, filters?: FindPaginatedClientInstalledSoftwareFilters",
+    returnType:
+      "Promise<PaginatedData<AcmpClientInstalledSoftwareListItemReadModel>>",
     imports: `import { PaginationOption } from '@scaleits-solutions-gmbh/org-lib-backend-common-kit';
 import { PaginatedData, paginateExternalData } from '@scaleits-solutions-gmbh/org-lib-global-common-kit';
 import { AcmpClientInstalledSoftwareListItemReadModel } from '@scaleits-solutions-gmbh/acmp-connector-lib-global-common-kit';
 import { MssqlUtils } from '@/infra/mssql/client';
-import { FindPaginatedClientInstalledSoftwareFilters } from '@repo/business/bounded-contexts/acmp-connector-bounded-context';
+import { FindPaginatedClientInstalledSoftwareFilters } from '@repo/modules/acmp-connector';
 import { findClientInstalledSoftwareCountQueryMethod } from './find-client-installed-software-count.query-method';`,
     sql: `\`
       SELECT s.SWSETUPID AS id, s.NAME AS name, s.VERSION AS version, s.PUBLISHER AS publisher,
@@ -420,12 +424,13 @@ import { findClientInstalledSoftwareCountQueryMethod } from './find-client-insta
   return paginateExternalData(data, total, pagination.page, pagination.pageSize);`,
   },
   {
-    name: 'find-client-installed-software-count',
-    functionName: 'findClientInstalledSoftwareCountQueryMethod',
-    params: 'clientId: string, filters?: FindPaginatedClientInstalledSoftwareFilters',
-    returnType: 'Promise<number>',
+    name: "find-client-installed-software-count",
+    functionName: "findClientInstalledSoftwareCountQueryMethod",
+    params:
+      "clientId: string, filters?: FindPaginatedClientInstalledSoftwareFilters",
+    returnType: "Promise<number>",
     imports: `import { MssqlUtils } from '@/infra/mssql/client';
-import { FindPaginatedClientInstalledSoftwareFilters } from '@repo/business/bounded-contexts/acmp-connector-bounded-context';`,
+import { FindPaginatedClientInstalledSoftwareFilters } from '@repo/modules/acmp-connector';`,
     sql: `\`
       SELECT COUNT(*) as count FROM SYS_SW_SETUP s JOIN CLT_SW_SETUP cs ON s.SWSETUPID = cs.SWSETUPID
       WHERE cs.CLIENTID = @clientId AND (@searchPattern IS NULL OR s.NAME LIKE @searchPattern)
@@ -441,15 +446,15 @@ import { FindPaginatedClientInstalledSoftwareFilters } from '@repo/business/boun
 
 const jobQueryMethods: QueryMethodDef[] = [
   {
-    name: 'find-paginated-jobs',
-    functionName: 'findPaginatedJobsQueryMethod',
-    params: 'pagination: PaginationOption, filters?: FindPaginatedJobsFilters',
-    returnType: 'Promise<PaginatedData<AcmpJobReadModel>>',
+    name: "find-paginated-jobs",
+    functionName: "findPaginatedJobsQueryMethod",
+    params: "pagination: PaginationOption, filters?: FindPaginatedJobsFilters",
+    returnType: "Promise<PaginatedData<AcmpJobReadModel>>",
     imports: `import { PaginationOption } from '@scaleits-solutions-gmbh/org-lib-backend-common-kit';
 import { PaginatedData, paginateExternalData } from '@scaleits-solutions-gmbh/org-lib-global-common-kit';
 import { AcmpJobReadModel } from '@scaleits-solutions-gmbh/acmp-connector-lib-global-common-kit';
 import { MssqlUtils } from '@/infra/mssql/client';
-import { FindPaginatedJobsFilters } from '@repo/business/bounded-contexts/acmp-connector-bounded-context';
+import { FindPaginatedJobsFilters } from '@repo/modules/acmp-connector';
 import { findJobCountQueryMethod } from './find-job-count.query-method';`,
     sql: `\`
       SELECT jl.JobId AS id, jl.JobName AS name,
@@ -467,10 +472,10 @@ import { findJobCountQueryMethod } from './find-job-count.query-method';`,
   return paginateExternalData(rows, total, pagination.page, pagination.pageSize);`,
   },
   {
-    name: 'find-job-by-id',
-    functionName: 'findJobByIdQueryMethod',
-    params: 'id: string',
-    returnType: 'Promise<AcmpJobReadModel | null>',
+    name: "find-job-by-id",
+    functionName: "findJobByIdQueryMethod",
+    params: "id: string",
+    returnType: "Promise<AcmpJobReadModel | null>",
     imports: `import { AcmpJobReadModel } from '@scaleits-solutions-gmbh/acmp-connector-lib-global-common-kit';
 import { MssqlUtils } from '@/infra/mssql/client';`,
     sql: `\`
@@ -484,12 +489,12 @@ import { MssqlUtils } from '@/infra/mssql/client';`,
   return rows[0] || null;`,
   },
   {
-    name: 'find-job-count',
-    functionName: 'findJobCountQueryMethod',
-    params: 'filters?: FindPaginatedJobsFilters',
-    returnType: 'Promise<number>',
+    name: "find-job-count",
+    functionName: "findJobCountQueryMethod",
+    params: "filters?: FindPaginatedJobsFilters",
+    returnType: "Promise<number>",
     imports: `import { MssqlUtils } from '@/infra/mssql/client';
-import { FindPaginatedJobsFilters } from '@repo/business/bounded-contexts/acmp-connector-bounded-context';`,
+import { FindPaginatedJobsFilters } from '@repo/modules/acmp-connector';`,
     sql: `\`
       SELECT COUNT(*) as count FROM SYS_Jobs_Logs
       WHERE JobKind IN (4, 25) AND (@searchPattern IS NULL OR JobName LIKE @searchPattern)
@@ -505,15 +510,16 @@ import { FindPaginatedJobsFilters } from '@repo/business/bounded-contexts/acmp-c
 
 const ticketQueryMethods: QueryMethodDef[] = [
   {
-    name: 'find-paginated-tickets',
-    functionName: 'findPaginatedTicketsQueryMethod',
-    params: 'pagination: PaginationOption, filters?: FindPaginatedTicketsFilters',
-    returnType: 'Promise<PaginatedData<AcmpTicketListItemReadModel>>',
+    name: "find-paginated-tickets",
+    functionName: "findPaginatedTicketsQueryMethod",
+    params:
+      "pagination: PaginationOption, filters?: FindPaginatedTicketsFilters",
+    returnType: "Promise<PaginatedData<AcmpTicketListItemReadModel>>",
     imports: `import { PaginationOption } from '@scaleits-solutions-gmbh/org-lib-backend-common-kit';
 import { PaginatedData, paginateExternalData } from '@scaleits-solutions-gmbh/org-lib-global-common-kit';
 import { AcmpTicketListItemReadModel } from '@scaleits-solutions-gmbh/acmp-connector-lib-global-common-kit';
 import { MssqlUtils } from '@/infra/mssql/client';
-import { FindPaginatedTicketsFilters } from '@repo/business/bounded-contexts/acmp-connector-bounded-context';
+import { FindPaginatedTicketsFilters } from '@repo/modules/acmp-connector';
 import { findTicketCountQueryMethod } from './find-ticket-count.query-method';`,
     sql: `\`
       SELECT sht.TicketID AS ticketId, sht.IntTicketID AS intTicketId, sht.Caption AS caption,
@@ -539,10 +545,10 @@ import { findTicketCountQueryMethod } from './find-ticket-count.query-method';`,
   return paginateExternalData(data, total, pagination.page, pagination.pageSize);`,
   },
   {
-    name: 'find-ticket-by-id',
-    functionName: 'findTicketByIdQueryMethod',
-    params: 'id: string',
-    returnType: 'Promise<AcmpTicketListItemReadModel | null>',
+    name: "find-ticket-by-id",
+    functionName: "findTicketByIdQueryMethod",
+    params: "id: string",
+    returnType: "Promise<AcmpTicketListItemReadModel | null>",
     imports: `import { AcmpTicketListItemReadModel } from '@scaleits-solutions-gmbh/acmp-connector-lib-global-common-kit';
 import { MssqlUtils } from '@/infra/mssql/client';`,
     sql: `\`
@@ -566,10 +572,10 @@ import { MssqlUtils } from '@/infra/mssql/client';`,
   return { ...r, categoryEn: r.categoryEn ?? undefined, categoryDe: r.categoryDe ?? undefined, stateEn: r.stateEn ?? undefined, stateDe: r.stateDe ?? undefined, ticketContact: r.ticketContact ?? undefined, assignee: r.assignee ?? undefined, impactEn: r.impactEn ?? undefined, impactDe: r.impactDe ?? undefined };`,
   },
   {
-    name: 'find-ticket-details-by-id',
-    functionName: 'findTicketDetailsByIdQueryMethod',
-    params: 'id: string',
-    returnType: 'Promise<AcmpTicketDetailsReadModel | null>',
+    name: "find-ticket-details-by-id",
+    functionName: "findTicketDetailsByIdQueryMethod",
+    params: "id: string",
+    returnType: "Promise<AcmpTicketDetailsReadModel | null>",
     imports: `import { AcmpTicketDetailsReadModel } from '@scaleits-solutions-gmbh/acmp-connector-lib-global-common-kit';
 import { MssqlUtils } from '@/infra/mssql/client';`,
     sql: `\`
@@ -594,12 +600,12 @@ import { MssqlUtils } from '@/infra/mssql/client';`,
   return { ...r, description: r.description ?? undefined, htmlDescription: r.htmlDescription ?? undefined, categoryEn: r.categoryEn ?? undefined, categoryDe: r.categoryDe ?? undefined, stateEn: r.stateEn ?? undefined, stateDe: r.stateDe ?? undefined, keywords: r.keywords ?? undefined, ticketContact: r.ticketContact ?? undefined, assignee: r.assignee ?? undefined, impactEn: r.impactEn ?? undefined, impactDe: r.impactDe ?? undefined };`,
   },
   {
-    name: 'find-ticket-count',
-    functionName: 'findTicketCountQueryMethod',
-    params: 'filters?: FindPaginatedTicketsFilters',
-    returnType: 'Promise<number>',
+    name: "find-ticket-count",
+    functionName: "findTicketCountQueryMethod",
+    params: "filters?: FindPaginatedTicketsFilters",
+    returnType: "Promise<number>",
     imports: `import { MssqlUtils } from '@/infra/mssql/client';
-import { FindPaginatedTicketsFilters } from '@repo/business/bounded-contexts/acmp-connector-bounded-context';`,
+import { FindPaginatedTicketsFilters } from '@repo/modules/acmp-connector';`,
     sql: `\`SELECT COUNT(*) as count FROM dbo.SYS_HD_Tickets WHERE (@searchPattern IS NULL OR Caption LIKE @searchPattern)\``,
     body: `const params = { searchPattern: filters?.searchTerm ? \`%\${filters.searchTerm}%\` : null };
   return (await MssqlUtils.scalar<number>(query, params)) || 0;`,
@@ -612,15 +618,16 @@ import { FindPaginatedTicketsFilters } from '@repo/business/bounded-contexts/acm
 
 const assetQueryMethods: QueryMethodDef[] = [
   {
-    name: 'find-paginated-assets',
-    functionName: 'findPaginatedAssetsQueryMethod',
-    params: 'pagination: PaginationOption, filters?: FindPaginatedAssetsFilters',
-    returnType: 'Promise<PaginatedData<AcmpAssetListItemReadModel>>',
+    name: "find-paginated-assets",
+    functionName: "findPaginatedAssetsQueryMethod",
+    params:
+      "pagination: PaginationOption, filters?: FindPaginatedAssetsFilters",
+    returnType: "Promise<PaginatedData<AcmpAssetListItemReadModel>>",
     imports: `import { PaginationOption } from '@scaleits-solutions-gmbh/org-lib-backend-common-kit';
 import { PaginatedData, paginateExternalData } from '@scaleits-solutions-gmbh/org-lib-global-common-kit';
 import { AcmpAssetListItemReadModel } from '@scaleits-solutions-gmbh/acmp-connector-lib-global-common-kit';
 import { MssqlUtils } from '@/infra/mssql/client';
-import { FindPaginatedAssetsFilters } from '@repo/business/bounded-contexts/acmp-connector-bounded-context';
+import { FindPaginatedAssetsFilters } from '@repo/modules/acmp-connector';
 import { findAssetCountQueryMethod } from './find-asset-count.query-method';`,
     sql: `\`
       ;WITH TypeTree AS (
@@ -654,10 +661,10 @@ import { findAssetCountQueryMethod } from './find-asset-count.query-method';`,
   return paginateExternalData(data, total, pagination.page, pagination.pageSize);`,
   },
   {
-    name: 'find-asset-by-id',
-    functionName: 'findAssetByIdQueryMethod',
-    params: 'id: string',
-    returnType: 'Promise<AcmpAssetListItemReadModel | null>',
+    name: "find-asset-by-id",
+    functionName: "findAssetByIdQueryMethod",
+    params: "id: string",
+    returnType: "Promise<AcmpAssetListItemReadModel | null>",
     imports: `import { AcmpAssetListItemReadModel } from '@scaleits-solutions-gmbh/acmp-connector-lib-global-common-kit';
 import { MssqlUtils } from '@/infra/mssql/client';`,
     sql: `\`
@@ -685,12 +692,12 @@ import { MssqlUtils } from '@/infra/mssql/client';`,
   return { ...r, assetType: r.assetType ?? undefined, location: r.location ?? undefined, costCenter: r.costCenter ?? undefined, department: r.department ?? undefined, vendor: r.vendor ?? undefined, manufacturer: r.manufacturer ?? undefined, servicePartner: r.servicePartner ?? undefined, stateEn: r.stateEn ?? undefined, stateDe: r.stateDe ?? undefined, inventoryNumber: r.inventoryNumber ?? undefined, serialNumber: r.serialNumber ?? undefined, model: r.model ?? undefined };`,
   },
   {
-    name: 'find-asset-count',
-    functionName: 'findAssetCountQueryMethod',
-    params: 'filters?: FindPaginatedAssetsFilters',
-    returnType: 'Promise<number>',
+    name: "find-asset-count",
+    functionName: "findAssetCountQueryMethod",
+    params: "filters?: FindPaginatedAssetsFilters",
+    returnType: "Promise<number>",
     imports: `import { MssqlUtils } from '@/infra/mssql/client';
-import { FindPaginatedAssetsFilters } from '@repo/business/bounded-contexts/acmp-connector-bounded-context';`,
+import { FindPaginatedAssetsFilters } from '@repo/modules/acmp-connector';`,
     sql: `\`
       ;WITH TypeTree AS (
         SELECT t.Id FROM [SYS_Assets_Types] t WHERE t.Id = @typeId
@@ -702,10 +709,10 @@ import { FindPaginatedAssetsFilters } from '@repo/business/bounded-contexts/acmp
   return (await MssqlUtils.scalar<number>(query, params)) || 0;`,
   },
   {
-    name: 'find-asset-types',
-    functionName: 'findAssetTypesQueryMethod',
-    params: '',
-    returnType: 'Promise<AcmpAssetTypeListItemReadModel[]>',
+    name: "find-asset-types",
+    functionName: "findAssetTypesQueryMethod",
+    params: "",
+    returnType: "Promise<AcmpAssetTypeListItemReadModel[]>",
     imports: `import { AcmpAssetTypeListItemReadModel } from '@scaleits-solutions-gmbh/acmp-connector-lib-global-common-kit';
 import { MssqlUtils } from '@/infra/mssql/client';`,
     sql: `\`
@@ -728,15 +735,16 @@ import { MssqlUtils } from '@/infra/mssql/client';`,
 
 const clientCommandQueryMethods: QueryMethodDef[] = [
   {
-    name: 'find-paginated-client-commands',
-    functionName: 'findPaginatedClientCommandsQueryMethod',
-    params: 'pagination: PaginationOption, filters?: FindPaginatedClientCommandsFilters',
-    returnType: 'Promise<PaginatedData<AcmpClientCommandReadModel>>',
+    name: "find-paginated-client-commands",
+    functionName: "findPaginatedClientCommandsQueryMethod",
+    params:
+      "pagination: PaginationOption, filters?: FindPaginatedClientCommandsFilters",
+    returnType: "Promise<PaginatedData<AcmpClientCommandReadModel>>",
     imports: `import { PaginationOption } from '@scaleits-solutions-gmbh/org-lib-backend-common-kit';
 import { PaginatedData, paginateExternalData } from '@scaleits-solutions-gmbh/org-lib-global-common-kit';
 import { AcmpClientCommandReadModel } from '@scaleits-solutions-gmbh/acmp-connector-lib-global-common-kit';
 import { MssqlUtils } from '@/infra/mssql/client';
-import { FindPaginatedClientCommandsFilters } from '@repo/business/bounded-contexts/acmp-connector-bounded-context';
+import { FindPaginatedClientCommandsFilters } from '@repo/modules/acmp-connector';
 import { findClientCommandCountQueryMethod } from './find-client-command-count.query-method';`,
     sql: `\`
       WITH RankedScripts AS (
@@ -754,10 +762,10 @@ import { findClientCommandCountQueryMethod } from './find-client-command-count.q
   return paginateExternalData(rows, total, pagination.page, pagination.pageSize);`,
   },
   {
-    name: 'find-client-command-by-id',
-    functionName: 'findClientCommandByIdQueryMethod',
-    params: 'id: string',
-    returnType: 'Promise<AcmpClientCommandReadModel | null>',
+    name: "find-client-command-by-id",
+    functionName: "findClientCommandByIdQueryMethod",
+    params: "id: string",
+    returnType: "Promise<AcmpClientCommandReadModel | null>",
     imports: `import { AcmpClientCommandReadModel } from '@scaleits-solutions-gmbh/acmp-connector-lib-global-common-kit';
 import { MssqlUtils } from '@/infra/mssql/client';`,
     sql: `\`
@@ -768,12 +776,12 @@ import { MssqlUtils } from '@/infra/mssql/client';`,
   return rows[0] || null;`,
   },
   {
-    name: 'find-client-command-count',
-    functionName: 'findClientCommandCountQueryMethod',
-    params: 'filters?: FindPaginatedClientCommandsFilters',
-    returnType: 'Promise<number>',
+    name: "find-client-command-count",
+    functionName: "findClientCommandCountQueryMethod",
+    params: "filters?: FindPaginatedClientCommandsFilters",
+    returnType: "Promise<number>",
     imports: `import { MssqlUtils } from '@/infra/mssql/client';
-import { FindPaginatedClientCommandsFilters } from '@repo/business/bounded-contexts/acmp-connector-bounded-context';`,
+import { FindPaginatedClientCommandsFilters } from '@repo/modules/acmp-connector';`,
     sql: `\`
       SELECT COUNT(DISTINCT ScriptID) as count FROM SYS_SCRIPTS
       WHERE (@searchPattern IS NULL OR Description LIKE @searchPattern)
@@ -789,15 +797,16 @@ import { FindPaginatedClientCommandsFilters } from '@repo/business/bounded-conte
 
 const rolloutTemplateQueryMethods: QueryMethodDef[] = [
   {
-    name: 'find-paginated-rollout-templates',
-    functionName: 'findPaginatedRolloutTemplatesQueryMethod',
-    params: 'pagination: PaginationOption, filters?: FindPaginatedRolloutTemplatesFilters',
-    returnType: 'Promise<PaginatedData<AcmpRolloutTemplateListItemReadModel>>',
+    name: "find-paginated-rollout-templates",
+    functionName: "findPaginatedRolloutTemplatesQueryMethod",
+    params:
+      "pagination: PaginationOption, filters?: FindPaginatedRolloutTemplatesFilters",
+    returnType: "Promise<PaginatedData<AcmpRolloutTemplateListItemReadModel>>",
     imports: `import { PaginationOption } from '@scaleits-solutions-gmbh/org-lib-backend-common-kit';
 import { PaginatedData, paginateExternalData } from '@scaleits-solutions-gmbh/org-lib-global-common-kit';
 import { AcmpRolloutTemplateListItemReadModel } from '@scaleits-solutions-gmbh/acmp-connector-lib-global-common-kit';
 import { MssqlUtils } from '@/infra/mssql/client';
-import { FindPaginatedRolloutTemplatesFilters } from '@repo/business/bounded-contexts/acmp-connector-bounded-context';
+import { FindPaginatedRolloutTemplatesFilters } from '@repo/modules/acmp-connector';
 import { findRolloutTemplateCountQueryMethod } from './find-rollout-template-count.query-method';`,
     sql: `\`
       SELECT TemplateId AS id, Name AS name, OSEdition AS os
@@ -812,10 +821,10 @@ import { findRolloutTemplateCountQueryMethod } from './find-rollout-template-cou
   return paginateExternalData(rows, total, pagination.page, pagination.pageSize);`,
   },
   {
-    name: 'find-rollout-template-by-id',
-    functionName: 'findRolloutTemplateByIdQueryMethod',
-    params: 'id: string',
-    returnType: 'Promise<AcmpRolloutTemplateListItemReadModel | null>',
+    name: "find-rollout-template-by-id",
+    functionName: "findRolloutTemplateByIdQueryMethod",
+    params: "id: string",
+    returnType: "Promise<AcmpRolloutTemplateListItemReadModel | null>",
     imports: `import { AcmpRolloutTemplateListItemReadModel } from '@scaleits-solutions-gmbh/acmp-connector-lib-global-common-kit';
 import { MssqlUtils } from '@/infra/mssql/client';`,
     sql: `\`SELECT TOP 1 TemplateId AS id, Name AS name, OSEdition AS os FROM SYS_OSD_RolloutTemplates WHERE TemplateId = @id\``,
@@ -823,12 +832,12 @@ import { MssqlUtils } from '@/infra/mssql/client';`,
   return rows[0] || null;`,
   },
   {
-    name: 'find-rollout-template-count',
-    functionName: 'findRolloutTemplateCountQueryMethod',
-    params: 'filters?: FindPaginatedRolloutTemplatesFilters',
-    returnType: 'Promise<number>',
+    name: "find-rollout-template-count",
+    functionName: "findRolloutTemplateCountQueryMethod",
+    params: "filters?: FindPaginatedRolloutTemplatesFilters",
+    returnType: "Promise<number>",
     imports: `import { MssqlUtils } from '@/infra/mssql/client';
-import { FindPaginatedRolloutTemplatesFilters } from '@repo/business/bounded-contexts/acmp-connector-bounded-context';`,
+import { FindPaginatedRolloutTemplatesFilters } from '@repo/modules/acmp-connector';`,
     sql: `\`SELECT COUNT(*) as count FROM SYS_OSD_RolloutTemplates WHERE (@searchPattern IS NULL OR Name LIKE @searchPattern) AND (@os IS NULL OR OSEdition = @os)\``,
     body: `const params = { searchPattern: filters?.searchTerm ? \`%\${filters.searchTerm}%\` : null, os: filters?.os || null };
   return (await MssqlUtils.scalar<number>(query, params)) || 0;`,
@@ -850,7 +859,10 @@ export async function ${def.functionName}(${def.params}): ${def.returnType} {
 }
 
 function generateQueryMethodIndex(methods: QueryMethodDef[]): string {
-  return methods.map(m => `export * from './${m.name}.query-method';`).join('\n') + '\n';
+  return (
+    methods.map((m) => `export * from './${m.name}.query-method';`).join("\n") +
+    "\n"
+  );
 }
 
 // ============================================================================
@@ -865,12 +877,47 @@ interface RepoGroup {
 }
 
 const repoGroups: RepoGroup[] = [
-  { name: 'clients', folder: 'clients', queryMethods: [...clientQueryMethods, ...clientHardDriveQueryMethods, ...clientNetworkCardQueryMethods, ...clientInstalledSoftwareQueryMethods], hasWriteRepo: false },
-  { name: 'jobs', folder: 'jobs', queryMethods: jobQueryMethods, hasWriteRepo: false },
-  { name: 'tickets', folder: 'tickets', queryMethods: ticketQueryMethods, hasWriteRepo: false },
-  { name: 'assets', folder: 'assets', queryMethods: assetQueryMethods, hasWriteRepo: false },
-  { name: 'client-commands', folder: 'client-commands', queryMethods: clientCommandQueryMethods, hasWriteRepo: true },
-  { name: 'rollout-templates', folder: 'rollout-templates', queryMethods: rolloutTemplateQueryMethods, hasWriteRepo: true },
+  {
+    name: "clients",
+    folder: "clients",
+    queryMethods: [
+      ...clientQueryMethods,
+      ...clientHardDriveQueryMethods,
+      ...clientNetworkCardQueryMethods,
+      ...clientInstalledSoftwareQueryMethods,
+    ],
+    hasWriteRepo: false,
+  },
+  {
+    name: "jobs",
+    folder: "jobs",
+    queryMethods: jobQueryMethods,
+    hasWriteRepo: false,
+  },
+  {
+    name: "tickets",
+    folder: "tickets",
+    queryMethods: ticketQueryMethods,
+    hasWriteRepo: false,
+  },
+  {
+    name: "assets",
+    folder: "assets",
+    queryMethods: assetQueryMethods,
+    hasWriteRepo: false,
+  },
+  {
+    name: "client-commands",
+    folder: "client-commands",
+    queryMethods: clientCommandQueryMethods,
+    hasWriteRepo: true,
+  },
+  {
+    name: "rollout-templates",
+    folder: "rollout-templates",
+    queryMethods: rolloutTemplateQueryMethods,
+    hasWriteRepo: true,
+  },
 ];
 
 // ============================================================================
@@ -878,49 +925,68 @@ const repoGroups: RepoGroup[] = [
 // ============================================================================
 
 function main(): void {
-  console.log('🚀 Generating Infrastructure for ACMP Connector\\n');
+  console.log("🚀 Generating Infrastructure for ACMP Connector\\n");
 
   // Create MSSQL client
-  console.log('📦 Creating MSSQL client');
-  const mssqlPath = path.join(INFRA_PATH, 'infra/mssql');
+  console.log("📦 Creating MSSQL client");
+  const mssqlPath = path.join(INFRA_PATH, "infra/mssql");
   ensureDir(mssqlPath);
-  writeFile(path.join(mssqlPath, 'client.ts'), mssqlClientContent);
-  writeFile(path.join(mssqlPath, 'index.ts'), `export * from './client';\\n`);
+  writeFile(path.join(mssqlPath, "client.ts"), mssqlClientContent);
+  writeFile(path.join(mssqlPath, "index.ts"), `export * from './client';\\n`);
 
   // Create repositories
   for (const group of repoGroups) {
     console.log(`\\n📦 Processing repository: ${group.name}`);
-    
-    const repoPath = path.join(INFRA_PATH, 'repositories/mssql', group.folder);
-    const queryMethodsPath = path.join(repoPath, 'query/query-methods');
+
+    const repoPath = path.join(INFRA_PATH, "repositories/mssql", group.folder);
+    const queryMethodsPath = path.join(repoPath, "query/query-methods");
     ensureDir(queryMethodsPath);
 
     // Generate query methods
     for (const method of group.queryMethods) {
-      writeFile(path.join(queryMethodsPath, `${method.name}.query-method.ts`), generateQueryMethod(method));
+      writeFile(
+        path.join(queryMethodsPath, `${method.name}.query-method.ts`),
+        generateQueryMethod(method),
+      );
     }
-    writeFile(path.join(queryMethodsPath, 'index.ts'), generateQueryMethodIndex(group.queryMethods));
+    writeFile(
+      path.join(queryMethodsPath, "index.ts"),
+      generateQueryMethodIndex(group.queryMethods),
+    );
   }
 
   // Create index files
-  const reposPath = path.join(INFRA_PATH, 'repositories');
+  const reposPath = path.join(INFRA_PATH, "repositories");
   ensureDir(reposPath);
-  writeFile(path.join(reposPath, 'index.ts'), `export * from './mssql';\\n`);
-  writeFile(path.join(reposPath, 'mssql/index.ts'), repoGroups.map(g => `export * from './${g.folder}';`).join('\\n') + '\\n');
-  
+  writeFile(path.join(reposPath, "index.ts"), `export * from './mssql';\\n`);
+  writeFile(
+    path.join(reposPath, "mssql/index.ts"),
+    repoGroups.map((g) => `export * from './${g.folder}';`).join("\\n") + "\\n",
+  );
+
   for (const group of repoGroups) {
-    writeFile(path.join(reposPath, 'mssql', group.folder, 'index.ts'), `export * from './query';\\n`);
-    writeFile(path.join(reposPath, 'mssql', group.folder, 'query/index.ts'), `export * from './query-methods';\\n`);
+    writeFile(
+      path.join(reposPath, "mssql", group.folder, "index.ts"),
+      `export * from './query';\\n`,
+    );
+    writeFile(
+      path.join(reposPath, "mssql", group.folder, "query/index.ts"),
+      `export * from './query-methods';\\n`,
+    );
   }
 
   // Main index
-  writeFile(path.join(INFRA_PATH, 'index.ts'), `export * from './infra/mssql';\\nexport * from './repositories';\\n`);
+  writeFile(
+    path.join(INFRA_PATH, "index.ts"),
+    `export * from './infra/mssql';\\nexport * from './repositories';\\n`,
+  );
 
-  console.log('\\n✅ Infrastructure generation complete!');
+  console.log("\\n✅ Infrastructure generation complete!");
   console.log(`\\n📊 Summary:`);
   console.log(`   Repository Groups: ${repoGroups.length}`);
-  console.log(`   Query Methods: ${repoGroups.reduce((a, g) => a + g.queryMethods.length, 0)}`);
+  console.log(
+    `   Query Methods: ${repoGroups.reduce((a, g) => a + g.queryMethods.length, 0)}`,
+  );
 }
 
 main();
-

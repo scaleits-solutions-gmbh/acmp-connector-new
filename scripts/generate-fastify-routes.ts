@@ -1,15 +1,15 @@
-import * as fs from 'fs';
-import * as path from 'path';
+import * as fs from "fs";
+import * as path from "path";
 
-const APP_PATH = path.join(__dirname, '../apps/fastify/api/src');
+const APP_PATH = path.join(__dirname, "../apps/fastify/api/src");
 
 interface RouteConfig {
   resource: string;
   folder: string;
   operations: {
     name: string;
-    type: 'query' | 'command';
-    httpMethod: 'GET' | 'POST' | 'PUT' | 'DELETE';
+    type: "query" | "command";
+    httpMethod: "GET" | "POST" | "PUT" | "DELETE";
     hasPathParams: boolean;
     pathParam?: string;
     metadataImport: string;
@@ -21,252 +21,253 @@ interface RouteConfig {
 
 const routes: RouteConfig[] = [
   {
-    resource: 'clients',
-    folder: 'clients',
+    resource: "clients",
+    folder: "clients",
     operations: [
       {
-        name: 'find-paginated-clients',
-        type: 'query',
-        httpMethod: 'GET',
+        name: "find-paginated-clients",
+        type: "query",
+        httpMethod: "GET",
         hasPathParams: false,
-        metadataImport: 'getClientsHttpMetadata',
-        schemaImport: 'getClientsHttpQueryParamsRequestSchema',
-        primaryPortImport: 'FindPaginatedClientsQueryPrimaryPort',
+        metadataImport: "getClientsHttpMetadata",
+        schemaImport: "getClientsHttpQueryParamsRequestSchema",
+        primaryPortImport: "FindPaginatedClientsQueryPrimaryPort",
         mapperImports: {
-          request: 'findPaginatedClientsHttpRequestMapper',
-          response: 'findPaginatedClientsHttpResponseMapper',
+          request: "findPaginatedClientsHttpRequestMapper",
+          response: "findPaginatedClientsHttpResponseMapper",
         },
       },
       {
-        name: 'find-client-by-id',
-        type: 'query',
-        httpMethod: 'GET',
+        name: "find-client-by-id",
+        type: "query",
+        httpMethod: "GET",
         hasPathParams: true,
-        pathParam: 'id',
-        metadataImport: 'getClientByIdHttpMetadata',
-        primaryPortImport: 'FindClientByIdQueryPrimaryPort',
+        pathParam: "id",
+        metadataImport: "getClientByIdHttpMetadata",
+        primaryPortImport: "FindClientByIdQueryPrimaryPort",
         mapperImports: {
-          request: 'findClientByIdHttpRequestMapper',
-          response: 'findClientByIdHttpResponseMapper',
+          request: "findClientByIdHttpRequestMapper",
+          response: "findClientByIdHttpResponseMapper",
         },
       },
     ],
   },
   {
-    resource: 'client-hard-drives',
-    folder: 'clients',
+    resource: "client-hard-drives",
+    folder: "clients",
     operations: [
       {
-        name: 'find-paginated-client-hard-drives',
-        type: 'query',
-        httpMethod: 'GET',
+        name: "find-paginated-client-hard-drives",
+        type: "query",
+        httpMethod: "GET",
         hasPathParams: true,
-        pathParam: 'clientId',
-        metadataImport: 'getClientHardDrivesHttpMetadata',
-        schemaImport: 'getClientHardDrivesHttpQueryParamsRequestSchema',
-        primaryPortImport: 'FindPaginatedClientHardDrivesQueryPrimaryPort',
+        pathParam: "clientId",
+        metadataImport: "getClientHardDrivesHttpMetadata",
+        schemaImport: "getClientHardDrivesHttpQueryParamsRequestSchema",
+        primaryPortImport: "FindPaginatedClientHardDrivesQueryPrimaryPort",
         mapperImports: {
-          request: 'findPaginatedClientHardDrivesHttpRequestMapper',
-          response: 'findPaginatedClientHardDrivesHttpResponseMapper',
+          request: "findPaginatedClientHardDrivesHttpRequestMapper",
+          response: "findPaginatedClientHardDrivesHttpResponseMapper",
         },
       },
     ],
   },
   {
-    resource: 'client-network-cards',
-    folder: 'clients',
+    resource: "client-network-cards",
+    folder: "clients",
     operations: [
       {
-        name: 'find-paginated-client-network-cards',
-        type: 'query',
-        httpMethod: 'GET',
+        name: "find-paginated-client-network-cards",
+        type: "query",
+        httpMethod: "GET",
         hasPathParams: true,
-        pathParam: 'clientId',
-        metadataImport: 'getClientNetworkCardsHttpMetadata',
-        schemaImport: 'getClientNetworkCardsHttpQueryParamsRequestSchema',
-        primaryPortImport: 'FindPaginatedClientNetworkCardsQueryPrimaryPort',
+        pathParam: "clientId",
+        metadataImport: "getClientNetworkCardsHttpMetadata",
+        schemaImport: "getClientNetworkCardsHttpQueryParamsRequestSchema",
+        primaryPortImport: "FindPaginatedClientNetworkCardsQueryPrimaryPort",
         mapperImports: {
-          request: 'findPaginatedClientNetworkCardsHttpRequestMapper',
-          response: 'findPaginatedClientNetworkCardsHttpResponseMapper',
+          request: "findPaginatedClientNetworkCardsHttpRequestMapper",
+          response: "findPaginatedClientNetworkCardsHttpResponseMapper",
         },
       },
     ],
   },
   {
-    resource: 'client-installed-software',
-    folder: 'clients',
+    resource: "client-installed-software",
+    folder: "clients",
     operations: [
       {
-        name: 'find-paginated-client-installed-software',
-        type: 'query',
-        httpMethod: 'GET',
+        name: "find-paginated-client-installed-software",
+        type: "query",
+        httpMethod: "GET",
         hasPathParams: true,
-        pathParam: 'clientId',
-        metadataImport: 'getClientInstalledSoftwareHttpMetadata',
-        schemaImport: 'getClientInstalledSoftwareHttpQueryParamsRequestSchema',
-        primaryPortImport: 'FindPaginatedClientInstalledSoftwareQueryPrimaryPort',
+        pathParam: "clientId",
+        metadataImport: "getClientInstalledSoftwareHttpMetadata",
+        schemaImport: "getClientInstalledSoftwareHttpQueryParamsRequestSchema",
+        primaryPortImport:
+          "FindPaginatedClientInstalledSoftwareQueryPrimaryPort",
         mapperImports: {
-          request: 'findPaginatedClientInstalledSoftwareHttpRequestMapper',
-          response: 'findPaginatedClientInstalledSoftwareHttpResponseMapper',
+          request: "findPaginatedClientInstalledSoftwareHttpRequestMapper",
+          response: "findPaginatedClientInstalledSoftwareHttpResponseMapper",
         },
       },
     ],
   },
   {
-    resource: 'jobs',
-    folder: 'jobs',
+    resource: "jobs",
+    folder: "jobs",
     operations: [
       {
-        name: 'find-paginated-jobs',
-        type: 'query',
-        httpMethod: 'GET',
+        name: "find-paginated-jobs",
+        type: "query",
+        httpMethod: "GET",
         hasPathParams: false,
-        metadataImport: 'getJobsHttpMetadata',
-        schemaImport: 'getJobsHttpQueryParamsRequestSchema',
-        primaryPortImport: 'FindPaginatedJobsQueryPrimaryPort',
+        metadataImport: "getJobsHttpMetadata",
+        schemaImport: "getJobsHttpQueryParamsRequestSchema",
+        primaryPortImport: "FindPaginatedJobsQueryPrimaryPort",
         mapperImports: {
-          request: 'findPaginatedJobsHttpRequestMapper',
-          response: 'findPaginatedJobsHttpResponseMapper',
+          request: "findPaginatedJobsHttpRequestMapper",
+          response: "findPaginatedJobsHttpResponseMapper",
         },
       },
     ],
   },
   {
-    resource: 'tickets',
-    folder: 'tickets',
+    resource: "tickets",
+    folder: "tickets",
     operations: [
       {
-        name: 'find-paginated-tickets',
-        type: 'query',
-        httpMethod: 'GET',
+        name: "find-paginated-tickets",
+        type: "query",
+        httpMethod: "GET",
         hasPathParams: false,
-        metadataImport: 'getTicketsHttpMetadata',
-        schemaImport: 'getTicketsHttpQueryParamsRequestSchema',
-        primaryPortImport: 'FindPaginatedTicketsQueryPrimaryPort',
+        metadataImport: "getTicketsHttpMetadata",
+        schemaImport: "getTicketsHttpQueryParamsRequestSchema",
+        primaryPortImport: "FindPaginatedTicketsQueryPrimaryPort",
         mapperImports: {
-          request: 'findPaginatedTicketsHttpRequestMapper',
-          response: 'findPaginatedTicketsHttpResponseMapper',
+          request: "findPaginatedTicketsHttpRequestMapper",
+          response: "findPaginatedTicketsHttpResponseMapper",
         },
       },
       {
-        name: 'find-ticket-by-id',
-        type: 'query',
-        httpMethod: 'GET',
+        name: "find-ticket-by-id",
+        type: "query",
+        httpMethod: "GET",
         hasPathParams: true,
-        pathParam: 'id',
-        metadataImport: 'getTicketByIdHttpMetadata',
-        primaryPortImport: 'FindTicketByIdQueryPrimaryPort',
+        pathParam: "id",
+        metadataImport: "getTicketByIdHttpMetadata",
+        primaryPortImport: "FindTicketByIdQueryPrimaryPort",
         mapperImports: {
-          request: 'findTicketByIdHttpRequestMapper',
-          response: 'findTicketByIdHttpResponseMapper',
+          request: "findTicketByIdHttpRequestMapper",
+          response: "findTicketByIdHttpResponseMapper",
         },
       },
     ],
   },
   {
-    resource: 'assets',
-    folder: 'assets',
+    resource: "assets",
+    folder: "assets",
     operations: [
       {
-        name: 'find-paginated-assets',
-        type: 'query',
-        httpMethod: 'GET',
+        name: "find-paginated-assets",
+        type: "query",
+        httpMethod: "GET",
         hasPathParams: false,
-        metadataImport: 'getAssetsHttpMetadata',
-        schemaImport: 'getAssetsHttpQueryParamsRequestSchema',
-        primaryPortImport: 'FindPaginatedAssetsQueryPrimaryPort',
+        metadataImport: "getAssetsHttpMetadata",
+        schemaImport: "getAssetsHttpQueryParamsRequestSchema",
+        primaryPortImport: "FindPaginatedAssetsQueryPrimaryPort",
         mapperImports: {
-          request: 'findPaginatedAssetsHttpRequestMapper',
-          response: 'findPaginatedAssetsHttpResponseMapper',
+          request: "findPaginatedAssetsHttpRequestMapper",
+          response: "findPaginatedAssetsHttpResponseMapper",
         },
       },
       {
-        name: 'find-asset-by-id',
-        type: 'query',
-        httpMethod: 'GET',
+        name: "find-asset-by-id",
+        type: "query",
+        httpMethod: "GET",
         hasPathParams: true,
-        pathParam: 'id',
-        metadataImport: 'getAssetByIdHttpMetadata',
-        primaryPortImport: 'FindAssetByIdQueryPrimaryPort',
+        pathParam: "id",
+        metadataImport: "getAssetByIdHttpMetadata",
+        primaryPortImport: "FindAssetByIdQueryPrimaryPort",
         mapperImports: {
-          request: 'findAssetByIdHttpRequestMapper',
-          response: 'findAssetByIdHttpResponseMapper',
+          request: "findAssetByIdHttpRequestMapper",
+          response: "findAssetByIdHttpResponseMapper",
         },
       },
       {
-        name: 'find-asset-types',
-        type: 'query',
-        httpMethod: 'GET',
+        name: "find-asset-types",
+        type: "query",
+        httpMethod: "GET",
         hasPathParams: false,
-        metadataImport: 'getAssetTypesHttpMetadata',
-        primaryPortImport: 'FindAssetTypesQueryPrimaryPort',
+        metadataImport: "getAssetTypesHttpMetadata",
+        primaryPortImport: "FindAssetTypesQueryPrimaryPort",
         mapperImports: {
-          request: 'findAssetTypesHttpRequestMapper',
-          response: 'findAssetTypesHttpResponseMapper',
+          request: "findAssetTypesHttpRequestMapper",
+          response: "findAssetTypesHttpResponseMapper",
         },
       },
     ],
   },
   {
-    resource: 'client-commands',
-    folder: 'client-commands',
+    resource: "client-commands",
+    folder: "client-commands",
     operations: [
       {
-        name: 'find-paginated-client-commands',
-        type: 'query',
-        httpMethod: 'GET',
+        name: "find-paginated-client-commands",
+        type: "query",
+        httpMethod: "GET",
         hasPathParams: false,
-        metadataImport: 'getClientCommandsHttpMetadata',
-        schemaImport: 'getClientCommandsHttpQueryParamsRequestSchema',
-        primaryPortImport: 'FindPaginatedClientCommandsQueryPrimaryPort',
+        metadataImport: "getClientCommandsHttpMetadata",
+        schemaImport: "getClientCommandsHttpQueryParamsRequestSchema",
+        primaryPortImport: "FindPaginatedClientCommandsQueryPrimaryPort",
         mapperImports: {
-          request: 'findPaginatedClientCommandsHttpRequestMapper',
-          response: 'findPaginatedClientCommandsHttpResponseMapper',
+          request: "findPaginatedClientCommandsHttpRequestMapper",
+          response: "findPaginatedClientCommandsHttpResponseMapper",
         },
       },
       {
-        name: 'find-client-command-by-id',
-        type: 'query',
-        httpMethod: 'GET',
+        name: "find-client-command-by-id",
+        type: "query",
+        httpMethod: "GET",
         hasPathParams: true,
-        pathParam: 'id',
-        metadataImport: 'getClientCommandByIdHttpMetadata',
-        primaryPortImport: 'FindClientCommandByIdQueryPrimaryPort',
+        pathParam: "id",
+        metadataImport: "getClientCommandByIdHttpMetadata",
+        primaryPortImport: "FindClientCommandByIdQueryPrimaryPort",
         mapperImports: {
-          request: 'findClientCommandByIdHttpRequestMapper',
-          response: 'findClientCommandByIdHttpResponseMapper',
+          request: "findClientCommandByIdHttpRequestMapper",
+          response: "findClientCommandByIdHttpResponseMapper",
         },
       },
     ],
   },
   {
-    resource: 'rollout-templates',
-    folder: 'rollout-templates',
+    resource: "rollout-templates",
+    folder: "rollout-templates",
     operations: [
       {
-        name: 'find-paginated-rollout-templates',
-        type: 'query',
-        httpMethod: 'GET',
+        name: "find-paginated-rollout-templates",
+        type: "query",
+        httpMethod: "GET",
         hasPathParams: false,
-        metadataImport: 'getRolloutTemplatesHttpMetadata',
-        schemaImport: 'getRolloutTemplatesHttpQueryParamsRequestSchema',
-        primaryPortImport: 'FindPaginatedRolloutTemplatesQueryPrimaryPort',
+        metadataImport: "getRolloutTemplatesHttpMetadata",
+        schemaImport: "getRolloutTemplatesHttpQueryParamsRequestSchema",
+        primaryPortImport: "FindPaginatedRolloutTemplatesQueryPrimaryPort",
         mapperImports: {
-          request: 'findPaginatedRolloutTemplatesHttpRequestMapper',
-          response: 'findPaginatedRolloutTemplatesHttpResponseMapper',
+          request: "findPaginatedRolloutTemplatesHttpRequestMapper",
+          response: "findPaginatedRolloutTemplatesHttpResponseMapper",
         },
       },
       {
-        name: 'find-rollout-template-by-id',
-        type: 'query',
-        httpMethod: 'GET',
+        name: "find-rollout-template-by-id",
+        type: "query",
+        httpMethod: "GET",
         hasPathParams: true,
-        pathParam: 'id',
-        metadataImport: 'getRolloutTemplateByIdHttpMetadata',
-        primaryPortImport: 'FindRolloutTemplateByIdQueryPrimaryPort',
+        pathParam: "id",
+        metadataImport: "getRolloutTemplateByIdHttpMetadata",
+        primaryPortImport: "FindRolloutTemplateByIdQueryPrimaryPort",
         mapperImports: {
-          request: 'findRolloutTemplateByIdHttpRequestMapper',
-          response: 'findRolloutTemplateByIdHttpResponseMapper',
+          request: "findRolloutTemplateByIdHttpRequestMapper",
+          response: "findRolloutTemplateByIdHttpResponseMapper",
         },
       },
     ],
@@ -275,9 +276,9 @@ const routes: RouteConfig[] = [
 
 function toPascalCase(str: string): string {
   return str
-    .split('-')
+    .split("-")
     .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
-    .join('');
+    .join("");
 }
 
 function toCamelCase(str: string): string {
@@ -291,7 +292,7 @@ function ensureDir(dir: string): void {
   }
 }
 
-function generateHandler(op: RouteConfig['operations'][0]): string {
+function generateHandler(op: RouteConfig["operations"][0]): string {
   const pascalName = toPascalCase(op.name);
   const camelName = toCamelCase(op.name);
 
@@ -308,8 +309,8 @@ function generateHandler(op: RouteConfig['operations'][0]): string {
 import {
   ${op.mapperImports.request},
   ${op.mapperImports.response},
-} from '@repo/business/boundaries';
-import { ${op.primaryPortImport} } from '@repo/business/bounded-contexts/acmp-connector-bounded-context';
+} from '@repo/modules/acmp-connector';
+import { ${op.primaryPortImport} } from '@repo/modules/acmp-connector';
 
 export function create${pascalName}Handler(
   query: ${op.primaryPortImport},
@@ -341,13 +342,15 @@ function generateRouteFile(config: RouteConfig): string {
     }
   });
   imports.push(
-    `import {\n  ${commonKitImports.join(',\n  ')},\n} from '@scaleits-solutions-gmbh/acmp-connector-lib-global-common-kit';`
+    `import {\n  ${commonKitImports.join(",\n  ")},\n} from '@scaleits-solutions-gmbh/acmp-connector-lib-global-common-kit';`,
   );
 
   // Collect all BC imports
-  const bcImports: string[] = config.operations.map((op) => op.primaryPortImport);
+  const bcImports: string[] = config.operations.map(
+    (op) => op.primaryPortImport,
+  );
   imports.push(
-    `import {\n  ${bcImports.join(',\n  ')},\n} from '@repo/business/bounded-contexts/acmp-connector-bounded-context';`
+    `import {\n  ${bcImports.join(",\n  ")},\n} from '@repo/modules/acmp-connector';`,
   );
 
   // Handler imports
@@ -371,7 +374,7 @@ function generateRouteFile(config: RouteConfig): string {
     schema: {
       querystring: ${op.schemaImport},
     },`
-      : '';
+      : "";
 
     return `  fastify.withTypeProvider<ZodTypeProvider>().route({
     method: ${op.metadataImport}.method,
@@ -380,21 +383,23 @@ function generateRouteFile(config: RouteConfig): string {
   });`;
   });
 
-  const resourceName = toCamelCase(config.resource.replace(/-/g, ' ').replace(/ /g, ''));
+  const resourceName = toCamelCase(
+    config.resource.replace(/-/g, " ").replace(/ /g, ""),
+  );
 
-  return `${imports.join('\n')}
+  return `${imports.join("\n")}
 
 export async function ${resourceName}Routes(
   fastify: FastifyInstance,
-  ${paramTypes.join(',\n  ')},
+  ${paramTypes.join(",\n  ")},
 ) {
-${routeRegistrations.join('\n\n')}
+${routeRegistrations.join("\n\n")}
 }
 `;
 }
 
 function main(): void {
-  console.log('🚀 Generating Fastify routes and handlers\n');
+  console.log("🚀 Generating Fastify routes and handlers\n");
 
   // Group routes by folder
   const byFolder = routes.reduce(
@@ -403,18 +408,18 @@ function main(): void {
       acc[config.folder].push(config);
       return acc;
     },
-    {} as Record<string, RouteConfig[]>
+    {} as Record<string, RouteConfig[]>,
   );
 
   for (const [folder, configs] of Object.entries(byFolder)) {
     console.log(`📦 Processing folder: ${folder}`);
 
     // Create handlers directory
-    const handlersDir = path.join(APP_PATH, 'presentation', 'handlers', folder);
+    const handlersDir = path.join(APP_PATH, "presentation", "handlers", folder);
     ensureDir(handlersDir);
 
     // Create routes directory
-    const routesDir = path.join(APP_PATH, 'presentation', 'routes', folder);
+    const routesDir = path.join(APP_PATH, "presentation", "routes", folder);
     ensureDir(routesDir);
 
     // Generate handlers
@@ -434,8 +439,8 @@ function main(): void {
     const handlerExports = configs
       .flatMap((c) => c.operations)
       .map((op) => `export * from './${op.name}.handler';`)
-      .join('\n');
-    fs.writeFileSync(path.join(handlersDir, 'index.ts'), handlerExports + '\n');
+      .join("\n");
+    fs.writeFileSync(path.join(handlersDir, "index.ts"), handlerExports + "\n");
     console.log(`  ✅ Created handlers/index.ts`);
 
     // Generate route file (one per folder)
@@ -453,23 +458,33 @@ function main(): void {
     console.log(`  ✅ Created route: ${routeFileName}`);
 
     // Generate routes index
-    fs.writeFileSync(path.join(routesDir, 'index.ts'), `export * from './${folder}.routes';\n`);
+    fs.writeFileSync(
+      path.join(routesDir, "index.ts"),
+      `export * from './${folder}.routes';\n`,
+    );
     console.log(`  ✅ Created routes/index.ts`);
   }
 
   // Generate main routes index
   const folders = Object.keys(byFolder);
-  const mainRoutesIndex = folders.map((f) => `export * from './${f}';`).join('\n') + '\n';
-  fs.writeFileSync(path.join(APP_PATH, 'presentation', 'routes', 'index.ts'), mainRoutesIndex);
+  const mainRoutesIndex =
+    folders.map((f) => `export * from './${f}';`).join("\n") + "\n";
+  fs.writeFileSync(
+    path.join(APP_PATH, "presentation", "routes", "index.ts"),
+    mainRoutesIndex,
+  );
   console.log(`\n✅ Created main routes/index.ts`);
 
   // Generate main handlers index
-  const mainHandlersIndex = folders.map((f) => `export * from './${f}';`).join('\n') + '\n';
-  fs.writeFileSync(path.join(APP_PATH, 'presentation', 'handlers', 'index.ts'), mainHandlersIndex);
+  const mainHandlersIndex =
+    folders.map((f) => `export * from './${f}';`).join("\n") + "\n";
+  fs.writeFileSync(
+    path.join(APP_PATH, "presentation", "handlers", "index.ts"),
+    mainHandlersIndex,
+  );
   console.log(`✅ Created main handlers/index.ts`);
 
-  console.log('\n✨ Done! Generated all routes and handlers.');
+  console.log("\n✨ Done! Generated all routes and handlers.");
 }
 
 main();
-

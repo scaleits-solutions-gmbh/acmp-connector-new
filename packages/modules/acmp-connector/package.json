@@ -1,0 +1,42 @@
+{
+  "name": "@repo/modules/acmp-connector",
+  "version": "1.0.0",
+  "description": "HTTP Boundary mappers for ACMP Connector",
+  "type": "module",
+  "main": "dist/index.cjs",
+  "module": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js",
+      "default": "./dist/index.cjs"
+    }
+  },
+  "scripts": {
+    "build": "tsup",
+    "lint": "eslint .",
+    "typecheck": "tsc --noEmit",
+    "lint:fix": "eslint . --fix",
+    "format": "prettier --write \"**/*.{ts,tsx,md}\"",
+    "check:format": "prettier --check \"**/*.{ts,tsx,md}\"",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "dependencies": {
+    "@scaleits-solutions-gmbh/acmp-connector-lib-global-common-kit": "0.0.8",
+    "@scaleits-solutions-gmbh/org-lib-backend-common-kit": "0.0.74",
+    "@scaleits-solutions-gmbh/org-lib-global-common-kit": "^0.0.7",
+    "zod": "4.1.13"
+  },
+  "devDependencies": {
+    "@eslint/js": "^9.38.0",
+    "@types/node": "^24.9.1",
+    "eslint": "^9.38.0",
+    "eslint-plugin-import-x": "^4.16.1",
+    "eslint-plugin-unused-imports": "^4.3.0",
+    "prettier": "^3.6.2",
+    "tsup": "^8.5.0",
+    "typescript": "5.9.3",
+    "typescript-eslint": "^8.46.2"
+  }
+}
